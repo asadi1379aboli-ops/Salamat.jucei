@@ -1,26 +1,26 @@
-/* =========================================
-   Juice Salamat
-   Premium Digital Menu
-========================================= */
+/*=========================================
+      Juice Salamat Premium Design
+=========================================*/
 
 :root{
 
 --primary:#1F6F50;
---primary-dark:#15513a;
-
+--primary-dark:#174E39;
 --gold:#D4AF37;
+--gold-light:#F5D66B;
 
---background:#F6F7F3;
-
+--bg:#F5F5F2;
 --white:#ffffff;
+--text:#1A1A1A;
+--gray:#707070;
 
---text:#1c1c1c;
+--radius:28px;
 
---gray:#6d6d6d;
+--shadow:
+0 18px 45px rgba(0,0,0,.10);
 
---shadow:0 15px 40px rgba(0,0,0,.08);
-
---radius:26px;
+--glass:
+rgba(255,255,255,.70);
 
 }
 
@@ -44,7 +44,7 @@ body{
 
 font-family:'Vazirmatn',sans-serif;
 
-background:var(--background);
+background:var(--bg);
 
 color:var(--text);
 
@@ -54,9 +54,9 @@ overflow-x:hidden;
 
 img{
 
-max-width:100%;
-
 display:block;
+
+max-width:100%;
 
 }
 
@@ -72,23 +72,23 @@ button{
 
 font-family:inherit;
 
-cursor:pointer;
-
 border:none;
 
-}.loading-screen{
+cursor:pointer;
+
+}
+
+/*=========================
+      Loading Screen
+=========================*/
+
+.loading-screen{
 
 position:fixed;
 
-top:0;
+inset:0;
 
-left:0;
-
-right:0;
-
-bottom:0;
-
-background:#0f172a;
+background:#08121b;
 
 display:flex;
 
@@ -98,49 +98,59 @@ justify-content:center;
 
 align-items:center;
 
-z-index:9999;
+z-index:99999;
 
-color:white;
-
-transition:.6s;
+transition:.7s;
 
 }
 
 .loading-logo{
 
-width:150px;
+width:170px;
 
-height:150px;
+height:170px;
 
 border-radius:50%;
 
 background:white;
 
-padding:8px;
+padding:10px;
 
-margin-bottom:20px;
+box-shadow:
 
-animation:logoFloat 2.5s infinite;
+0 0 45px rgba(212,175,55,.45);
+
+animation:logoFloat 3s infinite;
 
 }
 
 .loading-screen h1{
 
-font-size:34px;
+margin-top:25px;
 
-font-weight:800;
+color:white;
 
-margin-bottom:8px;
+font-size:38px;
+
+font-weight:900;
 
 }
 
 .loading-screen p{
 
-opacity:.8;
+margin-top:10px;
 
-letter-spacing:3px;
+color:#ddd;
 
-}.hero{
+letter-spacing:4px;
+
+}
+
+/*=========================
+         HERO
+=========================*/
+
+.hero{
 
 position:relative;
 
@@ -154,9 +164,13 @@ align-items:center;
 
 background:
 
-linear-gradient(rgba(0,0,0,.55),
+linear-gradient(
 
-rgba(0,0,0,.45)),
+rgba(0,0,0,.55),
+
+rgba(0,0,0,.45)
+
+),
 
 url("https://images.unsplash.com/photo-1497534446932-c925b458314e?q=80&w=1600&auto=format&fit=crop");
 
@@ -168,23 +182,45 @@ overflow:hidden;
 
 }
 
+.hero-overlay{
+
+position:absolute;
+
+inset:0;
+
+background:
+
+radial-gradient(circle,
+
+rgba(255,255,255,.08),
+
+transparent);
+
+}
+
 .hero-content{
+
+position:relative;
+
+z-index:2;
 
 text-align:center;
 
-color:white;
-
 padding:25px;
 
-animation:fadeUp 1s ease;
+color:white;
+
+animation:fadeUp 1s;
 
 }
 
 .hero-logo{
 
-width:170px;
+width:180px;
 
-height:170px;
+height:180px;
+
+margin:auto;
 
 border-radius:50%;
 
@@ -192,41 +228,71 @@ background:white;
 
 padding:10px;
 
-margin:auto;
-
 box-shadow:
 
-0 15px 50px rgba(0,0,0,.35);
+0 18px 50px rgba(0,0,0,.35);
+
+}
+
+.hero-badge{
+
+display:inline-block;
+
+margin-top:25px;
+
+padding:10px 18px;
+
+border-radius:50px;
+
+background:rgba(255,255,255,.18);
+
+backdrop-filter:blur(15px);
+
+font-size:14px;
+
+letter-spacing:1px;
 
 }
 
 .hero h1{
 
-font-size:48px;
+margin-top:20px;
+
+font-size:54px;
 
 font-weight:900;
-
-margin-top:25px;
 
 }
 
 .hero p{
 
+margin-top:15px;
+
 font-size:20px;
 
 opacity:.95;
 
-margin-top:10px;
+}
 
-letter-spacing:2px;
-
-}.hero-btn{
-
-display:inline-block;
+.hero-buttons{
 
 margin-top:35px;
 
-padding:18px 48px;
+display:flex;
+
+justify-content:center;
+
+gap:18px;
+
+flex-wrap:wrap;
+
+}
+
+.hero-btn{
+
+padding:18px 38px;
+
+border-radius:50px;
 
 background:linear-gradient(
 
@@ -234,21 +300,17 @@ background:linear-gradient(
 
 var(--gold),
 
-#f7d763
+var(--gold-light)
 
 );
 
+font-weight:800;
+
 color:#222;
-
-font-size:18px;
-
-font-weight:700;
-
-border-radius:50px;
 
 box-shadow:
 
-0 12px 35px rgba(212,175,55,.35);
+0 12px 35px rgba(212,175,55,.45);
 
 transition:.35s;
 
@@ -256,13 +318,61 @@ transition:.35s;
 
 .hero-btn:hover{
 
-transform:translateY(-4px);
+transform:translateY(-5px);
 
-}.top-products{
+}
 
-padding:40px 20px;
+.hero-btn-outline{
 
-max-width:1200px;
+padding:18px 38px;
+
+border-radius:50px;
+
+border:2px solid white;
+
+color:white;
+
+transition:.35s;
+
+}
+
+.hero-btn-outline:hover{
+
+background:white;
+
+color:#222;
+
+}
+
+.hero-wave{
+
+position:absolute;
+
+bottom:-2px;
+
+left:0;
+
+width:100%;
+
+}
+
+.hero-wave svg{
+
+display:block;
+
+width:100%;
+
+}
+
+/*=========================
+     Top Products
+=========================*/
+
+.top-products{
+
+padding:70px 20px 40px;
+
+max-width:1300px;
 
 margin:auto;
 
@@ -270,11 +380,11 @@ margin:auto;
 
 .top-products h2{
 
-font-size:30px;
+font-size:34px;
 
-font-weight:800;
+font-weight:900;
 
-margin-bottom:25px;
+margin-bottom:30px;
 
 }
 
@@ -282,11 +392,11 @@ margin-bottom:25px;
 
 display:flex;
 
-gap:20px;
+gap:25px;
 
 overflow-x:auto;
 
-padding-bottom:10px;
+padding-bottom:15px;
 
 scrollbar-width:none;
 
@@ -297,15 +407,62 @@ scrollbar-width:none;
 display:none;
 
 }
-/*==========================
-    Search Box
-===========================*/
+
+.top-card{
+
+min-width:240px;
+
+background:white;
+
+border-radius:30px;
+
+overflow:hidden;
+
+box-shadow:var(--shadow);
+
+transition:.4s;
+
+}
+
+.top-card:hover{
+
+transform:
+
+translateY(-10px)
+
+scale(1.03);
+
+}
+
+.top-card img{
+
+height:250px;
+
+width:100%;
+
+object-fit:cover;
+
+}
+
+.top-card h3{
+
+padding:18px;
+
+font-size:22px;
+
+text-align:center;
+
+font-weight:800;
+
+}/*=========================================
+        Search Box
+=========================================*/
 
 .search-box{
 
-max-width:700px;
+max-width:900px;
 
-margin:40px auto;
+margin:20px auto 50px;
 
 padding:0 20px;
 
@@ -315,83 +472,93 @@ padding:0 20px;
 
 width:100%;
 
-padding:18px 22px;
-
-font-size:17px;
+height:62px;
 
 border:none;
 
 outline:none;
 
-border-radius:18px;
+border-radius:60px;
+
+padding:0 28px;
+
+font-size:17px;
 
 background:white;
 
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+box-shadow:0 15px 35px rgba(0,0,0,.08);
 
-transition:.3s;
+transition:.35s;
 
 }
 
 .search-box input:focus{
 
-box-shadow:0 15px 35px rgba(31,111,80,.25);
+box-shadow:0 18px 45px rgba(31,111,80,.20);
+
+transform:scale(1.01);
 
 }
 
-/*==========================
-      Size Buttons
-===========================*/
+/*=========================================
+          Category Bar
+=========================================*/
 
-.sizes{
+.category-bar{
 
 display:flex;
 
-justify-content:center;
+gap:15px;
 
-gap:12px;
+overflow-x:auto;
 
-flex-wrap:wrap;
+padding:0 20px 30px;
 
-padding:20px;
+scrollbar-width:none;
 
 }
 
-.size{
+.category-bar::-webkit-scrollbar{
 
-background:white;
+display:none;
+
+}
+
+.category{
 
 padding:14px 22px;
 
-border-radius:50px;
+border-radius:40px;
 
-font-size:15px;
+background:white;
 
 font-weight:700;
 
-box-shadow:0 8px 20px rgba(0,0,0,.08);
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 transition:.3s;
 
-}
-
-.size:hover{
-
-transform:translateY(-3px);
+white-space:nowrap;
 
 }
 
-.size.active{
+.category:hover{
 
-background:var(--primary);
+transform:translateY(-5px);
+
+}
+
+.category.active{
+
+background:linear-gradient(45deg,#1F6F50,#2F8D67);
 
 color:white;
 
 }
 
-/*==========================
-      Menu Section
-===========================*/
+/*=========================================
+             Menu
+=========================================*/
 
 .menu{
 
@@ -399,21 +566,23 @@ max-width:1200px;
 
 margin:auto;
 
-padding:30px 20px 60px;
+padding:15px 20px 70px;
 
 }
 
 .menu-section{
 
-margin-top:45px;
+margin-top:50px;
 
-margin-bottom:20px;
+margin-bottom:25px;
 
 }
 
 .menu-section h2{
 
-font-size:30px;
+font-size:32px;
+
+font-weight:900;
 
 color:var(--primary);
 
@@ -423,9 +592,9 @@ padding-right:15px;
 
 }
 
-/*==========================
-      Menu Card
-===========================*/
+/*=========================================
+          Product Card
+=========================================*/
 
 .menu-card{
 
@@ -435,53 +604,87 @@ align-items:center;
 
 gap:18px;
 
-background:white;
-
-border-radius:24px;
-
 padding:18px;
 
-margin-bottom:18px;
+margin-bottom:22px;
 
-box-shadow:var(--shadow);
+border-radius:30px;
 
-transition:.35s;
+background:rgba(255,255,255,.72);
 
-opacity:0;
+backdrop-filter:blur(18px);
 
-transform:translateY(40px);
+border:1px solid rgba(255,255,255,.65);
 
-}
+box-shadow:0 18px 45px rgba(0,0,0,.08);
 
-.menu-card.show{
+position:relative;
 
-opacity:1;
+overflow:hidden;
 
-transform:translateY(0);
+transition:.45s;
 
 }
 
 .menu-card:hover{
 
-transform:translateY(-6px);
+transform:translateY(-8px);
 
-box-shadow:0 20px 45px rgba(0,0,0,.15);
+box-shadow:0 25px 55px rgba(0,0,0,.15);
+
+}
+
+.menu-card::before{
+
+content:"";
+
+position:absolute;
+
+left:-120%;
+
+top:0;
+
+width:80%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.45),
+
+transparent
+
+);
+
+transition:.8s;
+
+}
+
+.menu-card:hover::before{
+
+left:140%;
 
 }
 
 .menu-image{
 
-width:90px;
+width:100px;
 
-height:90px;
+height:100px;
 
-border-radius:50%;
+border-radius:24px;
 
 overflow:hidden;
 
 flex-shrink:0;
 
-border:4px solid var(--gold);
+box-shadow:0 15px 35px rgba(0,0,0,.15);
 
 }
 
@@ -503,56 +706,97 @@ flex:1;
 
 .menu-info h3{
 
-font-size:22px;
+font-size:24px;
 
 margin-bottom:6px;
+
+font-weight:800;
 
 }
 
 .menu-info p{
 
-color:#777;
+color:#666;
 
 font-size:15px;
+
+line-height:1.7;
 
 }
 
 .menu-price{
 
-font-size:24px;
+font-size:28px;
 
-font-weight:800;
+font-weight:900;
 
 color:var(--gold);
+
+text-align:left;
 
 white-space:nowrap;
 
 }
 
-.menu-price span{
-
-font-size:13px;
+.menu-price small{
 
 display:block;
 
-color:#777;
+font-size:13px;
+
+color:#888;
+
+margin-top:4px;
 
 }
-/*==========================
-          Footer
-===========================*/
+
+/*=========================================
+         Premium Badge
+=========================================*/
+
+.badge{
+
+display:inline-block;
+
+padding:6px 12px;
+
+border-radius:20px;
+
+background:#FFE9A8;
+
+color:#7A5600;
+
+font-size:12px;
+
+font-weight:700;
+
+margin-top:8px;
+
+}/*=========================================
+            Footer Premium
+=========================================*/
 
 .footer{
 
-background:#10261c;
+background:linear-gradient(180deg,#10261c,#081711);
 
-color:white;
+color:#fff;
 
-padding:60px 20px;
+padding:70px 25px;
 
 margin-top:80px;
 
 text-align:center;
+
+border-top-left-radius:40px;
+
+border-top-right-radius:40px;
+
+}
+
+.footer-card{
+
+margin-bottom:30px;
 
 }
 
@@ -560,17 +804,19 @@ text-align:center;
 
 font-size:34px;
 
-margin-bottom:10px;
+font-weight:900;
 
 color:#D4AF37;
+
+margin-bottom:10px;
 
 }
 
 .footer-card p{
 
-opacity:.85;
+font-size:16px;
 
-margin-bottom:35px;
+color:#d7d7d7;
 
 }
 
@@ -580,29 +826,41 @@ display:flex;
 
 justify-content:center;
 
-gap:15px;
+gap:18px;
 
 flex-wrap:wrap;
 
-margin-bottom:35px;
+margin:35px 0;
 
 }
 
 .footer-btn{
 
-display:inline-block;
+display:flex;
 
-padding:16px 28px;
+align-items:center;
 
-background:#1F6F50;
+justify-content:center;
+
+gap:8px;
+
+min-width:150px;
+
+height:56px;
+
+padding:0 24px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
 
 border-radius:50px;
 
-font-weight:bold;
+transition:.35s;
 
-transition:.3s;
-
-color:white;
+font-weight:700;
 
 }
 
@@ -610,9 +868,9 @@ color:white;
 
 background:#D4AF37;
 
-color:#222;
+color:#111;
 
-transform:translateY(-4px);
+transform:translateY(-5px);
 
 }
 
@@ -622,83 +880,77 @@ font-size:17px;
 
 line-height:2;
 
-opacity:.9;
+color:#d9d9d9;
+
+margin-top:20px;
 
 }
 
-/*==========================
-     Scroll To Top
-===========================*/
+/*=========================================
+        Floating Button
+=========================================*/
 
 #scrollTop{
 
 position:fixed;
 
-left:20px;
+left:22px;
 
-bottom:20px;
+bottom:22px;
 
-width:55px;
+width:58px;
 
-height:55px;
+height:58px;
 
 border-radius:50%;
 
-background:#D4AF37;
+background:linear-gradient(45deg,#D4AF37,#F5D66B);
 
-color:#222;
-
-font-size:24px;
-
-display:none;
+display:flex;
 
 justify-content:center;
 
 align-items:center;
 
-box-shadow:0 10px 30px rgba(0,0,0,.25);
+font-size:24px;
+
+color:#222;
+
+box-shadow:0 18px 40px rgba(0,0,0,.25);
+
+cursor:pointer;
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.35s;
 
 z-index:999;
 
-transition:.3s;
+}
+
+#scrollTop.show{
+
+opacity:1;
+
+visibility:visible;
 
 }
 
 #scrollTop:hover{
 
-transform:scale(1.1);
+transform:translateY(-6px) scale(1.08);
 
 }
 
-/*==========================
-      Animations
-===========================*/
-
-@keyframes logoFloat{
-
-0%{
-
-transform:translateY(0);
-
-}
-
-50%{
-
-transform:translateY(-10px);
-
-}
-
-100%{
-
-transform:translateY(0);
-
-}
-
-}
+/*=========================================
+           Animations
+=========================================*/
 
 @keyframes fadeUp{
 
-from{
+0%{
 
 opacity:0;
 
@@ -706,7 +958,7 @@ transform:translateY(40px);
 
 }
 
-to{
+100%{
 
 opacity:1;
 
@@ -716,29 +968,93 @@ transform:translateY(0);
 
 }
 
-/*==========================
-      Responsive
-===========================*/
+@keyframes logoFloat{
 
-@media(max-width:768px){
+0%{
 
-.hero h1{
-
-font-size:34px;
+transform:translateY(0px);
 
 }
 
-.hero p{
+50%{
 
-font-size:16px;
+transform:translateY(-12px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+}
+
+.fade-up{
+
+animation:fadeUp .8s ease both;
+
+}
+
+/*=========================================
+         Responsive Mobile
+=========================================*/
+
+@media(max-width:768px){
+
+.hero{
+
+height:92vh;
 
 }
 
 .hero-logo{
 
-width:130px;
+width:140px;
 
-height:130px;
+height:140px;
+
+}
+
+.hero h1{
+
+font-size:38px;
+
+}
+
+.hero p{
+
+font-size:17px;
+
+}
+
+.hero-buttons{
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.hero-btn,
+
+.hero-btn-outline{
+
+width:90%;
+
+text-align:center;
+
+}
+
+.top-card{
+
+min-width:220px;
+
+}
+
+.top-card img{
+
+height:220px;
 
 }
 
@@ -752,53 +1068,372 @@ text-align:center;
 
 .menu-image{
 
-width:110px;
+width:120px;
 
-height:110px;
+height:120px;
 
 }
 
 .menu-price{
 
-margin-top:15px;
+text-align:center;
+
+margin-top:10px;
 
 }
 
-.top-products h2{
+.footer-buttons{
 
-font-size:24px;
+flex-direction:column;
 
 }
 
-.footer-card h2{
+.footer-btn{
+
+width:100%;
+
+}
+
+}/*=========================================
+        Premium Glass Navbar
+=========================================*/
+
+.header-fixed{
+
+position:fixed;
+
+top:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:92%;
+
+max-width:1200px;
+
+height:72px;
+
+background:rgba(255,255,255,.65);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.45);
+
+border-radius:60px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 28px;
+
+box-shadow:0 20px 45px rgba(0,0,0,.12);
+
+z-index:9999;
+
+transition:.35s;
+
+}
+
+.header-fixed img{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+}
+
+.header-fixed h2{
+
+font-size:22px;
+
+font-weight:900;
+
+color:#1F6F50;
+
+}
+
+.header-fixed a{
+
+font-weight:700;
+
+transition:.3s;
+
+}
+
+.header-fixed a:hover{
+
+color:#D4AF37;
+
+}
+
+/*=========================================
+      Premium Product Hover
+=========================================*/
+
+.menu-card{
+
+cursor:pointer;
+
+}
+
+.menu-card:hover{
+
+transform:
+
+translateY(-12px)
+
+scale(1.02);
+
+}
+
+.menu-card:hover .menu-image{
+
+transform:scale(1.08);
+
+}
+
+.menu-image{
+
+transition:.45s;
+
+}
+
+/*=========================================
+          Price Style
+=========================================*/
+
+.menu-price{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:flex-end;
+
+}
+
+.menu-price::after{
+
+content:"تومان";
+
+font-size:12px;
+
+font-weight:600;
+
+color:#888;
+
+margin-top:4px;
+
+}
+
+/*=========================================
+         Golden Border
+=========================================*/
+
+.menu-card::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+border-radius:30px;
+
+padding:1px;
+
+background:linear-gradient(
+
+135deg,
+
+transparent,
+
+rgba(212,175,55,.7),
+
+transparent
+
+);
+
+-webkit-mask:
+
+linear-gradient(#fff 0 0) content-box,
+
+linear-gradient(#fff 0 0);
+
+-webkit-mask-composite:xor;
+
+mask-composite:exclude;
+
+pointer-events:none;
+
+}
+
+/*=========================================
+      Hero Background Animation
+=========================================*/
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:180%;
+
+height:180%;
+
+background:
+
+radial-gradient(circle,
+
+rgba(255,255,255,.06),
+
+transparent 60%);
+
+animation:rotateHero 30s linear infinite;
+
+}
+
+@keyframes rotateHero{
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/*=========================================
+        Floating Contact Button
+=========================================*/
+
+.call-button{
+
+position:fixed;
+
+right:20px;
+
+bottom:95px;
+
+width:62px;
+
+height:62px;
+
+border-radius:50%;
+
+background:#1F6F50;
+
+color:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
 
 font-size:28px;
 
-}
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+transition:.35s;
+
+z-index:999;
 
 }
-.top-card{
-    min-width:220px;
-    background:#fff;
-    border-radius:24px;
-    overflow:hidden;
-    box-shadow:0 18px 40px rgba(0,0,0,.12);
-    transition:.35s;
+
+.call-button:hover{
+
+transform:scale(1.1);
+
+background:#D4AF37;
+
+color:#111;
+
 }
 
-.top-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
+/*=========================================
+        WhatsApp Button
+=========================================*/
+
+.whatsapp{
+
+position:fixed;
+
+right:20px;
+
+bottom:20px;
+
+width:62px;
+
+height:62px;
+
+border-radius:50%;
+
+background:#25D366;
+
+color:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:28px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+transition:.35s;
+
+z-index:999;
+
 }
 
-.top-card h3{
-    text-align:center;
-    padding:18px;
-    font-size:20px;
-    font-weight:700;
+.whatsapp:hover{
+
+transform:scale(1.1);
+
 }
 
-.top-card:hover{
-    transform:translateY(-10px) scale(1.03);
+/*=========================================
+      Luxury Scrollbar
+=========================================*/
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#ececec;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#D4AF37;
+
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#b99220;
+
 }
