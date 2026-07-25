@@ -1,296 +1,299 @@
-// ===============================
-// Juice Salamat Premium Menu
-// Part 1
-// ===============================
+/*====================================
+     Juice Salamat Premium Menu
+====================================*/
 
 const CSV_FILE = "menu.csv";
 
 let menuData = [];
 let currentSize = "لیوانی";
 
-const menuContainer = document.getElementById("menu-list");
-const searchInput = document.getElementById("search");
-const sizeButtons = document.querySelectorAll(".size");
-const loadingScreen = document.querySelector(".loading-screen");
-const scrollTopBtn = document.getElementById("scrollTop");
+/*==========================
+      Loading Screen
+==========================*/
 
-window.addEventListener("load", () => {
+window.addEventListener("load",()=>{
 
-    setTimeout(() => {
-
-        loadingScreen.style.opacity = "0";
-
-        setTimeout(() => {
-
-            loadingScreen.style.display = "none";
-
-        },600);
-
-    },1800);
-
-    loadMenu();
-
-});
-
-function loadMenu(){
-
-    Papa.parse(CSV_FILE,{
-
-        download:true,
-
-        header:true,
-
-        skipEmptyLines:true,
-
-        complete:function(results){
-
-            menuData = results.data;
-
-            renderMenu();
-
-        },
-
-        error:function(){
-
-            menuContainer.innerHTML =
-            "<h2 style='text-align:center;color:red'>خطا در بارگذاری منو</h2>";
-
-        }
-
-    });
-
-}
-
-function renderMenu(){
-
-    let keyword = searchInput.value.trim();
-
-    menuContainer.innerHTML="";
-
-    menuData.forEach(item=>{
-
-        if(!item["نام محصول"]) return;
-
-        let name=item["نام محصول"];
-
-        if(keyword!=="" && !name.includes(keyword)) return;
-
-        if(
-            name.includes("منو") ||
-            name.includes("سلامت") ||
-            name.includes("میلک شیک‌ها") ||
-            name.includes("ترکیبی‌های") ||
-            name.includes("ترش‌های") ||
-            name.includes("طبیعی‌های")
-        ){
-
-            createSection(name);
-
-            return;
-
-        }
-
-        createCard(item);
-
-    });
-
-}// ===============================
-// Part 2
-// ===============================
-
-function createSection(title){
-
-    const section=document.createElement("div");
-
-    section.className="menu-section";
-
-    section.innerHTML=`<h2>${title}</h2>`;
-
-    menuContainer.appendChild(section);
-
-}
-
-function createCard(item){
-
-    let price=item[currentSize];
-
-    if(price===undefined || price==="") return;
-
-    price=parseInt(price);
-
-    if(price===0 || isNaN(price)) return;
-
-    const card=document.createElement("div");
-
-    card.className="menu-card";
-
-    card.innerHTML=`
-
-        <div class="menu-image">
-
-            <img src="logo.png.jpg" loading="lazy">
-
-        </div>
-
-        <div class="menu-info">
-
-            <h3>${item["نام محصول"]}</h3>
-
-            <p>${item["توضیحات"] || ""}</p>
-
-        </div>
-
-        <div class="menu-price">
-
-            ${price.toLocaleString("fa-IR")}
-
-            <span>هزار</span>
-
-        </div>
-
-    `;
-
-    menuContainer.appendChild(card);
-
-}
-
-searchInput.addEventListener("input",()=>{
-
-    renderMenu();
-
-});
-
-sizeButtons.forEach(btn=>{
-
-    btn.addEventListener("click",()=>{
-
-        sizeButtons.forEach(x=>x.classList.remove("active"));
-
-        btn.classList.add("active");
-
-        currentSize=btn.dataset.size;
-
-        renderMenu();
-
-    });
-
-});// ===============================
-// Part 3
-// ===============================
-
-// دکمه رفتن به بالای صفحه
-window.addEventListener("scroll",()=>{
-
-    if(window.scrollY>300){
-
-        scrollTopBtn.style.display="flex";
-
-    }else{
-
-        scrollTopBtn.style.display="none";
-
-    }
-
-});
-
-scrollTopBtn.addEventListener("click",()=>{
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-});
-
-// انیمیشن ظاهر شدن کارت‌ها
-const observer=new IntersectionObserver(entries=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("show");
-
-        }
-
-    });
-
-});
-
-function observeCards(){
-
-    document.querySelectorAll(".menu-card").forEach(card=>{
-
-        observer.observe(card);
-
-    });
-
-}
-
-// بعد از رندر منو، کارت‌ها را هم انیمیت کن
-const oldRenderMenu=renderMenu;
-
-renderMenu=function(){
-
-    oldRenderMenu();
-
-    observeCards();
-
-}// ===============================
-// Part 4
-// ===============================
-
-// نمایش سال جاری در صورت نیاز
-const yearElement = document.getElementById("year");
-if(yearElement){
-    yearElement.textContent = new Date().getFullYear();
-}
-
-// افکت کوچک روی دکمه‌ها
-document.querySelectorAll("button,.hero-btn,.footer-btn").forEach(btn=>{
-
-    btn.addEventListener("mousedown",()=>{
-
-        btn.style.transform="scale(.96)";
-
-    });
-
-    btn.addEventListener("mouseup",()=>{
-
-        btn.style.transform="scale(1)";
-
-    });
-
-    btn.addEventListener("mouseleave",()=>{
-
-        btn.style.transform="scale(1)";
-
-    });
-
-});
-
-// پیام خوش‌آمدگویی
-console.log("%c🍹 آبمیوه سلامت","font-size:22px;color:#D4AF37;font-weight:bold;");
-console.log("%cPremium Digital Menu","font-size:14px;color:#1F6F50;");
-
-// اگر منویی بارگذاری نشد
 setTimeout(()=>{
 
-    if(menuData.length===0){
+const loading=document.querySelector(".loading-screen");
 
-        menuContainer.innerHTML=`
-        <div style="
-        text-align:center;
-        padding:40px;
-        color:#666;
-        font-size:18px;">
-        ⚠️ منو هنوز بارگذاری نشده است.
-        </div>
-        `;
+if(loading){
 
-    }
+loading.style.opacity="0";
+loading.style.pointerEvents="none";
 
-},5000);
+setTimeout(()=>{
+loading.remove();
+},700);
+
+}
+
+},1200);
+
+});
+
+/*==========================
+      Read CSV
+==========================*/
+
+Papa.parse(CSV_FILE,{
+
+download:true,
+
+header:true,
+
+skipEmptyLines:true,
+
+complete:function(result){
+
+menuData=result.data;
+
+renderMenu(menuData);
+
+}
+
+});
+
+/*==========================
+      Render Menu
+==========================*/
+
+function renderMenu(data){
+
+const container=document.getElementById("menu-list");
+
+if(!container)return;
+
+container.innerHTML="";
+
+data.forEach(item=>{
+
+if(!item["نام محصول"])return;
+
+if(
+
+item["نام محصول"]==="منو ویژه فصلی"||
+
+item["نام محصول"]==="ترش‌های سلامت"||
+
+item["نام محصول"]==="طبیعی‌های سلامت"||
+
+item["نام محصول"]==="ترکیبی‌های سلامت"||
+
+item["نام محصول"]==="میلک شیک‌ها"
+
+){
+
+container.innerHTML+=`
+
+<div class="menu-section">
+
+<h2>${item["نام محصول"]}</h2>
+
+</div>
+
+`;
+
+return;
+
+}
+
+let price=parseInt(item[currentSize]);
+
+if(isNaN(price)||price===0)return;
+
+container.innerHTML+=`
+
+<div class="menu-card fade-up">
+
+<div class="menu-image">
+
+<img src="logo.png.jpg">
+
+</div>
+
+<div class="menu-info">
+
+<h3>${item["نام محصول"]}</h3>
+
+<p>${item["توضیحات"]||""}</p>
+
+</div>
+
+<div class="menu-price">
+
+${price}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}/*==========================
+      Live Search
+==========================*/
+
+const searchInput=document.getElementById("search");
+
+if(searchInput){
+
+searchInput.addEventListener("input",function(){
+
+const value=this.value.trim();
+
+if(value===""){
+
+renderMenu(menuData);
+
+return;
+
+}
+
+const filtered=menuData.filter(item=>{
+
+return(
+
+item["نام محصول"]&&
+
+item["نام محصول"].includes(value)
+
+);
+
+});
+
+renderMenu(filtered);
+
+});
+
+}
+
+/*==========================
+      Size Buttons
+==========================*/
+
+document.querySelectorAll(".size").forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+document.querySelectorAll(".size").forEach(b=>{
+
+b.classList.remove("active");
+
+});
+
+btn.classList.add("active");
+
+currentSize=btn.dataset.size;
+
+renderMenu(menuData);
+
+});
+
+});
+
+/*==========================
+      Scroll To Top
+==========================*/
+
+const scrollBtn=document.getElementById("scrollTop");
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>500){
+
+scrollBtn.classList.add("show");
+
+}else{
+
+scrollBtn.classList.remove("show");
+
+}
+
+});
+
+scrollBtn.addEventListener("click",()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+});
+
+/*==========================
+     Hero Button
+==========================*/
+
+const heroBtn=document.querySelector(".hero-btn");
+
+if(heroBtn){
+
+heroBtn.addEventListener("click",e=>{
+
+e.preventDefault();
+
+document.querySelector("#menu").scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+});
+
+}/*==========================
+      Scroll Animation
+==========================*/
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("fade-up");
+
+}
+
+});
+
+});
+
+setInterval(()=>{
+
+document.querySelectorAll(".menu-card").forEach(card=>{
+
+observer.observe(card);
+
+});
+
+},500);
+
+/*==========================
+      Premium Badge
+==========================*/
+
+setTimeout(()=>{
+
+document.querySelectorAll(".menu-card").forEach((card,index)=>{
+
+if(index<5){
+
+const badge=document.createElement("div");
+
+badge.className="badge";
+
+badge.innerHTML="🔥 پرفروش";
+
+card.querySelector(".menu-info").appendChild(badge);
+
+}
+
+});
+
+},1200);
