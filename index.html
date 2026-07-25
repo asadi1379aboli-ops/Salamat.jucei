@@ -1,291 +1,926 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آبمیوه سلامت | منوی دیجیتال</title>
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="منوی دیجیتال آبمیوه سلامت">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<meta charset="UTF-8">
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            direction: rtl;
+            overflow-x: hidden;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.5s ease 2s forwards;
+        }
 
-<title>آبمیوه سلامت | منوی دیجیتال</title>
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
 
-<meta name="theme-color" content="#0f172a">
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
-<meta name="description" content="منوی دیجیتال آبمیوه سلامت">
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+        .loading-screen h1 {
+            color: #f59e0b;
+            margin-top: 20px;
+            font-size: 2rem;
+        }
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        .loading-screen p {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+        /* Header Fixed */
+        .header-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #1e293b;
+        }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+        .header-fixed img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
 
-<link rel="stylesheet" href="style.css">
+        .header-fixed h2 {
+            font-size: 1.1rem;
+            color: #f59e0b;
+        }
 
+        .header-fixed nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-fixed nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+            background: #1e293b;
+        }
+
+        .header-fixed nav a:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: slideUp 1s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #f59e0b;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #f59e0b;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            background: #f59e0b;
+            color: #0f172a;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .hero-btn:hover {
+            background: #d97706;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Top Products */
+        .top-products {
+            padding: 60px 20px;
+            background: #1e293b;
+        }
+
+        .top-products h2 {
+            text-align: center;
+            color: #f59e0b;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .top-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .top-card {
+            min-width: 200px;
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            scroll-snap-align: start;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .top-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #f59e0b;
+        }
+
+        .top-card h3 {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+        }
+
+        /* Search Box */
+        .search-box {
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            background: #0f172a;
+        }
+
+        #search {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: 2px solid #334155;
+            background: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Vazirmatn';
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        #search:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Size Buttons */
+        .sizes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 30px 20px;
+            flex-wrap: wrap;
+            background: #0f172a;
+        }
+
+        .size {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 2px solid #334155;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Vazirmatn';
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .size.active {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+            font-weight: 700;
+        }
+
+        .size:hover {
+            border-color: #f59e0b;
+            transform: translateY(-2px);
+        }
+
+        /* Menu Grid */
+        .menu {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #0f172a;
+        }
+
+        .menu-item {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 20px;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid #334155;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            border-color: #f59e0b;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .menu-item h3 {
+            color: #f59e0b;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .menu-item .category {
+            display: inline-block;
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 10px 0;
+        }
+
+        .menu-item .description {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .menu-item .price {
+            color: #10b981;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .menu-item .size-label {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e293b;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #334155;
+        }
+
+        .footer-card {
+            margin-bottom: 30px;
+        }
+
+        .footer-card h2 {
+            color: #f59e0b;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-card p {
+            color: #94a3b8;
+        }
+
+        .footer-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-btn {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            display: inline-block;
+            border: 1px solid #334155;
+        }
+
+        .footer-btn:hover {
+            background: #f59e0b;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
+
+        .work-time {
+            color: #94a3b8;
+            line-height: 2;
+            font-size: 1.1rem;
+        }
+
+        /* Scroll to Top */
+        #scrollTop {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: none;
+            z-index: 999;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        #scrollTop:hover {
+            background: #d97706;
+            transform: translateY(-5px);
+        }
+
+        /* Modal */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .product-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 2rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #0f172a;
+        }
+
+        .close-modal:hover {
+            color: #f59e0b;
+            background: #334155;
+        }
+
+        .modal-content img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #f59e0b;
+        }
+
+        .modal-content h2 {
+            color: #f59e0b;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .modal-content p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .modal-price {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .modal-price h4 {
+            color: #f59e0b;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .modal-price p {
+            color: #e2e8f0;
+            margin: 10px 0;
+            padding: 8px;
+            background: #1e293b;
+            border-radius: 8px;
+        }
+
+        .order-btn {
+            background: #10b981;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            transition: 0.3s;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        .order-btn:hover {
+            background: #059669;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .menu {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+            
+            .header-fixed nav {
+                display: none;
+            }
+            
+            .header-fixed {
+                justify-content: center;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-content img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-<header class="header-fixed">
-
-<div style="display:flex;align-items:center;gap:12px;">
-
-<img src="logo.png.jpg" alt="آبمیوه سلامت">
-
-<h2>آبمیوه سلامت</h2>
-
-</div>
-
-<nav>
-
-<a href="#menu">منو</a>
-
-<a href="tel:09120230285">تماس</a>
-
-<a href="https://maps.google.com/?q=یوسف آباد تهران آبمیوه سلامت" target="_blank">مسیریابی</a>
-
-</nav>
-
-</header>
-<div class="loading-screen">
-
-<img src="logo.png.jpg" class="loading-logo">
-
-<h1>آبمیوه سلامت</h1>
-
-<p>Fresh Juice Bar</p>
-
-</div>
-
-<header class="hero">
-
-<div class="overlay"></div>
-
-<div class="hero-content">
-
-<img src="logo.png.jpg" class="hero-logo">
-
-<h1>
-
-آبمیوه سلامت
-
-</h1>
-
-<p>
-
-طبیعی • تازه • سالم
-
-</p>
-
-<a href="#menu" class="hero-btn">
-
-مشاهده منو
-
-</a>
-
-</div>
-
-</header>
-
-<section class="top-products">
-
-<h2>
-
-🔥 پرفروش‌ترین‌ها
-
-</h2>
-
-<div class="top-slider">
-
-<div class="top-card">
-<img src="assets/images/Avocado.jpeg" alt="آووکادو پسته">
-<h3>آووکادو پسته</h3>
-</div>
-
-<div class="top-card">
-<img src="assets/images/Pistachio.jpeg" alt="شیر پسته">
-<h3>شیر پسته</h3>
-</div>
-
-<div class="top-card">
-<img src="assets/images/Coffee.jpeg" alt="نسکافه">
-<h3>شیک نسکافه</h3>
-</div>
-
-<div class="top-card">
-<img src="assets/images/Majon.jpeg" alt="معجون">
-<h3>شیک معجون میکس</h3>
-</div>
-
-<div class="top-card">
-<img src="assets/images/Mango.jpeg" alt="انبه">
-<h3>انبه</h3>
-</div>
-</div>
-
-</section>
-
-<section class="search-box">
-
-<input
-
-type="text"
-
-id="search"
-
-placeholder="جستجوی محصول...">
-
-</section>
-
-<section class="sizes">
-
-<button class="size active"
-
-data-size="لیوانی">
-
-🥤
-
-لیوانی
-
-</button>
-
-<button class="size"
-
-data-size="نیم‌لیتری">
-
-🧃
-
-نیم لیتری
-
-</button>
-
-<button class="size"
-
-data-size="یک‌لیتری">
-
-🍶
-
-یک لیتری
-
-</button>
-
-<button class="size"
-
-data-size="یک‌ونیم‌لیتری">
-
-🫙
-
-خانوادگی
-
-</button>
-
-</section>
-
-<section
-
-id="menu"
-
-class="menu">
-
-<div id="menu-list">
-
-</div>
-
-</section>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <img src="logo.png.jpg" class="loading-logo" alt="آبمیوه سلامت">
+        <h1>آبمیوه سلامت</h1>
+        <p>Fresh Juice Bar</p>
+    </div>
+
+    <!-- Fixed Header -->
+    <header class="header-fixed">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <img src="logo.png.jpg" alt="آبمیوه سلامت">
+            <h2>آبمیوه سلامت</h2>
+        </div>
+        <nav>
+            <a href="#menu">📋 منو</a>
+            <a href="tel:09120230285">📞 تماس</a>
+            <a href="https://maps.google.com/?q=یوسف آباد تهران آبمیوه سلامت" target="_blank">📍 مسیریابی</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <img src="logo.png.jpg" class="hero-logo" alt="آبمیوه سلامت">
+            <h1>آبمیوه سلامت</h1>
+            <p>طبیعی • تازه • سالم</p>
+            <a href="#menu" class="hero-btn">🍹 مشاهده منو</a>
+        </div>
+    </header>
+
+    <!-- Top Products -->
+    <section class="top-products">
+        <h2>🔥 پرفروش‌ترین‌ها</h2>
+        <div class="top-slider">
+            <div class="top-card" onclick="showProductModal(menuData[0])">
+                <img src="assets/images/Avocado.jpeg" alt="آووکادو پسته" onerror="this.src='logo.png.jpg'">
+                <h3>آووکادو پسته</h3>
+            </div>
+            <div class="top-card" onclick="showProductModal(menuData[1])">
+                <img src="assets/images/Pistachio.jpeg" alt="شیر پسته" onerror="this.src='logo.png.jpg'">
+                <h3>شیر پسته</h3>
+            </div>
+            <div class="top-card" onclick="showProductModal(menuData[2])">
+                <img src="assets/images/Coffee.jpeg" alt="نسکافه" onerror="this.src='logo.png.jpg'">
+                <h3>شیک نسکافه</h3>
+            </div>
+            <div class="top-card" onclick="showProductModal(menuData[3])">
+                <img src="assets/images/Majon.jpeg" alt="معجون" onerror="this.src='logo.png.jpg'">
+                <h3>شیک معجون میکس</h3>
+            </div>
+            <div class="top-card" onclick="showProductModal(menuData[4])">
+                <img src="assets/images/Mango.jpeg" alt="انبه" onerror="this.src='logo.png.jpg'">
+                <h3>انبه</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Box -->
+    <section class="search-box">
+        <input type="text" id="search" placeholder="🔍 جستجوی محصول...">
+    </section>
+
+    <!-- Size Buttons -->
+    <section class="sizes">
+        <button class="size active" data-size="لیوانی">🥤 لیوانی</button>
+        <button class="size" data-size="نیم‌لیتری">🧃 نیم لیتری</button>
+        <button class="size" data-size="یک‌لیتری">🍶 یک لیتری</button>
+        <button class="size" data-size="یک‌ونیم‌لیتری">🫙 خانوادگی</button>
+    </section>
+
+    <!-- Menu Grid -->
+    <section id="menu" class="menu">
+        <div id="menu-list"></div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
+        <div class="footer-card">
+            <h2>آبمیوه سلامت</h2>
+            <p>طبیعی • تازه • سالم</p>
+        </div>
+        <div class="footer-buttons">
+            <a href="tel:09120230285" class="footer-btn">📞 تماس با ما</a>
+            <a href="https://maps.google.com/?q=یوسف آباد تهران آبمیوه سلامت" target="_blank" class="footer-btn">📍 مسیریابی</a>
+        </div>
+        <div class="work-time">
+            🕘 ساعت کاری<br>
+            هر روز<br>
+            ۹ صبح تا ۱۱ شب
+        </div>
+    </footer>
 
-    <div class="footer-card">
-
-        <h2>آبمیوه سلامت</h2>
-
-        <p>طبیعی • تازه • سالم</p>
-
-    </div>
-
-    <div class="footer-buttons">
-
-        <a href="tel:09120230285" class="footer-btn">
-
-            📞 تماس
-
-        </a>
-
-        <a href="https://maps.google.com/?q=یوسف آباد تهران آبمیوه سلامت" target="_blank" class="footer-btn">
-
-            📍 مسیریابی
-
-        </a>
-
-    </div>
-
-    <div class="work-time">
-
-        🕘 ساعت کاری
-
-        <br>
-
-        هر روز
-
-        <br>
-
-        ۹ صبح تا ۱۱ شب
-
-    </div>
-
-</footer>
-
-<button id="scrollTop">
-
-⬆
-
-</button>
+    <!-- Scroll to Top Button -->
+    <button id="scrollTop" title="برو بالا">⬆</button>
 
     <!-- Product Modal -->
-
-<div id="productModal" class="product-modal">
-
-  <div class="modal-content">
-
-    <span id="closeModal" class="close-modal">&times;</span>
-
-    <img id="modalImage" src="logo.png.jpg" alt="">
-
-    <h2 id="modalTitle"></h2>
-
-    <p id="modalDescription"></p>
-
-    <div id="modalPrices" class="modal-prices"></div>
-
-  </div>
-
-</div>
-    <!-- Product Modal -->
-
-<div id="productModal" class="product-modal">
-
-    <div class="modal-content">
-
-        <span class="close-modal">&times;</span>
-
-        <img id="modalImage" src="">
-
-        <h2 id="modalTitle"></h2>
-
-        <p id="modalDesc"></p>
-
-        <div id="modalPrice" class="modal-price"></div>
-
-        <a href="tel:09120230285" class="order-btn">
-
-            📞 سفارش تلفنی
-
-        </a>
-
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDesc"></p>
+            <div id="modalPrice" class="modal-price"></div>
+            <a href="tel:09120230285" class="order-btn">📞 سفارش تلفنی</a>
+        </div>
     </div>
 
-</div>
-<script src="script.js"></script>
+    <script>
+        // Menu Data
+        const menuData = [
+            {
+                name: "آووکادو پسته",
+                image: "assets/images/Avocado.jpeg",
+                description: "ترکیب خامه‌ای آووکادو با پسته تازه و عسل طبیعی",
+                prices: {
+                    "لیوانی": "۸۵,۰۰۰",
+                    "نیم‌لیتری": "۱۴۰,۰۰۰",
+                    "یک‌لیتری": "۲۲۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۳۰۰,۰۰۰"
+                },
+                category: "اسموتی"
+            },
+            {
+                name: "شیر پسته",
+                image: "assets/images/Pistachio.jpeg",
+                description: "شیر پسته خالص با پسته ایرانی و بستنی سنتی",
+                prices: {
+                    "لیوانی": "۹۰,۰۰۰",
+                    "نیم‌لیتری": "۱۵۰,۰۰۰",
+                    "یک‌لیتری": "۲۴۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۳۲۰,۰۰۰"
+                },
+                category: "شیر"
+            },
+            {
+                name: "شیک نسکافه",
+                image: "assets/images/Coffee.jpeg",
+                description: "نسکافه اصل با شیر و بستنی وانیلی",
+                prices: {
+                    "لیوانی": "۷۵,۰۰۰",
+                    "نیم‌لیتری": "۱۳۰,۰۰۰",
+                    "یک‌لیتری": "۲۰۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۲۸۰,۰۰۰"
+                },
+                category: "شیک"
+            },
+            {
+                name: "شیک معجون میکس",
+                image: "assets/images/Majon.jpeg",
+                description: "ترکیب ویژه موز، توت فرنگی، انبه و شیر",
+                prices: {
+                    "لیوانی": "۹۵,۰۰۰",
+                    "نیم‌لیتری": "۱۶۰,۰۰۰",
+                    "یک‌لیتری": "۲۵۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۳۵۰,۰۰۰"
+                },
+                category: "شیک"
+            },
+            {
+                name: "انبه",
+                image: "assets/images/Mango.jpeg",
+                description: "انبه تازه و رسیده هندی با یخ",
+                prices: {
+                    "لیوانی": "۸۰,۰۰۰",
+                    "نیم‌لیتری": "۱۳۵,۰۰۰",
+                    "یک‌لیتری": "۲۱۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۲۹۰,۰۰۰"
+                },
+                category: "آبمیوه"
+            },
+            {
+                name: "آب پرتقال طبیعی",
+                image: "assets/images/orange.jpg",
+                description: "پرتقال تازه جنوب، سرشار از ویتامین C",
+                prices: {
+                    "لیوانی": "۶۰,۰۰۰",
+                    "نیم‌لیتری": "۱۰۰,۰۰۰",
+                    "یک‌لیتری": "۱۶۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۲۲۰,۰۰۰"
+                },
+                category: "آبمیوه"
+            },
+            {
+                name: "اسموتی توت فرنگی",
+                image: "assets/images/strawberry.jpg",
+                description: "توت فرنگی تازه با ماست یونانی و عسل",
+                prices: {
+                    "لیوانی": "۷۵,۰۰۰",
+                    "نیم‌لیتری": "۱۳۰,۰۰۰",
+                    "یک‌لیتری": "۲۰۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۲۸۰,۰۰۰"
+                },
+                category: "اسموتی"
+            },
+            {
+                name: "موز شکلات",
+                image: "assets/images/chocolate-banana.jpg",
+                description: "موز رسیده با شکلات تلخ و شیر بادام",
+                prices: {
+                    "لیوانی": "۸۵,۰۰۰",
+                    "نیم‌لیتری": "۱۴۰,۰۰۰",
+                    "یک‌لیتری": "۲۲۰,۰۰۰",
+                    "یک‌ونیم‌لیتری": "۳۰۰,۰۰۰"
+                },
+                category: "اسموتی"
+            }
+        ];
 
+        let currentSize = 'لیوانی';
+
+        // Display Menu
+        function displayMenu(items) {
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = '';
+            
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'menu-item';
+                card.onclick = () => showProductModal(item);
+                
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='logo.png.jpg'">
+                    <h3>${item.name}</h3>
+                    <span class="category">${item.category}</span>
+                    <p class="description">${item.description}</p>
+                    <div class="price">${item.prices[currentSize]} تومان</div>
+                    <div class="size-label">${currentSize}</div>
+                `;
+                
+                menuList.appendChild(card);
+            });
+        }
+
+        // Size Filter
+        document.querySelectorAll('.size').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('.size').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentSize = e.target.dataset.size;
+                displayMenu(menuData);
+            });
+        });
+
+        // Search Function
+        document.getElementById('search').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = menuData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) ||
+                item.category.toLowerCase().includes(searchTerm) ||
+                item.description.toLowerCase().includes(searchTerm)
+            );
+            displayMenu(filtered);
+        });
+
+        // Show Product Modal
+        function showProductModal(item) {
+            const modal = document.getElementById('productModal');
+            document.getElementById('modalImage').src = item.image;
+            document.getElementById('modalTitle').textContent = item.name;
+            document.getElementById('modalDesc').textContent = item.description;
+            
+            let pricesHTML = '<h4>💰 قیمت‌ها:</h4>';
+            for (const [size, price] of Object.entries(item.prices)) {
+                pricesHTML += `<p>${size}: ${price} تومان</p>`;
+            }
+            document.getElementById('modalPrice').innerHTML = pricesHTML;
+            
+            modal.classList.add('active');
+        }
+
+        // Close Modal
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.getElementById('productModal').classList.remove('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target.id === 'productModal') {
+                document.getElementById('productModal').classList.remove('active');
+            }
+        });
+
+        // Scroll to Top
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.style.display = 'block';
+            } else {
+                scrollTopBtn.style.display = 'none';
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth Scroll for Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loading-screen').style.display = 'none';
+            }, 2000);
+        });
+
+        // Initial Display
+        displayMenu(menuData);
+    </script>
 </body>
-
 </html>
