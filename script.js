@@ -1,4 +1,4 @@
-/*====================================
+۷/*====================================
      Juice Salamat Premium Menu
 ====================================*/
 
@@ -536,5 +536,50 @@ if(e.target.id==="productModal"){
 e.target.classList.remove("active");
 
 }
+
+});
+/*==========================
+      Product Modal
+==========================*/
+
+function openProduct(name, desc, price) {
+
+    const modal = document.getElementById("productModal");
+
+    document.getElementById("modalTitle").innerHTML = name;
+
+    document.getElementById("modalDesc").innerHTML = desc || "آبمیوه طبیعی و تازه";
+
+    document.getElementById("modalPrice").innerHTML =
+        Number(price).toLocaleString("fa-IR") + " تومان";
+
+    document.getElementById("modalImage").src =
+        "assets/images/" + name + ".jpeg";
+
+    modal.classList.add("show");
+
+}
+
+const closeModal = document.querySelector(".close-modal");
+
+if (closeModal) {
+
+    closeModal.addEventListener("click", () => {
+
+        document.getElementById("productModal").classList.remove("show");
+
+    });
+
+}
+
+window.addEventListener("click", function (e) {
+
+    const modal = document.getElementById("productModal");
+
+    if (e.target === modal) {
+
+        modal.classList.remove("show");
+
+    }
 
 });
