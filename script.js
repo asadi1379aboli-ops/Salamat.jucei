@@ -104,11 +104,11 @@ if(isNaN(price)||price===0)return;
 
 container.innerHTML+=`
 
-<div class="menu-card fade-up">
+<div class="menu-card fade-up" onclick="openProduct(${JSON.stringify(item).replace(/"/g,'&quot;')})">
 
 <div class="menu-image">
 
-<img src="logo.png.jpg">
+<img src="assets/images/${item["نام محصول"]}.jpeg">
 
 </div>
 
@@ -431,6 +431,109 @@ header.style.boxShadow="0 15px 35px rgba(0,0,0,.15)";
 
 header.style.background="rgba(255,255,255,.65)";
 header.style.boxShadow="0 15px 35px rgba(0,0,0,.08)";
+
+}
+
+});
+
+/*==========================
+      Product Modal
+==========================*/
+
+function openProduct(item){
+
+const modal=document.getElementById("productModal");
+
+const image=document.getElementById("modalImage");
+
+const title=document.getElementById("modalTitle");
+
+const description=document.getElementById("modalDescription");
+
+const prices=document.getElementById("modalPrices");
+
+
+modal.classList.add("active");
+
+
+title.innerHTML=item["نام محصول"];
+
+
+description.innerHTML=
+item["توضیحات"] || 
+"تهیه شده با مواد اولیه تازه و طبیعی";
+
+
+image.src=
+"assets/images/"+item["نام محصول"]+".jpeg";
+
+
+prices.innerHTML="";
+
+
+const sizes=[
+
+"لیوانی",
+"نیم‌لیتری",
+"یک‌لیتری",
+"یک‌ونیم‌لیتری"
+
+];
+
+
+sizes.forEach(size=>{
+
+if(item[size] && item[size]!="0"){
+
+prices.innerHTML+=`
+
+<div>
+
+${size}
+
+<br>
+
+${item[size]} تومان
+
+</div>
+
+`;
+
+}
+
+});
+
+
+}
+
+
+/* بستن پنجره */
+
+const closeModal=document.getElementById("closeModal");
+
+
+if(closeModal){
+
+closeModal.onclick=()=>{
+
+document
+.getElementById("productModal")
+.classList.remove("active");
+
+};
+
+}
+
+
+/* بستن با کلیک بیرون */
+
+document
+.getElementById("productModal")
+.addEventListener("click",e=>{
+
+if(e.target.id==="productModal"){
+
+e.target.classList.remove("active");
 
 }
 
