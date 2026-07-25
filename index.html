@@ -15,9 +15,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    
     <style>
         :root {
             --primary: #f59e0b;
@@ -53,8 +50,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Particles */
-        #particles-js {
+        #particles-canvas {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
@@ -64,7 +60,6 @@
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        /* Loading */
         .loading-screen {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -84,7 +79,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Header Glass */
         .header {
             position: fixed; top: 0; left: 0; right: 0;
             background: var(--glass);
@@ -127,7 +121,6 @@
         }
         .phone-link:hover { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); }
 
-        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
@@ -155,7 +148,6 @@
         }
         .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px; }
         
-        /* Live Visitor Counter */
         .visitor-counter {
             display: inline-flex; align-items: center; gap: 8px;
             background: var(--bg-card); border: 1px solid var(--border);
@@ -187,7 +179,6 @@
         .btn-whatsapp { background: #25D366; color: white; }
         .btn-whatsapp:hover { background: #128C7E; transform: translateY(-3px); }
 
-        /* Daily Offer Timer */
         .daily-offer {
             background: linear-gradient(135deg, var(--primary), #fbbf24);
             padding: 15px 20px; text-align: center;
@@ -204,7 +195,6 @@
             font-weight: 900; font-size: 1.1rem;
         }
 
-        /* Random Picker */
         .random-picker {
             text-align: center; padding: 25px;
             background: var(--bg-card); margin: 20px;
@@ -227,7 +217,6 @@
             min-height: 30px;
         }
 
-        /* Search with Voice */
         .search-box {
             padding: 15px 20px; display: flex;
             justify-content: center; gap: 8px;
@@ -249,13 +238,12 @@
             transition: 0.3s;
         }
         .voice-btn:hover { transform: scale(1.1); }
-        .voice-btn.listening { animation: pulse 1s infinite; background: var(--danger); color: white; }
-        @keyframes pulse {
+        .voice-btn.listening { animation: pulse-btn 1s infinite; background: var(--danger); color: white; }
+        @keyframes pulse-btn {
             0%,100% { transform: scale(1); }
             50% { transform: scale(1.15); }
         }
 
-        /* Categories */
         .categories {
             display: flex; gap: 6px; padding: 10px 20px;
             overflow-x: auto; flex-wrap: nowrap;
@@ -271,7 +259,6 @@
         .cat-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
         .cat-btn:hover { border-color: var(--primary); }
 
-        /* Sizes */
         .sizes {
             display: flex; justify-content: center; gap: 6px;
             padding: 10px 20px; flex-wrap: wrap;
@@ -286,7 +273,6 @@
         .size-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
         .size-btn:hover { border-color: var(--primary); }
 
-        /* Menu */
         .menu {
             padding: 20px; display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -324,7 +310,6 @@
         .menu-item .price { color: var(--success); font-size: 1.2rem; font-weight: 700; margin-top: 8px; }
         .menu-item .size-label { color: #64748b; font-size: 0.7rem; }
 
-        /* Reviews Section */
         .reviews-section {
             padding: 50px 20px; background: var(--bg-card);
             position: relative; z-index: 1;
@@ -353,7 +338,6 @@
         .review-stars { color: var(--primary); font-size: 0.85rem; }
         .review-text { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; }
 
-        /* QR Code */
         .qr-section {
             text-align: center; padding: 40px 20px;
             position: relative; z-index: 1;
@@ -363,9 +347,7 @@
             background: white; padding: 15px;
             border-radius: 15px; display: inline-block;
         }
-        .qr-box canvas { display: block; }
 
-        /* Modal */
         .modal {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -413,7 +395,6 @@
         .modal-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
         .modal-btns .btn { font-size: 0.85rem; padding: 10px 18px; }
 
-        /* Footer */
         .footer {
             background: var(--bg-card); padding: 40px 20px;
             text-align: center; border-top: 1px solid var(--border);
@@ -434,7 +415,6 @@
         .footer-whatsapp:hover { background: #128C7E !important; }
         .work-time { color: var(--text-muted); line-height: 2; font-size: 0.95rem; }
 
-        /* Scroll Top */
         #scrollTop {
             position: fixed; bottom: 25px; left: 25px;
             background: var(--primary); color: var(--bg-dark);
@@ -446,7 +426,6 @@
         }
         #scrollTop:hover { transform: translateY(-4px); }
 
-        /* Toast */
         .toast {
             position: fixed; bottom: 30px; right: 50%;
             transform: translateX(50%);
@@ -475,8 +454,8 @@
 </head>
 <body>
 
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
+    <!-- ذرات طلایی پس‌زمینه -->
+    <canvas id="particles-canvas"></canvas>
 
     <!-- Loading -->
     <div class="loading-screen" id="loadingScreen">
@@ -508,7 +487,6 @@
             <h1>آبمیوه سلامت</h1>
             <p class="hero-subtitle">🍃 طبیعی • تازه • سالم</p>
             
-            <!-- Live Visitor Counter -->
             <div class="visitor-counter">
                 <div class="visitor-dot"></div>
                 <span>امروز</span>
@@ -523,7 +501,7 @@
         </div>
     </section>
 
-    <!-- Daily Offer Timer -->
+    <!-- Daily Offer -->
     <div class="daily-offer" data-aos="fade-up">
         <h3>🎉 تخفیف ویژه امروز - ۲۰٪ روی همه شیک‌ها!</h3>
         <p style="margin-bottom:8px;">تا پایان تخفیف:</p>
@@ -587,7 +565,7 @@
                         <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     </div>
                 </div>
-                <p class="review-text">بهترین آبمیوه‌ای که تا حالا خوردم! آووکادو پسته‌شون فوق‌العاده‌ست. حتماً امتحان کنید 👌</p>
+                <p class="review-text">بهترین آبمیوه‌ای که تا حالا خوردم! آووکادو پسته‌شون فوق‌العاده‌ست 👌</p>
             </div>
             <div class="review-card">
                 <div class="review-header">
@@ -597,7 +575,7 @@
                         <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     </div>
                 </div>
-                <p class="review-text">کیفیت عالی، قیمت مناسب. شیر پسته‌شون یه چیز دیگه‌ست! 😍 همیشه از اینجا سفارش میدم.</p>
+                <p class="review-text">کیفیت عالی، قیمت مناسب. شیر پسته‌شون یه چیز دیگه‌ست! 😍</p>
             </div>
             <div class="review-card">
                 <div class="review-header">
@@ -607,7 +585,7 @@
                         <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     </div>
                 </div>
-                <p class="review-text">منوی دیجیتالشون خیلی باحاله! راحت میتونم ببینم چی دارن و قیمتا رو مقایسه کنم. دمتون گرم 👍</p>
+                <p class="review-text">منوی دیجیتالشون خیلی باحاله! راحت میتونم ببینم چی دارن 👍</p>
             </div>
         </div>
     </section>
@@ -656,6 +634,99 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
+        // ========== ذرات طلایی پس‌زمینه ==========
+        (function() {
+            var canvas = document.getElementById('particles-canvas');
+            var ctx = canvas.getContext('2d');
+            var particles = [];
+            var particleCount = 35;
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+            
+            for (var i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 3 + 1,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random() * 0.4 + 0.1
+                });
+            }
+            
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(function(p) {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(245, 158, 11, ' + p.opacity + ')';
+                    ctx.fill();
+                    
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    
+                    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+                });
+                
+                for (var i = 0; i < particles.length; i++) {
+                    for (var j = i + 1; j < particles.length; j++) {
+                        var dx = particles[i].x - particles[j].x;
+                        var dy = particles[i].y - particles[j].y;
+                        var distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = 'rgba(245, 158, 11, ' + (0.08 * (1 - distance/120)) + ')';
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            animateParticles();
+            
+            var mouse = { x: -1000, y: -1000 };
+            document.addEventListener('mousemove', function(e) {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                
+                particles.forEach(function(p) {
+                    var dx = p.x - mouse.x;
+                    var dy = p.y - mouse.y;
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        p.speedX += dx * 0.002;
+                        p.speedY += dy * 0.002;
+                    }
+                });
+            });
+            
+            document.addEventListener('click', function(e) {
+                for (var i = 0; i < 3; i++) {
+                    particles.push({
+                        x: e.clientX,
+                        y: e.clientY,
+                        radius: Math.random() * 3 + 1,
+                        speedX: (Math.random() - 0.5) * 2,
+                        speedY: (Math.random() - 0.5) * 2,
+                        opacity: Math.random() * 0.5 + 0.2
+                    });
+                }
+            });
+        })();
+
         // ========== DATA ==========
         const menuData = [
             { name: "آووکادو پسته", image: "assets/images/Avocado.jpeg", description: "ترکیب خامه‌ای آووکادو با پسته تازه و عسل طبیعی", prices: { "لیوانی": "۸۵,۰۰۰", "نیم‌لیتری": "۱۴۰,۰۰۰", "یک‌لیتری": "۲۲۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۰۰,۰۰۰" }, category: "پرفروش‌ها", stars: 5, calories: "۳۲۰ کالری" },
@@ -663,7 +734,7 @@
             { name: "آب پرتقال طبیعی", image: "assets/images/orange.jpg", description: "پرتقال تازه جنوب، سرشار از ویتامین C", prices: { "لیوانی": "۶۰,۰۰۰", "نیم‌لیتری": "۱۰۰,۰۰۰", "یک‌لیتری": "۱۶۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۲۰,۰۰۰" }, category: "آبمیوه طبیعی", stars: 4, calories: "۱۲۰ کالری" },
             { name: "آب انار", image: "assets/images/pomegranate.jpg", description: "انار تازه دانه شده، آنتی‌اکسیدان طبیعی", prices: { "لیوانی": "۷۰,۰۰۰", "نیم‌لیتری": "۱۲۰,۰۰۰", "یک‌لیتری": "۱۹۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۶۰,۰۰۰" }, category: "آبمیوه طبیعی", stars: 5, calories: "۱۴۰ کالری" },
             { name: "آب هندوانه", image: "assets/images/watermelon.jpg", description: "هندوانه شیرین و خنک تابستانی", prices: { "لیوانی": "۵۰,۰۰۰", "نیم‌لیتری": "۸۵,۰۰۰", "یک‌لیتری": "۱۳۰,۰۰۰", "یک‌ونیم‌لیتری": "۱۸۰,۰۰۰" }, category: "آبمیوه طبیعی", stars: 4, calories: "۹۰ کالری" },
-            { name: "شربت آلبالو", image: "assets/images/sour-cherry.jpg", description: "آلبالو تازه با شکر و گلاب (فصل بهار و تابستان)", prices: { "لیوانی": "۶۵,۰۰۰", "نیم‌لیتری": "۱۱۰,۰۰۰", "یک‌لیتری": "۱۷۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۴۰,۰۰۰" }, category: "آبمیوه فصل", stars: 4, calories: "۱۵۰ کالری" },
+            { name: "شربت آلبالو", image: "assets/images/sour-cherry.jpg", description: "آلبالو تازه با شکر و گلاب", prices: { "لیوانی": "۶۵,۰۰۰", "نیم‌لیتری": "۱۱۰,۰۰۰", "یک‌لیتری": "۱۷۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۴۰,۰۰۰" }, category: "آبمیوه فصل", stars: 4, calories: "۱۵۰ کالری" },
             { name: "طالبی و عسل", image: "assets/images/melon.jpg", description: "طالبی رسیده تابستانی با عسل طبیعی", prices: { "لیوانی": "۵۵,۰۰۰", "نیم‌لیتری": "۹۵,۰۰۰", "یک‌لیتری": "۱۵۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۱۰,۰۰۰" }, category: "آبمیوه فصل", stars: 4, calories: "۱۱۰ کالری" },
             { name: "لیموناد تازه", image: "assets/images/lemonade.jpg", description: "لیمو ترش تازه با نعنا و شکر", prices: { "لیوانی": "۵۰,۰۰۰", "نیم‌لیتری": "۸۵,۰۰۰", "یک‌لیتری": "۱۳۰,۰۰۰", "یک‌ونیم‌لیتری": "۱۸۰,۰۰۰" }, category: "ترش", stars: 4, calories: "۱۰۰ کالری" },
             { name: "گریپ فروت", image: "assets/images/grapefruit.jpg", description: "گریپ فروت تازه با کمی عسل", prices: { "لیوانی": "۵۵,۰۰۰", "نیم‌لیتری": "۹۰,۰۰۰", "یک‌لیتری": "۱۴۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۰۰,۰۰۰" }, category: "ترش", stars: 4, calories: "۸۵ کالری" },
@@ -684,7 +755,6 @@
         let currentSize = 'لیوانی';
         let currentCategory = 'all';
 
-        // Display Menu
         function displayMenu(items) {
             const list = document.getElementById('menu-list');
             list.innerHTML = '';
@@ -714,7 +784,6 @@
             AOS.refresh();
         }
 
-        // Category Filter
         document.querySelectorAll('.cat-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -725,7 +794,6 @@
             });
         });
 
-        // Size Filter
         document.querySelectorAll('.size-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
@@ -736,7 +804,6 @@
             });
         });
 
-        // Search
         document.getElementById('search').addEventListener('input', e => {
             const term = e.target.value.toLowerCase();
             const filtered = menuData.filter(i => 
@@ -747,10 +814,9 @@
             displayMenu(filtered);
         });
 
-        // Voice Search
         function startVoiceSearch() {
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                showToast('🎤 جستجوی صوتی در مرورگر شما پشتیبانی نمیشه');
+                showToast('🎤 جستجوی صوتی پشتیبانی نمیشه');
                 return;
             }
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -760,43 +826,37 @@
             voiceBtn.classList.add('listening');
             recognition.start();
             recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                document.getElementById('search').value = transcript;
+                document.getElementById('search').value = event.results[0][0].transcript;
                 document.getElementById('search').dispatchEvent(new Event('input'));
                 voiceBtn.classList.remove('listening');
-                showToast('🎤 گفتی: ' + transcript);
+                showToast('🎤 گفتی: ' + event.results[0][0].transcript);
             };
-            recognition.onerror = () => {
-                voiceBtn.classList.remove('listening');
-                showToast('❌ خطا در جستجوی صوتی');
-            };
-            recognition.onend = () => voiceBtn.classList.remove('listening');
+            recognition.onerror = () => { voiceBtn.classList.remove('listening'); };
+            recognition.onend = () => { voiceBtn.classList.remove('listening'); };
         }
 
-        // Modal
         function openModal(item) {
             document.getElementById('modalImg').src = item.image;
             document.getElementById('modalTitle').textContent = item.name;
             document.getElementById('modalStars').textContent = '⭐'.repeat(item.stars || 4);
             document.getElementById('modalDesc').textContent = item.description;
-            document.getElementById('modalCalories').innerHTML = `<i class="fas fa-fire"></i> ${item.calories || '---'}`;
+            document.getElementById('modalCalories').innerHTML = '<i class="fas fa-fire"></i> ' + (item.calories || '---');
             let html = '';
             for (const [size, price] of Object.entries(item.prices)) {
-                html += `<p><strong>${size}:</strong> ${price} تومان</p>`;
+                html += '<p><strong>' + size + ':</strong> ' + price + ' تومان</p>';
             }
             document.getElementById('modalPrices').innerHTML = html;
             document.getElementById('modal').classList.add('active');
         }
+
         function closeModal() { document.getElementById('modal').classList.remove('active'); }
         document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-        // Random Picker
         function pickRandom() {
-            const randomItem = menuData[Math.floor(Math.random() * menuData.length)];
-            document.getElementById('randomResult').innerHTML = `🎯 <strong>${randomItem.name}</strong> - ${randomItem.prices[currentSize]} تومان`;
+            const item = menuData[Math.floor(Math.random() * menuData.length)];
+            document.getElementById('randomResult').innerHTML = '🎯 <strong>' + item.name + '</strong> - ' + item.prices[currentSize] + ' تومان';
         }
 
-        // Theme Toggle
         function toggleTheme() {
             const html = document.documentElement;
             const icon = document.querySelector('.theme-toggle i');
@@ -811,37 +871,23 @@
             }
         }
 
-        // Live Visitor Counter
         function updateVisitorCount() {
             const base = 12458;
-            const random = Math.floor(Math.random() * 20);
-            document.getElementById('visitorCount').textContent = (base + random).toLocaleString('fa-IR');
+            document.getElementById('visitorCount').textContent = (base + Math.floor(Math.random() * 20)).toLocaleString('fa-IR');
         }
         setInterval(updateVisitorCount, 5000);
 
-        // Offer Timer
         function updateTimer() {
             const now = new Date();
-            const end = new Date();
-            end.setHours(23, 59, 59, 999);
+            const end = new Date(); end.setHours(23, 59, 59, 999);
             const diff = end - now;
-            if (diff <= 0) {
-                document.getElementById('offerHours').textContent = '۰۰';
-                document.getElementById('offerMinutes').textContent = '۰۰';
-                document.getElementById('offerSeconds').textContent = '۰۰';
-                return;
-            }
-            const h = Math.floor(diff / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById('offerHours').textContent = String(h).padStart(2, '۰');
-            document.getElementById('offerMinutes').textContent = String(m).padStart(2, '۰');
-            document.getElementById('offerSeconds').textContent = String(s).padStart(2, '۰');
+            if (diff <= 0) { document.getElementById('offerHours').textContent = '۰۰'; document.getElementById('offerMinutes').textContent = '۰۰'; document.getElementById('offerSeconds').textContent = '۰۰'; return; }
+            document.getElementById('offerHours').textContent = String(Math.floor(diff / 3600000)).padStart(2, '۰');
+            document.getElementById('offerMinutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '۰');
+            document.getElementById('offerSeconds').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '۰');
         }
-        setInterval(updateTimer, 1000);
-        updateTimer();
+        setInterval(updateTimer, 1000); updateTimer();
 
-        // Toast
         function showToast(msg) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -850,45 +896,16 @@
             setTimeout(() => toast.remove(), 2200);
         }
 
-        // QR Code
-        new QRCode(document.getElementById('qrCode'), {
-            text: window.location.href,
-            width: 150,
-            height: 150,
-        });
+        new QRCode(document.getElementById('qrCode'), { text: window.location.href, width: 150, height: 150 });
 
-        // Particles
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 30, density: { enable: true, value_area: 800 } },
-                color: { value: '#f59e0b' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.2, random: true },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#f59e0b', opacity: 0.1, width: 1 },
-                move: { enable: true, speed: 1, direction: 'none', random: true, out_mode: 'out' }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' } },
-                modes: { grab: { distance: 140, line_linked: { opacity: 0.3 } }, push: { particles_nb: 3 } }
-            },
-            retina_detect: true
-        });
-
-        // Scroll Top
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => { scrollBtn.style.display = window.scrollY > 400 ? 'block' : 'none'; });
 
-        // Loading
         window.addEventListener('load', () => {
             setTimeout(() => { document.getElementById('loadingScreen').classList.add('hidden'); }, 1500);
         });
 
-        // AOS Init
         AOS.init({ duration: 600, once: true });
-
-        // Initial Display
         displayMenu(menuData);
     </script>
 </body>
