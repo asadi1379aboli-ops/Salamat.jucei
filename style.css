@@ -1094,7 +1094,9 @@ width:100%;
 
 }
 
-}/*=========================================
+}
+
+/*=========================================
         Premium Glass Navbar
 =========================================*/
 
@@ -1436,4 +1438,18 @@ border-radius:20px;
 
 background:#b99220;
 
+}
+.header-fixed nav{
+display:flex;
+gap:25px;
+align-items:center;
+}
+
+.header-fixed nav a{
+font-weight:700;
+transition:.3s;
+}
+
+.header-fixed nav a:hover{
+color:#D4AF37;
 }
