@@ -132,7 +132,9 @@ ${price}
 
 });
 
-}/*==========================
+}
+
+/*==========================
       Live Search
 ==========================*/
 
@@ -297,3 +299,115 @@ card.querySelector(".menu-info").appendChild(badge);
 });
 
 },1200);
+
+/*==========================
+      Category Filter
+==========================*/
+
+const categoryButtons=document.querySelectorAll(".category");
+
+categoryButtons.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+categoryButtons.forEach(btn=>btn.classList.remove("active"));
+
+button.classList.add("active");
+
+const category=button.innerText.trim();
+
+if(category==="🍹 همه"){
+
+renderMenu(menuData);
+
+return;
+
+}
+
+const filtered=menuData.filter(item=>{
+
+const name=item["نام محصول"]||"";
+
+switch(category){
+
+case "🥤 آبمیوه":
+return name.includes("آب");
+
+case "🍓 ترکیبی":
+return name.includes("+");
+
+case "🥛 میلک شیک":
+return name.includes("شیک") || name.includes("میلک");
+
+case "🥑 ویژه":
+return name.includes("پسته") ||
+name.includes("آووکادو") ||
+name.includes("انبه") ||
+name.includes("معجون");
+
+default:
+return true;
+
+}
+
+});
+
+renderMenu(filtered);
+
+});
+
+});
+
+/*==========================
+      WhatsApp Button
+==========================*/
+
+const whatsapp=document.querySelector(".whatsapp");
+
+if(whatsapp){
+
+whatsapp.addEventListener("click",()=>{
+
+window.open(
+
+"https://wa.me/989120230285",
+
+"_blank"
+
+);
+
+});
+
+}
+
+/*==========================
+      Call Button
+==========================*/
+
+const callButton=document.querySelector(".call-button");
+
+if(callButton){
+
+callButton.addEventListener("click",()=>{
+
+window.location.href="tel:09120230285";
+
+});
+
+}
+
+/*==========================
+      Fade Hero
+==========================*/
+
+window.addEventListener("scroll",()=>{
+
+const hero=document.querySelector(".hero");
+
+if(hero){
+
+hero.style.opacity=1-window.scrollY/900;
+
+}
+
+});
