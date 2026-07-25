@@ -413,3 +413,25 @@ hero.style.opacity=1-window.scrollY/900;
 }
 
 });
+
+/*==========================
+      Header Shadow
+==========================*/
+
+const header=document.querySelector(".header-fixed");
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>80){
+
+header.style.background="rgba(255,255,255,.92)";
+header.style.boxShadow="0 15px 35px rgba(0,0,0,.15)";
+
+}else{
+
+header.style.background="rgba(255,255,255,.65)";
+header.style.boxShadow="0 15px 35px rgba(0,0,0,.08)";
+
+}
+
+});
