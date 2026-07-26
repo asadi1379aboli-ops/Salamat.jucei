@@ -41,11 +41,9 @@ document.getElementById('installClose').addEventListener('click', () => {
     
     for (let i = 0; i < 30; i++) {
         particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
+            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
             r: Math.random() * 3 + 1.5,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
+            vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
             color: fruitColors[Math.floor(Math.random() * fruitColors.length)],
             o: Math.random() * 0.3 + 0.08
         });
@@ -54,36 +52,21 @@ document.getElementById('installClose').addEventListener('click', () => {
     function anim() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = p.color.replace(')', `, ${p.o})`).replace('rgb', 'rgba');
-            if (p.color.startsWith('#')) {
-                const hex = p.color;
-                const r = parseInt(hex.slice(1,3), 16);
-                const g = parseInt(hex.slice(3,5), 16);
-                const b = parseInt(hex.slice(5,7), 16);
-                ctx.fillStyle = `rgba(${r},${g},${b},${p.o})`;
-            }
-            ctx.fill();
-            p.x += p.vx;
-            p.y += p.vy;
+            const hex = p.color;
+            const r = parseInt(hex.slice(1,3), 16), g = parseInt(hex.slice(3,5), 16), b = parseInt(hex.slice(5,7), 16);
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r},${g},${b},${p.o})`; ctx.fill();
+            p.x += p.vx; p.y += p.vy;
             if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
             if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
         });
-        
-        // خطوط نرم بین ذرات نزدیک
         for (let i = 0; i < particles.length; i++) {
             for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
+                const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist < 100) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(255,107,53,${0.06 * (1 - dist/100)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(255,107,53,${0.06 * (1 - dist/100)})`; ctx.lineWidth = 0.5; ctx.stroke();
                 }
             }
         }
@@ -106,14 +89,8 @@ window.addEventListener('scroll', () => {
         });
         ticking = true;
     }
-    
-    // Header scroll effect
     const header = document.querySelector('.header');
-    if (header) {
-        header.classList.toggle('scrolled', window.scrollY > 50);
-    }
-    
-    // Scroll top button
+    if (header) header.classList.toggle('scrolled', window.scrollY > 50);
     const sb = document.getElementById('scrollTop');
     if (sb) sb.style.display = window.scrollY > 400 ? 'block' : 'none';
 });
@@ -132,22 +109,21 @@ let modalImages = [];
 const goalLabels = { energy: '⚡ انرژی', diet: '🥗 کاهش وزن', immunity: '🛡️ تقویت ایمنی', thirst: '💧 رفع تشنگی' };
 const statusLabels = { available: '✅ موجود', low: '⏳ رو به اتمام', unavailable: '❌ ناموجود' };
 
-// ========== Load Data ==========
 async function loadData() {
     try {
         const res = await fetch('data.json');
-        if (!res.ok) throw new Error('Failed to load data');
+        if (!res.ok) throw new Error('Failed');
         menuData = await res.json();
         menuData.sort((a, b) => (a.order || 99) - (b.order || 99));
     } catch (e) {
         menuData = [];
-        console.warn('⚠️ خطا در بارگذاری داده‌ها');
     }
     displayMenu();
     renderRecent();
+    checkDailyOffer();
+    checkSharedItem();
 }
 
-// ========== Filter ==========
 function getFilteredData() {
     let filtered = [...menuData];
     if (currentCat !== 'all') filtered = filtered.filter(i => i.cat === currentCat);
@@ -164,7 +140,6 @@ function getFilteredData() {
     return filtered;
 }
 
-// ========== Display Menu ==========
 function displayMenu() {
     const list = document.getElementById('menu-list');
     const items = getFilteredData();
@@ -199,23 +174,15 @@ function displayMenu() {
             goalsHTML += `<span class="goal-badge ${g}">${goalLabels[g]}</span>`;
         });
         
+        const escapedName = item.name.replace(/'/g, "\\'");
+        
         return `
-            <div class="menu-item" style="transition-delay:${index * 0.03}s" 
-                 onclick="openModal('${item.name.replace(/'/g, "\\'")}')">
+            <div class="menu-item" style="transition-delay:${index * 0.03}s" onclick="openModal('${escapedName}')">
                 ${badgeHTML} ${discountHTML} ${statusHTML}
-                <button class="fav-btn ${isFav ? 'liked' : ''}" 
-                        onclick="event.stopPropagation();toggleFav('${item.name.replace(/'/g, "\\'")}')" 
-                        aria-label="${isFav ? 'حذف از علاقه‌مندی' : 'افزودن به علاقه‌مندی'}">
-                    <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
-                </button>
-                <button class="share-btn" 
-                        onclick="event.stopPropagation();openShare('${item.name.replace(/'/g, "\\'")}')" 
-                        aria-label="اشتراک‌گذاری">
-                    <i class="fas fa-share-alt"></i>
-                </button>
+                <button class="fav-btn ${isFav ? 'liked' : ''}" onclick="event.stopPropagation();toggleFav('${escapedName}')" aria-label="${isFav ? 'حذف از علاقه‌مندی' : 'افزودن به علاقه‌مندی'}"><i class="${isFav ? 'fas' : 'far'} fa-heart"></i></button>
+                <button class="share-btn" onclick="event.stopPropagation();openShare('${escapedName}')" aria-label="اشتراک‌گذاری"><i class="fas fa-share-alt"></i></button>
                 ${imageCount > 1 ? `<span class="image-counter">${imageCount} عکس</span>` : ''}
-                <img src="${mainImage}" alt="${item.name}" loading="lazy" 
-                     onerror="this.src='logo.png.jpg';this.onerror=null;">
+                <img src="${mainImage}" alt="${item.name}" loading="lazy" onerror="this.src='logo.png.jpg';this.onerror=null;">
                 <div class="item-info">
                     <h3>${item.name}</h3>
                     <div class="stars">${'⭐'.repeat(item.stars)}</div>
@@ -231,7 +198,6 @@ function displayMenu() {
         `;
     }).join('');
     
-    // Animate visible items
     requestAnimationFrame(() => {
         document.querySelectorAll('.menu-item').forEach((item, i) => {
             setTimeout(() => item.classList.add('visible'), i * 40);
@@ -239,7 +205,6 @@ function displayMenu() {
     });
 }
 
-// ========== Recent ==========
 function addToRecent(item) {
     recentlyViewed = recentlyViewed.filter(r => r.name !== item.name);
     recentlyViewed.unshift({ name: item.name, images: item.images || [item.image], image: item.images?.[0] || item.image });
@@ -262,7 +227,6 @@ function renderRecent() {
     `).join('');
 }
 
-// ========== Favorites ==========
 function toggleFav(name) {
     const item = menuData.find(i => i.name === name);
     if (!item) return;
@@ -292,41 +256,30 @@ function showFavorites() {
     toast('❤️ علاقه‌مندی‌ها (۴ ثانیه)');
 }
 
-// ========== Suggestions ==========
 function showSuggestions(item) {
     const section = document.getElementById('suggestedSection');
     const grid = document.getElementById('suggestedGrid');
     if (!section || !grid) return;
-    
-    const suggestions = menuData.filter(i => 
-        i.name !== item.name && 
-        (i.cat === item.cat || (i.goals && item.goals && i.goals.some(g => (item.goals || []).includes(g))))
-    ).slice(0, 4);
-    
+    const suggestions = menuData.filter(i => i.name !== item.name && (i.cat === item.cat || (i.goals && item.goals && i.goals.some(g => (item.goals || []).includes(g))))).slice(0, 4);
     if (suggestions.length === 0) { section.style.display = 'none'; return; }
     section.style.display = 'block';
     grid.innerHTML = suggestions.map(s => `
         <div class="suggested-item" onclick="openModal('${s.name.replace(/'/g, "\\'")}');document.getElementById('suggestedSection').style.display='none';">
             <img src="${(s.images && s.images[0]) || s.image || 'logo.png.jpg'}" alt="${s.name}" loading="lazy" onerror="this.src='logo.png.jpg'">
-            <div style="font-size:0.85rem;color:var(--primary);">${s.name}</div>
-            <div style="font-size:0.8rem;color:var(--success);">${s.prices[currentSize]} تومان</div>
+            <div style="font-size:0.85rem;color:var(--orange);">${s.name}</div>
+            <div style="font-size:0.8rem;color:var(--lime);">${s.prices[currentSize]} تومان</div>
         </div>
     `).join('');
     section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ========== Modal ==========
 function openModal(name) {
     const item = menuData.find(i => i.name === name);
     if (!item) return;
-    
-    // Increment views
     item.views = (item.views || 0) + 1;
-    
     addToRecent(item);
     modalImages = item.images || [item.image || 'logo.png.jpg'];
     modalImageIndex = 0;
-    
     updateModalImage();
     
     document.getElementById('modalTitle').textContent = item.name;
@@ -334,38 +287,30 @@ function openModal(name) {
     document.getElementById('modalDesc').textContent = item.desc;
     document.getElementById('modalCalories').innerHTML = `<i class="fas fa-fire"></i> ${item.cal || '---'} کالری | <i class="fas fa-eye"></i> ${(item.views || 0).toLocaleString('fa-IR')} بازدید`;
     
-    // Status
     const statusText = document.getElementById('modalStatus');
     if (statusText) {
         statusText.textContent = statusLabels[item.status] || statusLabels.available;
         statusText.className = 'status-text ' + (item.status || 'available');
     }
     
-    // Ingredients
     const ingList = document.getElementById('ingredientsList');
     if (ingList && item.ingredients) {
         ingList.innerHTML = item.ingredients.map(i => `<span class="ingredient-tag">${i}</span>`).join('');
-    } else if (ingList) {
-        ingList.innerHTML = '';
-    }
+    } else if (ingList) ingList.innerHTML = '';
     
-    // Prices
     let pricesHTML = '';
     for (const [size, price] of Object.entries(item.prices || {})) {
         pricesHTML += `<p><strong>${size}:</strong> ${price} تومان</p>`;
     }
     document.getElementById('modalPrices').innerHTML = pricesHTML;
     
-    // Combo suggestions
     const comboSection = document.getElementById('comboSection');
     if (comboSection && item.combo && item.combo.length > 0) {
         comboSection.style.display = 'block';
         document.getElementById('comboItems').innerHTML = item.combo.map(c => 
             `<span class="combo-item" onclick="openModal('${c.replace(/'/g, "\\'")}')">${c}</span>`
         ).join('');
-    } else if (comboSection) {
-        comboSection.style.display = 'none';
-    }
+    } else if (comboSection) comboSection.style.display = 'none';
     
     document.getElementById('modal').classList.add('active');
     showSuggestions(item);
@@ -385,49 +330,25 @@ function updateModalImage() {
     }
 }
 
-function nextImage() {
-    if (modalImages.length > 1) {
-        modalImageIndex = (modalImageIndex + 1) % modalImages.length;
-        updateModalImage();
-    }
-}
+function nextImage() { if (modalImages.length > 1) { modalImageIndex = (modalImageIndex + 1) % modalImages.length; updateModalImage(); } }
+function prevImage() { if (modalImages.length > 1) { modalImageIndex = (modalImageIndex - 1 + modalImages.length) % modalImages.length; updateModalImage(); } }
+function closeModal() { document.getElementById('modal').classList.remove('active'); const sug = document.getElementById('suggestedSection'); if (sug) sug.style.display = 'none'; }
 
-function prevImage() {
-    if (modalImages.length > 1) {
-        modalImageIndex = (modalImageIndex - 1 + modalImages.length) % modalImages.length;
-        updateModalImage();
-    }
-}
-
-function closeModal() {
-    document.getElementById('modal').classList.remove('active');
-    const sug = document.getElementById('suggestedSection');
-    if (sug) sug.style.display = 'none';
-}
-
-// ========== Share ==========
 function openShare(name) {
     const item = menuData.find(i => i.name === name);
     if (!item) return;
     const url = window.location.href.split('?')[0] + '?item=' + encodeURIComponent(name);
     const text = `🍹 ${item.name} - ${item.prices[currentSize]} تومان\n${item.desc}\n\nسفارش از آبمیوه سلامت:\n`;
-    
     document.getElementById('shareText').textContent = `🍹 ${item.name}`;
     document.getElementById('shareWhatsApp').href = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
     document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     document.getElementById('shareModal').classList.add('active');
 }
-
-function closeShare() {
-    document.getElementById('shareModal').classList.remove('active');
-}
-
+function closeShare() { document.getElementById('shareModal').classList.remove('active'); }
 function copyLink() {
-    const url = window.location.href.split('?')[0];
-    navigator.clipboard.writeText(url).then(() => toast('🔗 لینک کپی شد!'));
+    navigator.clipboard.writeText(window.location.href).then(() => toast('🔗 لینک کپی شد!'));
 }
 
-// ========== Event Listeners ==========
 document.querySelectorAll('.cat-btn').forEach(b => b.addEventListener('click', function() {
     document.querySelectorAll('.cat-btn').forEach(x => x.classList.remove('active'));
     this.classList.add('active');
@@ -459,42 +380,26 @@ document.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', 
 document.getElementById('search').addEventListener('input', e => {
     const t = e.target.value.toLowerCase();
     if (t.length === 0) { displayMenu(); return; }
-    const filtered = getFilteredData().filter(i => 
-        i.name.toLowerCase().includes(t) || i.cat.toLowerCase().includes(t) || i.desc.toLowerCase().includes(t)
-    );
+    const filtered = getFilteredData().filter(i => i.name.toLowerCase().includes(t) || i.cat.toLowerCase().includes(t) || i.desc.toLowerCase().includes(t));
     const temp = [...menuData];
     menuData = filtered;
     displayMenu();
     menuData = temp;
 });
 
-// Voice Search
 function startVoiceSearch() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) { toast('🎤 مرورگر شما پشتیبانی نمی‌کند', 'error'); return; }
-    const rec = new SpeechRecognition();
-    rec.lang = 'fa-IR';
-    const btn = document.getElementById('voiceBtn');
-    btn.classList.add('listening');
-    rec.start();
-    rec.onresult = e => {
-        document.getElementById('search').value = e.results[0][0].transcript;
-        document.getElementById('search').dispatchEvent(new Event('input'));
-        btn.classList.remove('listening');
-    };
+    const rec = new SpeechRecognition(); rec.lang = 'fa-IR';
+    const btn = document.getElementById('voiceBtn'); btn.classList.add('listening'); rec.start();
+    rec.onresult = e => { document.getElementById('search').value = e.results[0][0].transcript; document.getElementById('search').dispatchEvent(new Event('input')); btn.classList.remove('listening'); };
     rec.onerror = () => btn.classList.remove('listening');
     rec.onend = () => btn.classList.remove('listening');
 }
 
-// Modal close
-document.getElementById('modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-});
-document.getElementById('shareModal').addEventListener('click', function(e) {
-    if (e.target === this) closeShare();
-});
+document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.getElementById('shareModal').addEventListener('click', function(e) { if (e.target === this) closeShare(); });
 
-// ========== Theme ==========
 function toggleTheme() {
     const html = document.documentElement;
     const icon = document.querySelector('.header-actions .icon-btn i');
@@ -507,48 +412,19 @@ function toggleTheme() {
     }
 }
 
-// ========== Review Form ==========
-function submitReview() {
-    const name = document.getElementById('reviewName').value.trim();
-    const text = document.getElementById('reviewText').value.trim();
-    const stars = document.getElementById('reviewStars').value;
-    if (!name || !text) { toast('❌ نام و نظر الزامی است', 'error'); return; }
-    
-    const reviewsGrid = document.querySelector('.reviews-grid');
-    const card = document.createElement('div');
-    card.className = 'review-card';
-    card.innerHTML = `
-        <div class="review-header">
-            <div class="review-avatar">${name[0]}</div>
-            <div>
-                <div class="review-name">${name}</div>
-                <div class="review-stars">${'⭐'.repeat(parseInt(stars))}</div>
-            </div>
-        </div>
-        <p class="review-text">${text}</p>
-    `;
-    reviewsGrid.appendChild(card);
-    document.getElementById('reviewName').value = '';
-    document.getElementById('reviewText').value = '';
-    toast('✅ نظر شما ثبت شد! متشکریم 🙏');
-}
-
-// ========== Toast ==========
 function toast(msg, type = 'success') {
     const existing = document.querySelector('.toast');
     if (existing) existing.remove();
     const t = document.createElement('div');
     t.className = 'toast';
     t.textContent = msg;
-    if (type === 'error') t.style.background = 'var(--danger)';
+    if (type === 'error') t.style.background = 'var(--strawberry)';
     document.body.appendChild(t);
     setTimeout(() => t.remove(), 2500);
 }
 
-// ========== Daily Offer Timer ==========
 function updateOfferTimer() {
-    const now = new Date();
-    const end = new Date(); end.setHours(23, 59, 59, 999);
+    const now = new Date(), end = new Date(); end.setHours(23, 59, 59, 999);
     const diff = end - now;
     if (diff <= 0) return;
     document.getElementById('offerH').textContent = String(Math.floor(diff / 3600000)).padStart(2, '۰');
@@ -556,34 +432,16 @@ function updateOfferTimer() {
     document.getElementById('offerS').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '۰');
 }
 
-// Check for offer
 function checkDailyOffer() {
     const hasOffer = menuData.some(i => i.discount > 0);
     const banner = document.getElementById('dailyBanner');
-    if (banner && hasOffer) {
-        banner.classList.add('show');
-        updateOfferTimer();
-        setInterval(updateOfferTimer, 1000);
-    }
+    if (banner && hasOffer) { banner.classList.add('show'); updateOfferTimer(); setInterval(updateOfferTimer, 1000); }
 }
 
-// ========== Check URL for shared item ==========
 function checkSharedItem() {
     const params = new URLSearchParams(window.location.search);
     const itemName = params.get('item');
-    if (itemName) {
-        setTimeout(() => openModal(decodeURIComponent(itemName)), 500);
-    }
+    if (itemName) setTimeout(() => openModal(decodeURIComponent(itemName)), 500);
 }
 
-// ========== Init ==========
-loadData().then(() => {
-    checkDailyOffer();
-    checkSharedItem();
-    
-    // Show skeleton for 800ms then display real data
-    setTimeout(() => {
-        displayMenu();
-        renderRecent();
-    }, 300);
-});
+loadData();
