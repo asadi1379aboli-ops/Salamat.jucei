@@ -1,0 +1,28 @@
+{
+  "name": "آبمیوه سلامت",
+  "short_name": "آبمیوه سلامت",
+  "description": "منوی دیجیتال آبمیوه سلامت - طبیعی، تازه، سالم - یوسف‌آباد تهران",
+  "start_url": "/Salamat.jucei/",
+  "scope": "/Salamat.jucei/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "logo.png.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "fa-IR",
+  "dir": "rtl",
+  "categories": ["food", "drink", "health"]
+}
