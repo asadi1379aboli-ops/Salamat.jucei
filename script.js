@@ -28,31 +28,65 @@ document.getElementById('installClose').addEventListener('click', () => {
     installBanner.classList.remove('show');
 });
 
-// ========== Particles ==========
+// ========== Fruit Particles ==========
 (function() {
     const canvas = document.getElementById('particles-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let particles = [];
+    const fruitColors = ['#ff6b35', '#ffd23f', '#ff2d55', '#7b2d8e', '#7bc67e', '#ff8c5a'];
+    
     function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
     addEventListener('resize', resize); resize();
-    for (let i = 0; i < 25; i++) {
+    
+    for (let i = 0; i < 30; i++) {
         particles.push({
-            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-            r: Math.random() * 2 + 0.5,
-            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-            o: Math.random() * 0.3 + 0.05
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 3 + 1.5,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            color: fruitColors[Math.floor(Math.random() * fruitColors.length)],
+            o: Math.random() * 0.3 + 0.08
         });
     }
+    
     function anim() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(245,158,11,${p.o})`; ctx.fill();
-            p.x += p.vx; p.y += p.vy;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = p.color.replace(')', `, ${p.o})`).replace('rgb', 'rgba');
+            if (p.color.startsWith('#')) {
+                const hex = p.color;
+                const r = parseInt(hex.slice(1,3), 16);
+                const g = parseInt(hex.slice(3,5), 16);
+                const b = parseInt(hex.slice(5,7), 16);
+                ctx.fillStyle = `rgba(${r},${g},${b},${p.o})`;
+            }
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
             if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
             if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
         });
+        
+        // خطوط نرم بین ذرات نزدیک
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 100) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(255,107,53,${0.06 * (1 - dist/100)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
         requestAnimationFrame(anim);
     }
     anim();
