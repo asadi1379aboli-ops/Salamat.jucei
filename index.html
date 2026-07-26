@@ -2,854 +2,298 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آبمیوه سلامت | منوی دیجیتال حرفه‌ای</title>
-    <meta name="theme-color" content="#0f172a">
-    <meta name="description" content="منوی دیجیتال آبمیوه سلامت - طبیعی، تازه، سالم">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>آبمیوه سلامت | منوی دیجیتال</title>
+    <meta name="theme-color" content="#f59e0b">
+    <meta name="description" content="منوی دیجیتال آبمیوه سلامت - طبیعی، تازه، سالم - تهران، یوسف‌آباد">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="آبمیوه سلامت">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="logo.png.jpg">
+    <link rel="apple-touch-icon" href="logo.png.jpg">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #f59e0b;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --text-light: #e2e8f0;
-            --text-muted: #94a3b8;
-            --success: #10b981;
-            --danger: #ef4444;
-            --purple: #8b5cf6;
-            --blue: #3b82f6;
-            --border: #334155;
-            --glass: rgba(15, 23, 42, 0.85);
-        }
-
-        [data-theme="light"] {
-            --bg-dark: #f8fafc;
-            --bg-card: #ffffff;
-            --text-light: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --glass: rgba(255, 255, 255, 0.85);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            direction: rtl;
-            overflow-x: hidden;
-            transition: all 0.3s ease;
-        }
-
-        #particles-canvas {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
-        /* ========== LOADING ========== */
-        .loading-screen {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--bg-dark); z-index: 9999;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: 0.5s;
-        }
-        .loading-screen.hidden { opacity: 0; visibility: hidden; }
-        .loader {
-            width: 60px; height: 60px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* ========== HEADER ========== */
-        .header {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 10px 20px; z-index: 1000;
-            display: flex; justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .header-brand { display: flex; align-items: center; gap: 10px; }
-        .header-logo {
-            width: 42px; height: 42px;
-            border-radius: 50%; border: 2px solid var(--primary);
-            object-fit: cover; animation: glow 2s infinite;
-        }
-        @keyframes glow {
-            0%,100% { box-shadow: 0 0 8px rgba(245,158,11,0.3); }
-            50% { box-shadow: 0 0 18px rgba(245,158,11,0.6); }
-        }
-        .header-name { font-size: 1.1rem; color: var(--primary); font-weight: 900; }
-        .header-actions { display: flex; gap: 8px; align-items: center; }
-        .icon-btn {
-            background: var(--bg-card); border: 1px solid var(--border);
-            color: var(--text-light); width: 38px; height: 38px;
-            border-radius: 50%; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-        }
-        .icon-btn:hover { background: var(--primary); color: var(--bg-dark); transform: rotate(180deg); }
-        .header-phones { display: flex; gap: 6px; }
-        .phone-link {
-            color: var(--text-light); text-decoration: none;
-            background: var(--bg-card); padding: 6px 12px;
-            border-radius: 50px; font-size: 0.75rem;
-            transition: 0.3s; border: 1px solid var(--border);
-            display: flex; align-items: center; gap: 4px;
-            white-space: nowrap;
-        }
-        .phone-link:hover { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); }
-
-        /* ========== HERO ========== */
-        .hero {
-            min-height: 100vh; position: relative;
-            display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 100px 20px 60px;
-        }
-        .hero-content { position: relative; z-index: 1; }
-        .hero-logo {
-            width: 140px; height: 140px;
-            border-radius: 50%; border: 4px solid var(--primary);
-            margin-bottom: 20px; object-fit: cover;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        .hero h1 {
-            font-size: 3rem;
-            background: linear-gradient(135deg, var(--primary), #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 900; margin-bottom: 8px;
-        }
-        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px; }
-
-        /* Visitor Counter */
-        .visitor-counter {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            padding: 10px 20px; border-radius: 50px;
-            margin-bottom: 25px; font-size: 0.9rem;
-        }
-        .visitor-dot {
-            width: 10px; height: 10px;
-            background: var(--success); border-radius: 50%;
-            animation: pulse-dot 1.5s infinite;
-        }
-        @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .visitor-count { color: var(--primary); font-weight: 900; }
-
-        .hero-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            padding: 14px 30px; border-radius: 50px;
-            text-decoration: none; font-weight: 700;
-            font-size: 1rem; transition: 0.3s;
-            display: inline-flex; align-items: center; gap: 8px;
-            cursor: pointer; border: none;
-            font-family: 'Vazirmatn';
-        }
-        .btn-primary { background: var(--primary); color: var(--bg-dark); }
-        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(245,158,11,0.3); }
-        .btn-whatsapp { background: #25D366; color: white; }
-        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-4px); }
-
-        /* ========== DAILY OFFER TIMER ========== */
-        .daily-offer {
-            background: linear-gradient(135deg, var(--primary), #fbbf24);
-            padding: 20px; text-align: center;
-            color: var(--bg-dark); position: relative; z-index: 1;
-            margin: 0 20px; border-radius: 24px;
-        }
-        .daily-offer h3 { margin-bottom: 8px; font-size: 1.2rem; }
-        .offer-timer { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
-        .timer-box {
-            background: var(--bg-dark); color: var(--primary);
-            padding: 10px 18px; border-radius: 12px;
-            font-weight: 900; font-size: 1.2rem;
-        }
-        .timer-label { font-size: 0.7rem; color: var(--bg-dark); }
-
-        /* ========== RANDOM PICKER ========== */
-        .random-picker {
-            text-align: center; padding: 25px;
-            background: var(--bg-card); margin: 20px;
-            border-radius: 24px; border: 1px solid var(--border);
-            position: relative; z-index: 1;
-        }
-        .random-picker h3 { margin-bottom: 12px; }
-        .random-btn {
-            background: var(--purple); color: white;
-            border: none; padding: 14px 28px;
-            border-radius: 50px; cursor: pointer;
-            font-family: 'Vazirmatn'; font-weight: 700;
-            font-size: 1rem; transition: 0.3s;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
-        .random-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(139,92,246,0.3); }
-        .random-result { margin-top: 15px; font-size: 1.2rem; color: var(--primary); font-weight: 700; min-height: 30px; }
-
-        /* ========== GOAL FILTER ========== */
-        .goal-filter {
-            display: flex; gap: 10px; justify-content: center;
-            flex-wrap: wrap; padding: 20px;
-            position: relative; z-index: 1; margin: 0 20px;
-        }
-        .goal-btn {
-            background: var(--bg-card); color: var(--text-light);
-            border: 2px solid var(--border); padding: 15px 20px;
-            border-radius: 20px; cursor: pointer;
-            font-family: 'Vazirmatn'; transition: 0.3s;
-            text-align: center; min-width: 110px;
-        }
-        .goal-btn:hover { border-color: var(--primary); transform: translateY(-3px); }
-        .goal-btn.active {
-            background: var(--primary); color: var(--bg-dark);
-            border-color: var(--primary); font-weight: 700;
-        }
-        .goal-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
-        .goal-label { font-size: 0.8rem; }
-
-        /* ========== VIEW TOGGLE ========== */
-        .view-toggle {
-            display: flex; justify-content: center; gap: 8px;
-            padding: 10px 20px; position: relative; z-index: 1;
-        }
-        .view-btn {
-            background: var(--bg-card); color: var(--text-muted);
-            border: 1px solid var(--border); padding: 10px 18px;
-            border-radius: 12px; cursor: pointer;
-            font-family: 'Vazirmatn'; transition: 0.3s; font-size: 0.85rem;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .view-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
-
-        /* ========== SEARCH WITH VOICE ========== */
-        .search-box {
-            padding: 15px 20px; display: flex;
-            justify-content: center; gap: 8px;
-            position: relative; z-index: 1;
-        }
-        #search {
-            width: 100%; max-width: 500px;
-            padding: 14px 20px; border-radius: 50px;
-            border: 2px solid var(--border);
-            background: var(--bg-card); color: var(--text-light);
-            font-family: 'Vazirmatn'; font-size: 0.95rem;
-            transition: 0.3s;
-        }
-        #search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 25px rgba(245,158,11,0.15); }
-        .voice-btn {
-            background: var(--primary); color: var(--bg-dark);
-            border: none; width: 48px; height: 48px;
-            border-radius: 50%; cursor: pointer;
-            font-size: 1.2rem; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .voice-btn:hover { transform: scale(1.1); }
-        .voice-btn.listening { animation: pulse-btn 1s infinite; background: var(--danger); color: white; }
-        @keyframes pulse-btn { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-
-        /* ========== CATEGORIES ========== */
-        .categories {
-            display: flex; gap: 8px; padding: 10px 20px;
-            overflow-x: auto; flex-wrap: nowrap;
-            position: relative; z-index: 1;
-        }
-        .cat-btn {
-            background: var(--bg-card); color: var(--text-light);
-            border: 2px solid var(--border); padding: 10px 18px;
-            border-radius: 50px; cursor: pointer;
-            font-family: 'Vazirmatn'; white-space: nowrap;
-            transition: 0.3s; font-size: 0.85rem;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .cat-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
-        .cat-btn:hover { border-color: var(--primary); }
-
-        /* ========== SIZES ========== */
-        .sizes {
-            display: flex; justify-content: center; gap: 8px;
-            padding: 10px 20px; flex-wrap: wrap;
-            position: relative; z-index: 1;
-        }
-        .size-btn {
-            background: var(--bg-card); color: var(--text-light);
-            border: 2px solid var(--border); padding: 10px 18px;
-            border-radius: 50px; cursor: pointer;
-            font-family: 'Vazirmatn'; transition: 0.3s; font-size: 0.85rem;
-        }
-        .size-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
-
-        /* ========== MENU ========== */
-        .menu {
-            padding: 20px; display: grid;
-            gap: 20px; max-width: 1200px; margin: 0 auto;
-            position: relative; z-index: 1;
-        }
-        .menu.grid-view { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-        .menu.grid-view .menu-item {
-            background: var(--bg-card); border-radius: 24px;
-            overflow: hidden; border: 1px solid var(--border);
-            transition: 0.3s; cursor: pointer;
-            display: flex; flex-direction: column;
-        }
-        .menu.grid-view .menu-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-color: var(--primary);
-        }
-        .menu.grid-view .menu-item img { width: 100%; height: 220px; object-fit: cover; }
-        .menu.grid-view .item-info { padding: 18px; flex: 1; display: flex; flex-direction: column; }
-        .menu.grid-view .item-info h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 4px; }
-        .menu.grid-view .item-info .stars { color: var(--primary); font-size: 0.8rem; margin-bottom: 4px; }
-        .menu.grid-view .item-info .tag {
-            display: inline-block; background: var(--bg-dark);
-            color: var(--text-muted); padding: 4px 12px;
-            border-radius: 12px; font-size: 0.75rem; margin: 5px 0;
-        }
-        .menu.grid-view .item-info .desc { color: var(--text-muted); font-size: 0.85rem; margin: 8px 0; line-height: 1.7; }
-        .menu.grid-view .item-info .calories { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0; }
-        .menu.grid-view .item-info .price { color: var(--success); font-size: 1.3rem; font-weight: 700; margin-top: auto; }
-
-        .menu.list-view { grid-template-columns: 1fr; max-width: 800px; }
-        .menu.list-view .menu-item {
-            background: var(--bg-card); border-radius: 16px;
-            border: 1px solid var(--border); transition: 0.3s;
-            cursor: pointer; display: flex; align-items: center;
-            padding: 15px; gap: 20px;
-        }
-        .menu.list-view .menu-item:hover { border-color: var(--primary); background: rgba(245,158,11,0.03); }
-        .menu.list-view .menu-item img {
-            width: 130px; height: 130px;
-            border-radius: 16px; object-fit: cover; flex-shrink: 0;
-        }
-        .menu.list-view .item-info { flex: 1; }
-        .menu.list-view .item-info h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 4px; }
-        .menu.list-view .item-info .stars { color: var(--primary); font-size: 0.75rem; }
-        .menu.list-view .item-info .tag {
-            display: inline-block; background: var(--bg-dark);
-            color: var(--text-muted); padding: 3px 10px;
-            border-radius: 10px; font-size: 0.7rem; margin: 4px 0;
-        }
-        .menu.list-view .item-info .desc { color: var(--text-muted); font-size: 0.8rem; margin: 4px 0; }
-        .menu.list-view .item-info .calories { color: var(--text-muted); font-size: 0.7rem; }
-        .menu.list-view .item-info .price { color: var(--success); font-size: 1.1rem; font-weight: 700; }
-
-        /* Goal Badge */
-        .goal-badge {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 4px 10px; border-radius: 20px;
-            font-size: 0.7rem; font-weight: 700; margin: 0 3px;
-        }
-        .goal-badge.energy { background: #fbbf24; color: #000; }
-        .goal-badge.diet { background: #10b981; color: #fff; }
-        .goal-badge.immunity { background: #8b5cf6; color: #fff; }
-        .goal-badge.thirst { background: #3b82f6; color: #fff; }
-
-        /* ========== REVIEWS ========== */
-        .reviews-section {
-            padding: 50px 20px; background: var(--bg-card);
-            position: relative; z-index: 1;
-        }
-        .reviews-section h2 { text-align: center; color: var(--primary); font-size: 2rem; margin-bottom: 30px; }
-        .reviews-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px; max-width: 1000px; margin: 0 auto;
-        }
-        .review-card { background: var(--bg-dark); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
-        .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .review-avatar {
-            width: 45px; height: 45px; border-radius: 50%;
-            background: var(--primary); display: flex;
-            align-items: center; justify-content: center;
-            font-weight: 900; color: var(--bg-dark); font-size: 1.2rem;
-        }
-        .review-name { font-weight: 700; }
-        .review-stars { color: var(--primary); font-size: 0.85rem; }
-        .review-text { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; }
-
-        /* ========== QR CODE ========== */
-        .qr-section {
-            text-align: center; padding: 40px 20px;
-            position: relative; z-index: 1;
-        }
-        .qr-section h3 { color: var(--primary); margin-bottom: 15px; }
-        .qr-box { background: white; padding: 15px; border-radius: 15px; display: inline-block; }
-
-        /* ========== MODAL ========== */
-        .modal {
-            display: none; position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000;
-            overflow-y: auto;
-        }
-        .modal.active { display: flex; align-items: center; justify-content: center; }
-        .modal-content {
-            background: var(--bg-card); border-radius: 25px;
-            padding: 30px; max-width: 500px; width: 92%;
-            text-align: center; position: relative;
-            animation: modalIn 0.3s ease;
-        }
-        @keyframes modalIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .modal-close {
-            position: absolute; top: 15px; left: 15px;
-            font-size: 1.5rem; color: var(--text-muted);
-            cursor: pointer; width: 38px; height: 38px;
-            border-radius: 50%; background: var(--bg-dark);
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.3s; border: none;
-        }
-        .modal-close:hover { color: var(--danger); background: var(--border); }
-        .modal img {
-            width: 180px; height: 180px; border-radius: 50%;
-            object-fit: cover; border: 4px solid var(--primary);
-            margin-bottom: 15px;
-        }
-        .modal h2 { color: var(--primary); margin-bottom: 6px; }
-        .modal .stars { color: var(--primary); margin-bottom: 8px; font-size: 1.1rem; }
-        .modal .desc { color: var(--text-muted); margin-bottom: 12px; line-height: 1.8; }
-        .modal-prices {
-            background: var(--bg-dark); padding: 15px;
-            border-radius: 12px; text-align: right; margin-bottom: 15px;
-        }
-        .modal-prices p {
-            padding: 5px 10px; margin: 3px 0;
-            background: var(--bg-card); border-radius: 8px;
-            color: var(--text-light);
-        }
-        .modal-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-
-        /* ========== FOOTER ========== */
-        .footer {
-            background: var(--bg-card); padding: 40px 20px;
-            text-align: center; border-top: 1px solid var(--border);
-            position: relative; z-index: 1; margin-top: 20px;
-        }
-        .footer h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 5px; }
-        .footer .slogan { color: var(--text-muted); margin-bottom: 25px; }
-        .footer-phones { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 25px; }
-        .footer-phone {
-            background: var(--bg-dark); border: 1px solid var(--border);
-            padding: 12px 22px; border-radius: 50px;
-            color: var(--text-light); text-decoration: none;
-            font-weight: 500; transition: 0.3s;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .footer-phone:hover { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); transform: translateY(-2px); }
-        .footer-whatsapp { background: #25D366 !important; color: white !important; border-color: #25D366 !important; }
-        .footer-whatsapp:hover { background: #128C7E !important; }
-        .work-time { color: var(--text-muted); line-height: 2; }
-
-        /* ========== SCROLL TOP ========== */
-        #scrollTop {
-            position: fixed; bottom: 25px; left: 25px;
-            background: var(--primary); color: var(--bg-dark);
-            border: none; width: 50px; height: 50px;
-            border-radius: 50%; cursor: pointer;
-            font-size: 1.3rem; display: none;
-            z-index: 999; transition: 0.3s;
-            box-shadow: 0 5px 20px rgba(245,158,11,0.3);
-        }
-        #scrollTop:hover { transform: translateY(-5px); }
-
-        /* ========== TOAST ========== */
-        .toast {
-            position: fixed; bottom: 30px; right: 50%;
-            transform: translateX(50%);
-            background: var(--success); color: white;
-            padding: 12px 25px; border-radius: 50px;
-            font-weight: 700; z-index: 9999;
-            animation: toastIn 0.3s ease, toastOut 0.3s ease 1.8s forwards;
-            font-size: 0.9rem;
-        }
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateX(50%) translateY(15px); }
-            to { opacity: 1; transform: translateX(50%) translateY(0); }
-        }
-        @keyframes toastOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .menu.grid-view { grid-template-columns: 1fr; }
-            .menu.list-view .menu-item { flex-direction: column; text-align: center; }
-            .menu.list-view .menu-item img { width: 100%; height: 180px; }
-            .header-phones .phone-link span { display: none; }
-            .goal-filter { gap: 5px; }
-            .goal-btn { min-width: 75px; padding: 10px 12px; }
-            .modal-content { padding: 20px; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ذرات طلایی -->
+    <!-- Particles -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- لودینگ -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader"></div>
-        <p style="color:var(--primary);font-weight:700;">🍹 در حال آماده‌سازی...</p>
+    <!-- Install Banner -->
+    <div class="install-banner" id="installBanner">
+        <span>📱 این منو رو روی گوشیت نصب کن!</span>
+        <button class="install-btn" id="installBtn" aria-label="نصب برنامه">نصب سریع</button>
+        <button class="install-close" id="installClose" aria-label="بستن">✕</button>
     </div>
 
-    <!-- هدر -->
+    <!-- Header -->
     <header class="header">
         <div class="header-brand">
-            <img src="logo.png.jpg" alt="لوگو" class="header-logo" onerror="this.style.background='var(--primary)'">
+            <img src="logo.png.jpg" alt="لوگو آبمیوه سلامت" class="header-logo" loading="eager">
             <span class="header-name">آبمیوه سلامت</span>
         </div>
         <div class="header-actions">
-            <button class="icon-btn" onclick="toggleTheme()" title="تغییر تم"><i class="fas fa-sun"></i></button>
+            <button class="icon-btn" onclick="toggleTheme()" aria-label="تغییر تم" title="تغییر تم">
+                <i class="fas fa-sun"></i>
+            </button>
+            <button class="icon-btn" onclick="showFavorites()" aria-label="علاقه‌مندی‌ها" title="علاقه‌مندی‌ها">
+                <i class="fas fa-heart"></i>
+            </button>
             <div class="header-phones">
-                <a href="tel:09120230285" class="phone-link"><i class="fas fa-phone"></i> <span>۰۹۱۲۰۲۳۰۲۸۵</span></a>
-                <a href="tel:09196367277" class="phone-link"><i class="fas fa-phone"></i> <span>۰۹۱۹۶۳۶۷۲۷۷</span></a>
+                <a href="tel:09120230285" class="phone-link" aria-label="تماس با ۰۹۱۲۰۲۳۰۲۸۵"><i class="fas fa-phone"></i> <span>۰۹۱۲۰۲۳۰۲۸۵</span></a>
+                <a href="tel:09196367277" class="phone-link" aria-label="تماس با ۰۹۱۹۶۳۶۷۲۷۷"><i class="fas fa-phone"></i> <span>۰۹۱۹۶۳۶۷۲۷۷</span></a>
             </div>
         </div>
     </header>
 
-    <!-- هیرو -->
+    <!-- Hero -->
     <section class="hero">
-        <div class="hero-content" data-aos="fade-up">
-            <img src="logo.png.jpg" alt="لوگو" class="hero-logo" onerror="this.style.background='var(--primary)'">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <img src="logo.png.jpg" alt="آبمیوه سلامت" class="hero-logo" loading="eager">
             <h1>آبمیوه سلامت</h1>
             <p class="hero-subtitle">🍃 طبیعی • تازه • سالم</p>
-            <div class="visitor-counter">
-                <div class="visitor-dot"></div>
-                <span>امروز</span>
-                <span class="visitor-count" id="visitorCount">۱۲,۴۵۸</span>
-                <span>نفر از ما خرید کردن 🎉</span>
-            </div>
+            <p class="hero-welcome"><i class="fas fa-hand-peace"></i> امروز میزبان شما هستیم</p>
             <div class="hero-buttons">
-                <a href="#menu-section" class="btn btn-primary"><i class="fas fa-glass-cheers"></i> مشاهده منو</a>
-                <a href="https://wa.me/989120230285" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> سفارش واتساپ</a>
+                <a href="#menu-section" class="btn btn-primary" aria-label="مشاهده منو"><i class="fas fa-glass-cheers"></i> مشاهده منو</a>
+                <a href="#map-section" class="btn btn-outline" aria-label="مسیریابی"><i class="fas fa-map-marker-alt"></i> مسیریابی</a>
             </div>
         </div>
     </section>
 
-    <!-- تخفیف روزانه -->
-    <div class="daily-offer" data-aos="fade-up">
-        <h3>🎉 تخفیف ویژه امروز - ۲۰٪ روی همه شیک‌ها!</h3>
-        <p class="timer-label">تا پایان تخفیف:</p>
-        <div class="offer-timer">
-            <div><div class="timer-box" id="offerHours">۰۰</div><div class="timer-label">ساعت</div></div>
-            <div><div class="timer-box" id="offerMinutes">۰۰</div><div class="timer-label">دقیقه</div></div>
-            <div><div class="timer-box" id="offerSeconds">۰۰</div><div class="timer-label">ثانیه</div></div>
+    <!-- Daily Offer Banner -->
+    <div class="daily-banner" id="dailyBanner">
+        <span class="offer-text">🎉 تخفیف ویژه امروز!</span>
+        <div class="countdown">
+            <span id="offerH">۰۰</span>:
+            <span id="offerM">۰۰</span>:
+            <span id="offerS">۰۰</span>
         </div>
     </div>
 
-    <!-- انتخاب تصادفی -->
-    <div class="random-picker" data-aos="fade-up">
-        <h3>🤔 امروز چی بخورم؟</h3>
-        <button class="random-btn" onclick="pickRandom()"><i class="fas fa-random"></i> انتخاب تصادفی</button>
-        <div class="random-result" id="randomResult"></div>
+    <!-- Goal Filter -->
+    <div class="goal-filter">
+        <button class="goal-btn active" data-goal="all" aria-label="همه"><span class="goal-icon">📋</span> همه</button>
+        <button class="goal-btn" data-goal="energy" aria-label="انرژی"><span class="goal-icon">⚡</span> انرژی</button>
+        <button class="goal-btn" data-goal="diet" aria-label="کاهش وزن"><span class="goal-icon">🥗</span> کاهش وزن</button>
+        <button class="goal-btn" data-goal="immunity" aria-label="تقویت ایمنی"><span class="goal-icon">🛡️</span> ایمنی</button>
+        <button class="goal-btn" data-goal="thirst" aria-label="رفع تشنگی"><span class="goal-icon">💧</span> رفع تشنگی</button>
     </div>
 
-    <!-- فیلتر هدف -->
-    <div class="goal-filter" data-aos="fade-up">
-        <button class="goal-btn active" data-goal="all"><span class="goal-icon">📋</span><span class="goal-label">همه</span></button>
-        <button class="goal-btn" data-goal="energy"><span class="goal-icon">⚡</span><span class="goal-label">انرژی</span></button>
-        <button class="goal-btn" data-goal="diet"><span class="goal-icon">🥗</span><span class="goal-label">کاهش وزن</span></button>
-        <button class="goal-btn" data-goal="immunity"><span class="goal-icon">🛡️</span><span class="goal-label">تقویت ایمنی</span></button>
-        <button class="goal-btn" data-goal="thirst"><span class="goal-icon">💧</span><span class="goal-label">رفع تشنگی</span></button>
+    <!-- Price Filter -->
+    <div class="price-filter">
+        <button class="price-btn active" data-price="all" aria-label="همه">همه قیمت‌ها</button>
+        <button class="price-btn" data-price="low" aria-label="کمتر از ۱۵۰">کمتر از ۱۵۰</button>
+        <button class="price-btn" data-price="mid" aria-label="۱۵۰ تا ۲۵۰">۱۵۰ تا ۲۵۰</button>
+        <button class="price-btn" data-price="high" aria-label="بالای ۲۵۰">بالای ۲۵۰</button>
     </div>
 
-    <!-- تغییر حالت نمایش -->
-    <div class="view-toggle" data-aos="fade-up">
-        <button class="view-btn active" data-view="grid"><i class="fas fa-th-large"></i> کارتی</button>
-        <button class="view-btn" data-view="list"><i class="fas fa-list"></i> لیستی</button>
-    </div>
-
-    <!-- جستجو -->
+    <!-- Search -->
     <div class="search-box">
-        <input type="text" id="search" placeholder="🔍 جستجو در منو...">
-        <button class="voice-btn" id="voiceBtn" onclick="startVoiceSearch()" title="جستجوی صوتی"><i class="fas fa-microphone"></i></button>
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search" placeholder="جستجو در منو..." aria-label="جستجو">
+        </div>
+        <button class="voice-btn" id="voiceBtn" onclick="startVoiceSearch()" aria-label="جستجوی صوتی">
+            <i class="fas fa-microphone"></i>
+        </button>
     </div>
 
-    <!-- دسته‌بندی -->
+    <!-- Categories -->
     <div class="categories" id="menu-section">
-        <button class="cat-btn active" data-cat="all">📋 همه</button>
-        <button class="cat-btn" data-cat="پرفروش‌ها">🔥 پرفروش‌ها</button>
-        <button class="cat-btn" data-cat="آبمیوه طبیعی">🍊 طبیعی</button>
-        <button class="cat-btn" data-cat="آبمیوه فصل">🌸 فصلی</button>
-        <button class="cat-btn" data-cat="ترش">🍋 ترش‌ها</button>
-        <button class="cat-btn" data-cat="ترکیبی">🥤 ترکیبی</button>
-        <button class="cat-btn" data-cat="شیک">🥛 شیک</button>
-        <button class="cat-btn" data-cat="اسموتی">🥑 اسموتی</button>
-        <button class="cat-btn" data-cat="رژیمی">🥗 رژیمی</button>
+        <button class="cat-btn active" data-cat="all" aria-label="همه">📋 همه</button>
+        <button class="cat-btn" data-cat="پرفروش‌ها" aria-label="پرفروش‌ها">🔥 پرفروش‌ها</button>
+        <button class="cat-btn" data-cat="آبمیوه طبیعی" aria-label="طبیعی">🍊 طبیعی</button>
+        <button class="cat-btn" data-cat="آبمیوه فصل" aria-label="فصلی">🌸 فصلی</button>
+        <button class="cat-btn" data-cat="ترش" aria-label="ترش‌ها">🍋 ترش‌ها</button>
+        <button class="cat-btn" data-cat="ترکیبی" aria-label="ترکیبی">🥤 ترکیبی</button>
+        <button class="cat-btn" data-cat="شیک" aria-label="شیک">🥛 شیک</button>
+        <button class="cat-btn" data-cat="اسموتی" aria-label="اسموتی">🥑 اسموتی</button>
+        <button class="cat-btn" data-cat="رژیمی" aria-label="رژیمی">🥗 رژیمی</button>
     </div>
 
-    <!-- سایز -->
+    <!-- Sizes -->
     <div class="sizes">
-        <button class="size-btn active" data-size="لیوانی">🥤 لیوانی</button>
-        <button class="size-btn" data-size="نیم‌لیتری">🧃 نیم‌لیتری</button>
-        <button class="size-btn" data-size="یک‌لیتری">🍶 یک‌لیتری</button>
-        <button class="size-btn" data-size="یک‌ونیم‌لیتری">🫙 خانوادگی</button>
+        <button class="size-btn active" data-size="لیوانی" aria-label="لیوانی">🥤 لیوانی</button>
+        <button class="size-btn" data-size="نیم‌لیتری" aria-label="نیم‌لیتری">🧃 نیم‌لیتری</button>
+        <button class="size-btn" data-size="یک‌لیتری" aria-label="یک‌لیتری">🍶 یک‌لیتری</button>
+        <button class="size-btn" data-size="یک‌ونیم‌لیتری" aria-label="خانوادگی">🫙 خانوادگی</button>
     </div>
 
-    <!-- منو -->
-    <section class="menu grid-view" id="menu-list"></section>
+    <!-- Recently Viewed -->
+    <div class="recently-viewed" id="recentlyViewed" style="display:none;">
+        <h3><i class="fas fa-history"></i> بازدیدهای اخیر</h3>
+        <div class="recent-slider" id="recentSlider"></div>
+    </div>
 
-    <!-- نظرات -->
-    <section class="reviews-section" data-aos="fade-up">
+    <!-- Menu -->
+    <section class="menu" id="menu-list">
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+    </section>
+
+    <!-- Suggested -->
+    <div class="suggested-section" id="suggestedSection" style="display:none;">
+        <h3><i class="fas fa-lightbulb"></i> شاید این‌ها رو هم دوست داشته باشید</h3>
+        <div class="suggested-grid" id="suggestedGrid"></div>
+    </div>
+
+    <!-- Map -->
+    <div class="map-section" id="map-section">
+        <h3><i class="fas fa-map-marker-alt"></i> 📍 موقعیت ما</h3>
+        <p style="color:var(--text-muted);margin-bottom:12px;font-size:0.9rem;">
+            تهران، یوسف‌آباد، خیابان سید جمال‌الدین اسدآبادی، بین کوچه چهل‌وهشتم و پنجاهم
+        </p>
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3238.782388317384!2d51.40847831526089!3d35.731907980179476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e0147a6b5b5b5%3A0x9c9c9c9c9c9c9c9c!2sSeyed%20Jamal%20al-Din%20Asadabadi%20St%2C%20Tehran!5e0!3m2!1sen!2s!4v1690000000000"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="موقعیت آبمیوه سلامت">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Reviews -->
+    <section class="reviews-section">
         <h2>⭐ نظرات مشتریان</h2>
         <div class="reviews-grid">
             <div class="review-card">
-                <div class="review-header"><div class="review-avatar">م</div><div><div class="review-name">مریم رضایی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div></div>
+                <div class="review-header">
+                    <div class="review-avatar">م</div>
+                    <div><div class="review-name">مریم رضایی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div>
+                </div>
                 <p class="review-text">بهترین آبمیوه‌ای که تا حالا خوردم! آووکادو پسته‌شون فوق‌العاده‌ست 👌</p>
             </div>
             <div class="review-card">
-                <div class="review-header"><div class="review-avatar">ع</div><div><div class="review-name">علی محمدی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div></div>
+                <div class="review-header">
+                    <div class="review-avatar">ع</div>
+                    <div><div class="review-name">علی محمدی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div>
+                </div>
                 <p class="review-text">کیفیت عالی، قیمت مناسب. شیر پسته‌شون یه چیز دیگه‌ست! 😍</p>
             </div>
             <div class="review-card">
-                <div class="review-header"><div class="review-avatar">س</div><div><div class="review-name">سارا احمدی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div></div>
+                <div class="review-header">
+                    <div class="review-avatar">س</div>
+                    <div><div class="review-name">سارا احمدی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div>
+                </div>
                 <p class="review-text">منوی دیجیتالشون خیلی باحاله! راحت میتونم انتخاب کنم 👍</p>
             </div>
         </div>
     </section>
 
-    <!-- QR Code -->
-    <div class="qr-section" data-aos="fade-up">
-        <h3>📱 اسکن کن و منو رو ببین!</h3>
-        <div class="qr-box" id="qrCode"></div>
-        <p style="color:var(--text-muted);margin-top:10px;">با دوربین گوشی اسکن کنید</p>
+    <!-- Review Form -->
+    <div class="review-form-section">
+        <h3>📝 نظر شما</h3>
+        <div class="review-form">
+            <input type="text" id="reviewName" placeholder="نام شما">
+            <select id="reviewStars">
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+            </select>
+            <textarea id="reviewText" rows="3" placeholder="نظرت رو اینجا بنویس..."></textarea>
+            <button onclick="submitReview()">ثبت نظر</button>
+        </div>
     </div>
 
-    <!-- فوتر -->
+    <!-- QR Code -->
+    <div class="qr-section">
+        <h3>📱 اسکن کن و منو رو روی گوشیت نصب کن!</h3>
+        <div class="qr-box" id="qrCode"></div>
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
         <h2>🍹 آبمیوه سلامت</h2>
         <p class="slogan">طبیعی • تازه • سالم</p>
+        <p class="footer-address">
+            📍 تهران، یوسف‌آباد، خیابان سید جمال‌الدین اسدآبادی<br>
+            بین کوچه چهل‌وهشتم و پنجاهم
+        </p>
         <div class="footer-phones">
-            <a href="tel:09120230285" class="footer-phone"><i class="fas fa-phone"></i> ۰۹۱۲۰۲۳۰۲۸۵</a>
-            <a href="tel:09196367277" class="footer-phone"><i class="fas fa-phone"></i> ۰۹۱۹۶۳۶۷۲۷۷</a>
-            <a href="https://wa.me/989120230285" target="_blank" class="footer-phone footer-whatsapp"><i class="fab fa-whatsapp"></i> واتساپ</a>
-            <a href="https://maps.google.com/?q=یوسف+آباد+تهران+آبمیوه+سلامت" target="_blank" class="footer-phone"><i class="fas fa-map-marker-alt"></i> مسیریابی</a>
+            <a href="tel:09120230285" class="footer-phone" aria-label="تماس ۱"><i class="fas fa-phone"></i> ۰۹۱۲۰۲۳۰۲۸۵</a>
+            <a href="tel:09196367277" class="footer-phone" aria-label="تماس ۲"><i class="fas fa-phone"></i> ۰۹۱۹۶۳۶۷۲۷۷</a>
+            <a href="https://maps.google.com/?q=تهران+یوسف+آباد+سید+جمال+الدین+اسدآبادی+آبمیوه+سلامت" target="_blank" class="footer-phone" aria-label="مسیریابی"><i class="fas fa-map-marker-alt"></i> مسیریابی</a>
         </div>
         <div class="work-time"><i class="fas fa-clock"></i> ساعت کاری: هر روز | ۹ صبح تا ۱۱ شب</div>
     </footer>
 
-    <!-- اسکرول به بالا -->
-    <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+    <!-- Scroll Top -->
+    <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="برو بالا">⬆</button>
 
-    <!-- مودال -->
+    <!-- Modal -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            <img id="modalImg" src="" alt="">
+            <button class="modal-close" onclick="closeModal()" aria-label="بستن">✕</button>
+            
+            <div class="modal-slider">
+                <img id="modalImg" src="" alt="" loading="lazy">
+                <button class="slider-nav slider-prev" onclick="prevImage()" aria-label="عکس قبلی" style="display:none;">❮</button>
+                <button class="slider-nav slider-next" onclick="nextImage()" aria-label="عکس بعدی" style="display:none;">❯</button>
+                <div class="slider-dots" id="modalDots"></div>
+            </div>
+            
             <h2 id="modalTitle"></h2>
             <div class="stars" id="modalStars"></div>
-            <p class="desc" id="modalDesc"></p>
-            <p style="color:var(--text-muted);margin-bottom:12px;" id="modalCalories"></p>
+            <p class="status-text" id="modalStatus"></p>
+            <p style="color:var(--text-muted);margin:6px 0;" id="modalDesc"></p>
+            <p style="color:var(--text-muted);font-size:0.8rem;" id="modalCalories"></p>
+            
+            <div class="ingredients-list" id="ingredientsList"></div>
+            
             <div class="modal-prices" id="modalPrices"></div>
+            
+            <div class="combo-section" id="comboSection" style="display:none;">
+                <h4>🍹 پیشنهادهای ترکیبی</h4>
+                <div class="combo-items" id="comboItems"></div>
+            </div>
+            
             <div class="modal-btns">
-                <a href="tel:09120230285" class="btn btn-primary"><i class="fas fa-phone"></i> تماس بگیرید</a>
-                <a href="https://wa.me/989120230285" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> سفارش واتساپ</a>
+                <a href="tel:09120230285" class="btn btn-primary" aria-label="تماس"><i class="fas fa-phone"></i> تماس بگیرید</a>
+                <button class="btn btn-outline btn-sm" onclick="copyLink()" aria-label="کپی لینک"><i class="fas fa-link"></i> کپی لینک</button>
             </div>
         </div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <h3>📤 اشتراک‌گذاری</h3>
+            <p id="shareText" style="color:var(--primary);margin-bottom:15px;"></p>
+            <div class="share-options">
+                <a id="shareWhatsApp" class="share-option whatsapp" target="_blank" aria-label="واتساپ">
+                    <i class="fab fa-whatsapp"></i> واتساپ
+                </a>
+                <a id="shareTelegram" class="share-option telegram" target="_blank" aria-label="تلگرام">
+                    <i class="fab fa-telegram"></i> تلگرام
+                </a>
+                <button class="share-option" onclick="copyLink();closeShare();" aria-label="کپی لینک">
+                    <i class="fas fa-copy"></i> کپی لینک
+                </button>
+            </div>
+            <button class="btn btn-outline btn-sm" style="margin-top:15px;width:100%;" onclick="closeShare()">بستن</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        // ========== ذرات طلایی ==========
-        (function(){
-            var c=document.getElementById('particles-canvas'),ctx=c.getContext('2d'),p=[];
-            function r(){c.width=innerWidth;c.height=innerHeight}
-            addEventListener('resize',r);r();
-            for(var i=0;i<35;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,rad:Math.random()*3+1,sx:(Math.random()-0.5)*0.5,sy:(Math.random()-0.5)*0.5,op:Math.random()*0.4+0.1});
-            function a(){
-                ctx.clearRect(0,0,c.width,c.height);
-                p.forEach(function(o){ctx.beginPath();ctx.arc(o.x,o.y,o.rad,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,'+o.op+')';ctx.fill();o.x+=o.sx;o.y+=o.sy;if(o.x<0||o.x>c.width)o.sx*=-1;if(o.y<0||o.y>c.height)o.sy*=-1});
-                for(var i=0;i<p.length;i++)for(var j=i+1;j<p.length;j++){var dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(p[i].x,p[i].y);ctx.lineTo(p[j].x,p[j].y);ctx.strokeStyle='rgba(245,158,11,'+(0.08*(1-dist/120))+')';ctx.lineWidth=0.5;ctx.stroke()}}
-                requestAnimationFrame(a);
+        // Generate QR Code
+        window.addEventListener('load', () => {
+            const qrEl = document.getElementById('qrCode');
+            if (qrEl && typeof QRCode !== 'undefined') {
+                new QRCode(qrEl, { text: window.location.href, width: 140, height: 140 });
             }
-            a();
-            var m={x:-1e3,y:-1e3};
-            addEventListener('mousemove',function(e){m.x=e.clientX;m.y=e.clientY;p.forEach(function(o){var dx=o.x-m.x,dy=o.y-m.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){o.sx+=dx*0.002;o.sy+=dy*0.002}})});
-            addEventListener('click',function(e){for(var i=0;i<3;i++)p.push({x:e.clientX,y:e.clientY,rad:Math.random()*3+1,sx:(Math.random()-0.5)*2,sy:(Math.random()-0.5)*2,op:Math.random()*0.5+0.2})});
-        })();
-
-        // ========== دیتا ==========
-        const menuData=[
-            {name:"آووکادو پسته",image:"assets/images/Avocado.jpeg",desc:"ترکیب خامه‌ای آووکادو با پسته تازه و عسل طبیعی",prices:{"لیوانی":"۸۵,۰۰۰","نیم‌لیتری":"۱۴۰,۰۰۰","یک‌لیتری":"۲۲۰,۰۰۰","یک‌ونیم‌لیتری":"۳۰۰,۰۰۰"},cat:"پرفروش‌ها",stars:5,cal:"۳۲۰",goals:["energy","immunity"]},
-            {name:"شیر پسته",image:"assets/images/Pistachio.jpeg",desc:"شیر پسته خالص با پسته ایرانی و بستنی سنتی",prices:{"لیوانی":"۹۰,۰۰۰","نیم‌لیتری":"۱۵۰,۰۰۰","یک‌لیتری":"۲۴۰,۰۰۰","یک‌ونیم‌لیتری":"۳۲۰,۰۰۰"},cat:"پرفروش‌ها",stars:5,cal:"۳۸۰",goals:["energy"]},
-            {name:"آب پرتقال طبیعی",image:"assets/images/orange.jpg",desc:"پرتقال تازه جنوب، سرشار از ویتامین C",prices:{"لیوانی":"۶۰,۰۰۰","نیم‌لیتری":"۱۰۰,۰۰۰","یک‌لیتری":"۱۶۰,۰۰۰","یک‌ونیم‌لیتری":"۲۲۰,۰۰۰"},cat:"آبمیوه طبیعی",stars:4,cal:"۱۲۰",goals:["immunity","thirst"]},
-            {name:"آب انار",image:"assets/images/pomegranate.jpg",desc:"انار تازه دانه شده، آنتی‌اکسیدان طبیعی",prices:{"لیوانی":"۷۰,۰۰۰","نیم‌لیتری":"۱۲۰,۰۰۰","یک‌لیتری":"۱۹۰,۰۰۰","یک‌ونیم‌لیتری":"۲۶۰,۰۰۰"},cat:"آبمیوه طبیعی",stars:5,cal:"۱۴۰",goals:["immunity"]},
-            {name:"آب هندوانه",image:"assets/images/watermelon.jpg",desc:"هندوانه شیرین و خنک تابستانی",prices:{"لیوانی":"۵۰,۰۰۰","نیم‌لیتری":"۸۵,۰۰۰","یک‌لیتری":"۱۳۰,۰۰۰","یک‌ونیم‌لیتری":"۱۸۰,۰۰۰"},cat:"آبمیوه طبیعی",stars:4,cal:"۹۰",goals:["thirst","diet"]},
-            {name:"شربت آلبالو",image:"assets/images/sour-cherry.jpg",desc:"آلبالو تازه با شکر و گلاب (فصل بهار و تابستان)",prices:{"لیوانی":"۶۵,۰۰۰","نیم‌لیتری":"۱۱۰,۰۰۰","یک‌لیتری":"۱۷۰,۰۰۰","یک‌ونیم‌لیتری":"۲۴۰,۰۰۰"},cat:"آبمیوه فصل",stars:4,cal:"۱۵۰",goals:["thirst"]},
-            {name:"طالبی و عسل",image:"assets/images/melon.jpg",desc:"طالبی رسیده تابستانی با عسل طبیعی",prices:{"لیوانی":"۵۵,۰۰۰","نیم‌لیتری":"۹۵,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۱۰,۰۰۰"},cat:"آبمیوه فصل",stars:4,cal:"۱۱۰",goals:["thirst","diet"]},
-            {name:"لیموناد تازه",image:"assets/images/lemonade.jpg",desc:"لیمو ترش تازه با نعنا و شکر",prices:{"لیوانی":"۵۰,۰۰۰","نیم‌لیتری":"۸۵,۰۰۰","یک‌لیتری":"۱۳۰,۰۰۰","یک‌ونیم‌لیتری":"۱۸۰,۰۰۰"},cat:"ترش",stars:4,cal:"۱۰۰",goals:["thirst","diet"]},
-            {name:"گریپ فروت",image:"assets/images/grapefruit.jpg",desc:"گریپ فروت تازه با کمی عسل",prices:{"لیوانی":"۵۵,۰۰۰","نیم‌لیتری":"۹۰,۰۰۰","یک‌لیتری":"۱۴۰,۰۰۰","یک‌ونیم‌لیتری":"۲۰۰,۰۰۰"},cat:"ترش",stars:4,cal:"۸۵",goals:["diet","immunity"]},
-            {name:"کیوی لیمو",image:"assets/images/kiwi.jpg",desc:"کیوی تازه با لیمو ترش و نعنا",prices:{"لیوانی":"۶۰,۰۰۰","نیم‌لیتری":"۱۰۰,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۲۰,۰۰۰"},cat:"ترش",stars:4,cal:"۹۵",goals:["immunity","diet"]},
-            {name:"انبه",image:"assets/images/Mango.jpeg",desc:"انبه تازه و رسیده هندی با یخ",prices:{"لیوانی":"۸۰,۰۰۰","نیم‌لیتری":"۱۳۵,۰۰۰","یک‌لیتری":"۲۱۰,۰۰۰","یک‌ونیم‌لیتری":"۲۹۰,۰۰۰"},cat:"ترکیبی",stars:5,cal:"۲۰۰",goals:["energy"]},
-            {name:"موز توت فرنگی",image:"assets/images/banana-strawberry.jpg",desc:"ترکیب موز رسیده با توت فرنگی تازه",prices:{"لیوانی":"۷۰,۰۰۰","نیم‌لیتری":"۱۲۰,۰۰۰","یک‌لیتری":"۱۸۰,۰۰۰","یک‌ونیم‌لیتری":"۲۵۰,۰۰۰"},cat:"ترکیبی",stars:4,cal:"۱۸۰",goals:["energy"]},
-            {name:"سیب هویج",image:"assets/images/apple-carrot.jpg",desc:"ترکیب سیب قرمز با هویج تازه و زنجبیل",prices:{"لیوانی":"۵۵,۰۰۰","نیم‌لیتری":"۹۵,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۱۰,۰۰۰"},cat:"ترکیبی",stars:4,cal:"۱۱۰",goals:["immunity","diet"]},
-            {name:"شیک نسکافه",image:"assets/images/Coffee.jpeg",desc:"نسکافه اصل با شیر و بستنی وانیلی",prices:{"لیوانی":"۷۵,۰۰۰","نیم‌لیتری":"۱۳۰,۰۰۰","یک‌لیتری":"۲۰۰,۰۰۰","یک‌ونیم‌لیتری":"۲۸۰,۰۰۰"},cat:"شیک",stars:5,cal:"۳۵۰",goals:["energy"]},
-            {name:"شیک معجون میکس",image:"assets/images/Majon.jpeg",desc:"ترکیب ویژه موز، توت فرنگی، انبه و شیر",prices:{"لیوانی":"۹۵,۰۰۰","نیم‌لیتری":"۱۶۰,۰۰۰","یک‌لیتری":"۲۵۰,۰۰۰","یک‌ونیم‌لیتری":"۳۵۰,۰۰۰"},cat:"شیک",stars:5,cal:"۴۲۰",goals:["energy"]},
-            {name:"شیک شکلات",image:"assets/images/chocolate-shake.jpg",desc:"شکلات تلخ با شیر و بستنی وانیلی",prices:{"لیوانی":"۸۰,۰۰۰","نیم‌لیتری":"۱۳۵,۰۰۰","یک‌لیتری":"۲۱۰,۰۰۰","یک‌ونیم‌لیتری":"۲۹۰,۰۰۰"},cat:"شیک",stars:4,cal:"۳۸۰",goals:["energy"]},
-            {name:"اسموتی توت فرنگی",image:"assets/images/strawberry.jpg",desc:"توت فرنگی تازه با ماست یونانی و عسل",prices:{"لیوانی":"۷۵,۰۰۰","نیم‌لیتری":"۱۳۰,۰۰۰","یک‌لیتری":"۲۰۰,۰۰۰","یک‌ونیم‌لیتری":"۲۸۰,۰۰۰"},cat:"اسموتی",stars:5,cal:"۲۵۰",goals:["immunity"]},
-            {name:"موز شکلات",image:"assets/images/chocolate-banana.jpg",desc:"موز رسیده با شکلات تلخ و شیر بادام",prices:{"لیوانی":"۸۵,۰۰۰","نیم‌لیتری":"۱۴۰,۰۰۰","یک‌لیتری":"۲۲۰,۰۰۰","یک‌ونیم‌لیتری":"۳۰۰,۰۰۰"},cat:"اسموتی",stars:4,cal:"۳۰۰",goals:["energy"]},
-            {name:"اسموتی سبز",image:"assets/images/green-smoothie.jpg",desc:"اسفناج، کرفس، سیب سبز و لیمو (بدون شکر)",prices:{"لیوانی":"۶۵,۰۰۰","نیم‌لیتری":"۱۱۰,۰۰۰","یک‌لیتری":"۱۷۰,۰۰۰","یک‌ونیم‌لیتری":"۲۴۰,۰۰۰"},cat:"رژیمی",stars:4,cal:"۸۰",goals:["diet","immunity"]},
-            {name:"کرفس و سیب",image:"assets/images/celery-apple.jpg",desc:"کرفس تازه با سیب سبز (کم کالری، بدون قند)",prices:{"لیوانی":"۵۰,۰۰۰","نیم‌لیتری":"۸۵,۰۰۰","یک‌لیتری":"۱۳۰,۰۰۰","یک‌ونیم‌لیتری":"۱۹۰,۰۰۰"},cat:"رژیمی",stars:4,cal:"۶۰",goals:["diet"]},
-            {name:"چغندر و هویج",image:"assets/images/beetroot-carrot.jpg",desc:"چغندر قرمز با هویج و زنجبیل (سم‌زدا)",prices:{"لیوانی":"۶۰,۰۰۰","نیم‌لیتری":"۱۰۰,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۲۰,۰۰۰"},cat:"رژیمی",stars:4,cal:"۹۰",goals:["immunity","diet"]}
-        ];
-
-        let currentSize='لیوانی',currentCat='all',currentGoal='all',currentView='grid';
-
-        const goalLabels={energy:'⚡ انرژی',diet:'🥗 کاهش وزن',immunity:'🛡️ تقویت ایمنی',thirst:'💧 رفع تشنگی'};
-
-        function displayMenu(items){
-            const list=document.getElementById('menu-list');
-            list.innerHTML='';
-            list.className='menu '+(currentView==='grid'?'grid-view':'list-view');
-            if(items.length===0){list.innerHTML='<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:50px;">😔 محصولی یافت نشد</p>';return}
-            items.forEach((item,i)=>{
-                const card=document.createElement('div');
-                card.className='menu-item';
-                card.setAttribute('data-aos','fade-up');
-                card.setAttribute('data-aos-delay',(i%6)*60);
-                card.onclick=()=>openModal(item);
-                const stars='⭐'.repeat(item.stars);
-                let goalsHTML='';
-                if(item.goals)item.goals.forEach(g=>{goalsHTML+=`<span class="goal-badge ${g}">${goalLabels[g]}</span>`});
-                card.innerHTML=`
-                    <img src="${item.image}" alt="${item.name}" onerror="this.src='logo.png.jpg'">
-                    <div class="item-info">
-                        <h3>${item.name}</h3>
-                        <div class="stars">${stars}</div>
-                        <span class="tag">${item.cat}</span>
-                        <div>${goalsHTML}</div>
-                        <p class="desc">${item.desc}</p>
-                        <p class="calories"><i class="fas fa-fire"></i> ${item.cal} کالری</p>
-                        <div class="price">${item.prices[currentSize]} تومان</div>
-                    </div>`;
-                list.appendChild(card);
-            });
-            AOS.refresh();
-        }
-
-        function filterAll(){
-            let filtered=menuData;
-            if(currentCat!=='all')filtered=filtered.filter(i=>i.cat===currentCat);
-            if(currentGoal!=='all')filtered=filtered.filter(i=>i.goals&&i.goals.includes(currentGoal));
-            return filtered;
-        }
-
-        document.querySelectorAll('.cat-btn').forEach(b=>b.addEventListener('click',function(){
-            document.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));
-            this.classList.add('active');
-            currentCat=this.dataset.cat;
-            displayMenu(filterAll());
-        }));
-
-        document.querySelectorAll('.goal-btn').forEach(b=>b.addEventListener('click',function(){
-            document.querySelectorAll('.goal-btn').forEach(x=>x.classList.remove('active'));
-            this.classList.add('active');
-            currentGoal=this.dataset.goal;
-            displayMenu(filterAll());
-        }));
-
-        document.querySelectorAll('.size-btn').forEach(b=>b.addEventListener('click',function(){
-            document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active'));
-            this.classList.add('active');
-            currentSize=this.dataset.size;
-            displayMenu(filterAll());
-        }));
-
-        document.querySelectorAll('.view-btn').forEach(b=>b.addEventListener('click',function(){
-            document.querySelectorAll('.view-btn').forEach(x=>x.classList.remove('active'));
-            this.classList.add('active');
-            currentView=this.dataset.view;
-            displayMenu(filterAll());
-        }));
-
-        document.getElementById('search').addEventListener('input',e=>{
-            const t=e.target.value.toLowerCase();
-            displayMenu(filterAll().filter(i=>i.name.toLowerCase().includes(t)||i.cat.toLowerCase().includes(t)||i.desc.toLowerCase().includes(t)));
         });
-
-        function startVoiceSearch(){
-            if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showToast('🎤 جستجوی صوتی پشتیبانی نمیشه');return}
-            const SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=new SR();
-            rec.lang='fa-IR';const vb=document.getElementById('voiceBtn');vb.classList.add('listening');rec.start();
-            rec.onresult=e=>{document.getElementById('search').value=e.results[0][0].transcript;document.getElementById('search').dispatchEvent(new Event('input'));vb.classList.remove('listening');showToast('🎤 گفتی: '+e.results[0][0].transcript)};
-            rec.onerror=()=>vb.classList.remove('listening');rec.onend=()=>vb.classList.remove('listening');
-        }
-
-        function openModal(item){
-            document.getElementById('modalImg').src=item.image;
-            document.getElementById('modalTitle').textContent=item.name;
-            document.getElementById('modalStars').textContent='⭐'.repeat(item.stars);
-            document.getElementById('modalDesc').textContent=item.desc;
-            document.getElementById('modalCalories').innerHTML=`<i class="fas fa-fire"></i> ${item.cal} کالری`;
-            let h='';for(const[s,p]of Object.entries(item.prices))h+=`<p><strong>${s}:</strong> ${p} تومان</p>`;
-            document.getElementById('modalPrices').innerHTML=h;
-            document.getElementById('modal').classList.add('active');
-        }
-        function closeModal(){document.getElementById('modal').classList.remove('active')}
-        document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
-
-        function pickRandom(){
-            const item=menuData[Math.floor(Math.random()*menuData.length)];
-            document.getElementById('randomResult').innerHTML=`🎯 <strong>${item.name}</strong> - ${item.prices[currentSize]} تومان`;
-        }
-
-        function toggleTheme(){
-            const html=document.documentElement,icon=document.querySelector('.icon-btn i');
-            if(html.getAttribute('data-theme')==='dark'){html.setAttribute('data-theme','light');icon.className='fas fa-moon';showToast('☀️ حالت روشن')}
-            else{html.setAttribute('data-theme','dark');icon.className='fas fa-sun';showToast('🌙 حالت تاریک')}
-        }
-
-        function updateVisitor(){document.getElementById('visitorCount').textContent=(12458+Math.floor(Math.random()*20)).toLocaleString('fa-IR')}
-        setInterval(updateVisitor,5000);
-
-        function updateTimer(){
-            const now=new Date(),end=new Date();end.setHours(23,59,59,999);const diff=end-now;
-            if(diff<=0){document.getElementById('offerHours').textContent='۰۰';document.getElementById('offerMinutes').textContent='۰۰';document.getElementById('offerSeconds').textContent='۰۰';return}
-            document.getElementById('offerHours').textContent=String(Math.floor(diff/3600000)).padStart(2,'۰');
-            document.getElementById('offerMinutes').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'۰');
-            document.getElementById('offerSeconds').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'۰');
-        }
-        setInterval(updateTimer,1000);updateTimer();
-
-        function showToast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
-
-        new QRCode(document.getElementById('qrCode'),{text:window.location.href,width:150,height:150});
-
-        const sb=document.getElementById('scrollTop');
-        addEventListener('scroll',()=>{sb.style.display=scrollY>400?'block':'none'});
-
-        addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hidden')},1500)});
-
-        AOS.init({duration:600,once:true});
-        displayMenu(menuData);
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
