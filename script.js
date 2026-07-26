@@ -1,585 +1,555 @@
-۷/*====================================
-     Juice Salamat Premium Menu
-====================================*/
-
-const CSV_FILE = "menu.csv";
-
-let menuData = [];
-let currentSize = "لیوانی";
-
-/*==========================
-      Loading Screen
-==========================*/
-
-window.addEventListener("load",()=>{
-
-setTimeout(()=>{
-
-const loading=document.querySelector(".loading-screen");
-
-if(loading){
-
-loading.style.opacity="0";
-loading.style.pointerEvents="none";
-
-setTimeout(()=>{
-loading.remove();
-},700);
-
-}
-
-},1200);
-
-});
-
-/*==========================
-      Read CSV
-==========================*/
-
-Papa.parse(CSV_FILE,{
-
-download:true,
-
-header:true,
-
-skipEmptyLines:true,
-
-complete:function(result){
-
-menuData=result.data;
-
-renderMenu(menuData);
-
-}
-
-});
-
-/*==========================
-      Render Menu
-==========================*/
-
-function renderMenu(data){
-
-const container=document.getElementById("menu-list");
-
-if(!container)return;
-
-container.innerHTML="";
-
-data.forEach(item=>{
-
-if(!item["نام محصول"])return;
-
-if(
-
-item["نام محصول"]==="منو ویژه فصلی"||
-
-item["نام محصول"]==="ترش‌های سلامت"||
-
-item["نام محصول"]==="طبیعی‌های سلامت"||
-
-item["نام محصول"]==="ترکیبی‌های سلامت"||
-
-item["نام محصول"]==="میلک شیک‌ها"
-
-){
-
-container.innerHTML+=`
-
-<div class="menu-section">
-
-<h2>${item["نام محصول"]}</h2>
-
-</div>
-
-`;
-
-return;
-
-}
-
-let price=parseInt(item[currentSize]);
-
-if(isNaN(price)||price===0)return;
-
-container.innerHTML+=`
-
-<div class="menu-card fade-up" onclick="openProduct(${JSON.stringify(item).replace(/"/g,'&quot;')})">
-
-<div class="menu-image">
-
-<img src="assets/images/${item["نام محصول"]}.jpeg">
-
-</div>
-
-<div class="menu-info">
-
-<h3>${item["نام محصول"]}</h3>
-
-<p>${item["توضیحات"]||""}</p>
-
-</div>
-
-<div class="menu-price">
-
-${price}
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-/*==========================
-      Live Search
-==========================*/
-
-const searchInput=document.getElementById("search");
-
-if(searchInput){
-
-searchInput.addEventListener("input",function(){
-
-const value=this.value.trim();
-
-if(value===""){
-
-renderMenu(menuData);
-
-return;
-
-}
-
-const filtered=menuData.filter(item=>{
-
-return(
-
-item["نام محصول"]&&
-
-item["نام محصول"].includes(value)
-
-);
-
-});
-
-renderMenu(filtered);
-
-});
-
-}
-
-/*==========================
-      Size Buttons
-==========================*/
-
-document.querySelectorAll(".size").forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-document.querySelectorAll(".size").forEach(b=>{
-
-b.classList.remove("active");
-
-});
-
-btn.classList.add("active");
-
-currentSize=btn.dataset.size;
-
-renderMenu(menuData);
-
-});
-
-});
-
-/*==========================
-      Scroll To Top
-==========================*/
-
-const scrollBtn=document.getElementById("scrollTop");
-
-window.addEventListener("scroll",()=>{
-
-if(window.scrollY>500){
-
-scrollBtn.classList.add("show");
-
-}else{
-
-scrollBtn.classList.remove("show");
-
-}
-
-});
-
-scrollBtn.addEventListener("click",()=>{
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-});
-
-/*==========================
-     Hero Button
-==========================*/
-
-const heroBtn=document.querySelector(".hero-btn");
-
-if(heroBtn){
-
-heroBtn.addEventListener("click",e=>{
-
-e.preventDefault();
-
-document.querySelector("#menu").scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-});
-
-}
-
-/*==========================
-      Scroll Animation
-==========================*/
-
-const observer=new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("fade-up");
-
-}
-
-});
-
-});
-
-setInterval(()=>{
-
-document.querySelectorAll(".menu-card").forEach(card=>{
-
-observer.observe(card);
-
-});
-
-},500);
-
-/*==========================
-      Premium Badge
-==========================*/
-
-setTimeout(()=>{
-
-document.querySelectorAll(".menu-card").forEach((card,index)=>{
-
-if(index<5){
-
-const badge=document.createElement("div");
-
-badge.className="badge";
-
-badge.innerHTML="🔥 پرفروش";
-
-card.querySelector(".menu-info").appendChild(badge);
-
-}
-
-});
-
-},1200);
-
-/*==========================
-      Category Filter
-==========================*/
-
-const categoryButtons=document.querySelectorAll(".category");
-
-categoryButtons.forEach(button=>{
-
-button.addEventListener("click",()=>{
-
-categoryButtons.forEach(btn=>btn.classList.remove("active"));
-
-button.classList.add("active");
-
-const category=button.innerText.trim();
-
-if(category==="🍹 همه"){
-
-renderMenu(menuData);
-
-return;
-
-}
-
-const filtered=menuData.filter(item=>{
-
-const name=item["نام محصول"]||"";
-
-switch(category){
-
-case "🥤 آبمیوه":
-return name.includes("آب");
-
-case "🍓 ترکیبی":
-return name.includes("+");
-
-case "🥛 میلک شیک":
-return name.includes("شیک") || name.includes("میلک");
-
-case "🥑 ویژه":
-return name.includes("پسته") ||
-name.includes("آووکادو") ||
-name.includes("انبه") ||
-name.includes("معجون");
-
-default:
-return true;
-
-}
-
-});
-
-renderMenu(filtered);
-
-});
-
-});
-
-/*==========================
-      WhatsApp Button
-==========================*/
-
-const whatsapp=document.querySelector(".whatsapp");
-
-if(whatsapp){
-
-whatsapp.addEventListener("click",()=>{
-
-window.open(
-
-"https://wa.me/989120230285",
-
-"_blank"
-
-);
-
-});
-
-}
-
-/*==========================
-      Call Button
-==========================*/
-
-const callButton=document.querySelector(".call-button");
-
-if(callButton){
-
-callButton.addEventListener("click",()=>{
-
-window.location.href="tel:09120230285";
-
-});
-
-}
-
-/*==========================
-      Fade Hero
-==========================*/
-
-window.addEventListener("scroll",()=>{
-
-const hero=document.querySelector(".hero");
-
-if(hero){
-
-hero.style.opacity=1-window.scrollY/900;
-
-}
-
-});
-
-/*==========================
-      Header Shadow
-==========================*/
-
-const header=document.querySelector(".header-fixed");
-
-window.addEventListener("scroll",()=>{
-
-if(window.scrollY>80){
-
-header.style.background="rgba(255,255,255,.92)";
-header.style.boxShadow="0 15px 35px rgba(0,0,0,.15)";
-
-}else{
-
-header.style.background="rgba(255,255,255,.65)";
-header.style.boxShadow="0 15px 35px rgba(0,0,0,.08)";
-
-}
-
-});
-
-/*==========================
-      Product Modal
-==========================*/
-
-function openProduct(item){
-
-const modal=document.getElementById("productModal");
-
-const image=document.getElementById("modalImage");
-
-const title=document.getElementById("modalTitle");
-
-const description=document.getElementById("modalDescription");
-
-const prices=document.getElementById("modalPrices");
-
-
-modal.classList.add("active");
-
-
-title.innerHTML=item["نام محصول"];
-
-
-description.innerHTML=
-item["توضیحات"] || 
-"تهیه شده با مواد اولیه تازه و طبیعی";
-
-
-image.src=
-"assets/images/"+item["نام محصول"]+".jpeg";
-
-
-prices.innerHTML="";
-
-
-const sizes=[
-
-"لیوانی",
-"نیم‌لیتری",
-"یک‌لیتری",
-"یک‌ونیم‌لیتری"
-
-];
-
-
-sizes.forEach(size=>{
-
-if(item[size] && item[size]!="0"){
-
-prices.innerHTML+=`
-
-<div>
-
-${size}
-
-<br>
-
-${item[size]} تومان
-
-</div>
-
-`;
-
-}
-
-});
-
-
-}
-
-
-/* بستن پنجره */
-
-const closeModal=document.getElementById("closeModal");
-
-
-if(closeModal){
-
-closeModal.onclick=()=>{
-
-document
-.getElementById("productModal")
-.classList.remove("active");
-
-};
-
-}
-
-
-/* بستن با کلیک بیرون */
-
-document
-.getElementById("productModal")
-.addEventListener("click",e=>{
-
-if(e.target.id==="productModal"){
-
-e.target.classList.remove("active");
-
-}
-
-});
-/*==========================
-      Product Modal
-==========================*/
-
-function openProduct(name, desc, price) {
-
-    const modal = document.getElementById("productModal");
-
-    document.getElementById("modalTitle").innerHTML = name;
-
-    document.getElementById("modalDesc").innerHTML = desc || "آبمیوه طبیعی و تازه";
-
-    document.getElementById("modalPrice").innerHTML =
-        Number(price).toLocaleString("fa-IR") + " تومان";
-
-    document.getElementById("modalImage").src =
-        "assets/images/" + name + ".jpeg";
-
-    modal.classList.add("show");
-
-}
-
-const closeModal = document.querySelector(".close-modal");
-
-if (closeModal) {
-
-    closeModal.addEventListener("click", () => {
-
-        document.getElementById("productModal").classList.remove("show");
-
+// ========== Service Worker ==========
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
     });
-
 }
 
-window.addEventListener("click", function (e) {
+// ========== PWA Install ==========
+let deferredPrompt;
+const installBanner = document.getElementById('installBanner');
 
-    const modal = document.getElementById("productModal");
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBanner.classList.add('show');
+});
 
-    if (e.target === modal) {
-
-        modal.classList.remove("show");
-
+document.getElementById('installBtn').addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') installBanner.classList.remove('show');
+        deferredPrompt = null;
     }
+});
 
+document.getElementById('installClose').addEventListener('click', () => {
+    installBanner.classList.remove('show');
+});
+
+// ========== Particles ==========
+(function() {
+    const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    addEventListener('resize', resize); resize();
+    for (let i = 0; i < 25; i++) {
+        particles.push({
+            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 0.5,
+            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+            o: Math.random() * 0.3 + 0.05
+        });
+    }
+    function anim() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(245,158,11,${p.o})`; ctx.fill();
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        });
+        requestAnimationFrame(anim);
+    }
+    anim();
+})();
+
+// ========== Parallax ==========
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const scrolled = window.scrollY;
+            const logo = document.querySelector('.hero-logo');
+            const bg = document.querySelector('.hero-bg');
+            if (logo) logo.style.transform = `translateY(${scrolled * 0.05}px)`;
+            if (bg) bg.style.transform = `translateY(${scrolled * 0.02}px)`;
+            ticking = false;
+        });
+        ticking = true;
+    }
+    
+    // Header scroll effect
+    const header = document.querySelector('.header');
+    if (header) {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    }
+    
+    // Scroll top button
+    const sb = document.getElementById('scrollTop');
+    if (sb) sb.style.display = window.scrollY > 400 ? 'block' : 'none';
+});
+
+// ========== DATA ==========
+let menuData = [];
+let currentSize = 'لیوانی';
+let currentCat = 'all';
+let currentGoal = 'all';
+let currentPrice = 'all';
+let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let modalImageIndex = 0;
+let modalImages = [];
+
+const goalLabels = { energy: '⚡ انرژی', diet: '🥗 کاهش وزن', immunity: '🛡️ تقویت ایمنی', thirst: '💧 رفع تشنگی' };
+const statusLabels = { available: '✅ موجود', low: '⏳ رو به اتمام', unavailable: '❌ ناموجود' };
+
+// ========== Load Data ==========
+async function loadData() {
+    try {
+        const res = await fetch('data.json');
+        if (!res.ok) throw new Error('Failed to load data');
+        menuData = await res.json();
+        menuData.sort((a, b) => (a.order || 99) - (b.order || 99));
+    } catch (e) {
+        menuData = [];
+        console.warn('⚠️ خطا در بارگذاری داده‌ها');
+    }
+    displayMenu();
+    renderRecent();
+}
+
+// ========== Filter ==========
+function getFilteredData() {
+    let filtered = [...menuData];
+    if (currentCat !== 'all') filtered = filtered.filter(i => i.cat === currentCat);
+    if (currentGoal !== 'all') filtered = filtered.filter(i => i.goals && i.goals.includes(currentGoal));
+    if (currentPrice !== 'all') {
+        filtered = filtered.filter(i => {
+            const price = parseInt((i.prices[currentSize] || '0').replace(/[^0-9]/g, ''));
+            if (currentPrice === 'low') return price < 150000;
+            if (currentPrice === 'mid') return price >= 150000 && price <= 250000;
+            if (currentPrice === 'high') return price > 250000;
+            return true;
+        });
+    }
+    return filtered;
+}
+
+// ========== Display Menu ==========
+function displayMenu() {
+    const list = document.getElementById('menu-list');
+    const items = getFilteredData();
+    
+    if (items.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:50px;">😔 محصولی یافت نشد</p>';
+        return;
+    }
+    
+    list.innerHTML = items.map((item, index) => {
+        const isFav = favorites.some(f => f.name === item.name);
+        const price = parseInt((item.prices[currentSize] || '0').replace(/[^0-9]/g, ''));
+        const discountPrice = item.discount > 0 ? Math.round(price * (1 - item.discount / 100)) : null;
+        const priceDisplay = discountPrice ? discountPrice.toLocaleString('fa-IR') : price.toLocaleString('fa-IR');
+        const mainImage = (item.images && item.images[0]) || item.image || 'logo.png.jpg';
+        const imageCount = (item.images && item.images.length > 1) ? item.images.length : 0;
+        
+        let badgeHTML = '';
+        if (item.badge === 'special') badgeHTML = '<div class="ribbon special">⭐ پرفروش</div>';
+        if (item.badge === 'new') badgeHTML = '<div class="ribbon new">🆕 جدید</div>';
+        
+        let discountHTML = '';
+        if (item.discount > 0) discountHTML = `<div class="discount-badge">${item.discount}٪</div>`;
+        
+        let statusHTML = '';
+        if (item.status && item.status !== 'available') {
+            statusHTML = `<div class="status-badge ${item.status}">${statusLabels[item.status]}</div>`;
+        }
+        
+        let goalsHTML = '';
+        if (item.goals) item.goals.forEach(g => {
+            goalsHTML += `<span class="goal-badge ${g}">${goalLabels[g]}</span>`;
+        });
+        
+        return `
+            <div class="menu-item" style="transition-delay:${index * 0.03}s" 
+                 onclick="openModal('${item.name.replace(/'/g, "\\'")}')">
+                ${badgeHTML} ${discountHTML} ${statusHTML}
+                <button class="fav-btn ${isFav ? 'liked' : ''}" 
+                        onclick="event.stopPropagation();toggleFav('${item.name.replace(/'/g, "\\'")}')" 
+                        aria-label="${isFav ? 'حذف از علاقه‌مندی' : 'افزودن به علاقه‌مندی'}">
+                    <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+                <button class="share-btn" 
+                        onclick="event.stopPropagation();openShare('${item.name.replace(/'/g, "\\'")}')" 
+                        aria-label="اشتراک‌گذاری">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                ${imageCount > 1 ? `<span class="image-counter">${imageCount} عکس</span>` : ''}
+                <img src="${mainImage}" alt="${item.name}" loading="lazy" 
+                     onerror="this.src='logo.png.jpg';this.onerror=null;">
+                <div class="item-info">
+                    <h3>${item.name}</h3>
+                    <div class="stars">${'⭐'.repeat(item.stars)}</div>
+                    <span class="tag">${item.cat}</span>
+                    <div>${goalsHTML}</div>
+                    <p class="views-count"><i class="fas fa-eye"></i> ${(item.views || 0).toLocaleString('fa-IR')} بازدید</p>
+                    <div class="price-row">
+                        <span class="price">${priceDisplay} تومان</span>
+                        ${discountPrice ? `<span class="old-price">${price.toLocaleString('fa-IR')}</span>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Animate visible items
+    requestAnimationFrame(() => {
+        document.querySelectorAll('.menu-item').forEach((item, i) => {
+            setTimeout(() => item.classList.add('visible'), i * 40);
+        });
+    });
+}
+
+// ========== Recent ==========
+function addToRecent(item) {
+    recentlyViewed = recentlyViewed.filter(r => r.name !== item.name);
+    recentlyViewed.unshift({ name: item.name, images: item.images || [item.image], image: item.images?.[0] || item.image });
+    if (recentlyViewed.length > 8) recentlyViewed.pop();
+    localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+    renderRecent();
+}
+
+function renderRecent() {
+    const section = document.getElementById('recentlyViewed');
+    const slider = document.getElementById('recentSlider');
+    if (!section || !slider) return;
+    if (recentlyViewed.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    slider.innerHTML = recentlyViewed.map(r => `
+        <div class="recent-item" onclick="openModal('${r.name.replace(/'/g, "\\'")}')">
+            <img src="${r.image}" alt="${r.name}" loading="lazy" onerror="this.src='logo.png.jpg'">
+            <div style="font-size:0.8rem;color:var(--text-light);">${r.name}</div>
+        </div>
+    `).join('');
+}
+
+// ========== Favorites ==========
+function toggleFav(name) {
+    const item = menuData.find(i => i.name === name);
+    if (!item) return;
+    const index = favorites.findIndex(f => f.name === name);
+    if (index >= 0) {
+        favorites.splice(index, 1);
+        toast('💔 از علاقه‌مندی‌ها حذف شد');
+    } else {
+        favorites.push({ name: item.name, images: item.images || [item.image], image: item.images?.[0] || item.image, prices: item.prices, cat: item.cat });
+        toast('❤️ به علاقه‌مندی‌ها اضافه شد');
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    displayMenu();
+}
+
+function showFavorites() {
+    if (favorites.length === 0) { toast('😔 هنوز چیزی ذخیره نکردی!', 'error'); return; }
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    const allBtn = document.querySelector('.cat-btn[data-cat="all"]');
+    if (allBtn) allBtn.classList.add('active');
+    currentCat = 'all';
+    const temp = [...menuData];
+    const favItems = favorites.map(f => menuData.find(m => m.name === f.name)).filter(Boolean);
+    menuData = favItems;
+    displayMenu();
+    setTimeout(() => { menuData = temp; displayMenu(); }, 4000);
+    toast('❤️ علاقه‌مندی‌ها (۴ ثانیه)');
+}
+
+// ========== Suggestions ==========
+function showSuggestions(item) {
+    const section = document.getElementById('suggestedSection');
+    const grid = document.getElementById('suggestedGrid');
+    if (!section || !grid) return;
+    
+    const suggestions = menuData.filter(i => 
+        i.name !== item.name && 
+        (i.cat === item.cat || (i.goals && item.goals && i.goals.some(g => (item.goals || []).includes(g))))
+    ).slice(0, 4);
+    
+    if (suggestions.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    grid.innerHTML = suggestions.map(s => `
+        <div class="suggested-item" onclick="openModal('${s.name.replace(/'/g, "\\'")}');document.getElementById('suggestedSection').style.display='none';">
+            <img src="${(s.images && s.images[0]) || s.image || 'logo.png.jpg'}" alt="${s.name}" loading="lazy" onerror="this.src='logo.png.jpg'">
+            <div style="font-size:0.85rem;color:var(--primary);">${s.name}</div>
+            <div style="font-size:0.8rem;color:var(--success);">${s.prices[currentSize]} تومان</div>
+        </div>
+    `).join('');
+    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ========== Modal ==========
+function openModal(name) {
+    const item = menuData.find(i => i.name === name);
+    if (!item) return;
+    
+    // Increment views
+    item.views = (item.views || 0) + 1;
+    
+    addToRecent(item);
+    modalImages = item.images || [item.image || 'logo.png.jpg'];
+    modalImageIndex = 0;
+    
+    updateModalImage();
+    
+    document.getElementById('modalTitle').textContent = item.name;
+    document.getElementById('modalStars').textContent = '⭐'.repeat(item.stars);
+    document.getElementById('modalDesc').textContent = item.desc;
+    document.getElementById('modalCalories').innerHTML = `<i class="fas fa-fire"></i> ${item.cal || '---'} کالری | <i class="fas fa-eye"></i> ${(item.views || 0).toLocaleString('fa-IR')} بازدید`;
+    
+    // Status
+    const statusText = document.getElementById('modalStatus');
+    if (statusText) {
+        statusText.textContent = statusLabels[item.status] || statusLabels.available;
+        statusText.className = 'status-text ' + (item.status || 'available');
+    }
+    
+    // Ingredients
+    const ingList = document.getElementById('ingredientsList');
+    if (ingList && item.ingredients) {
+        ingList.innerHTML = item.ingredients.map(i => `<span class="ingredient-tag">${i}</span>`).join('');
+    } else if (ingList) {
+        ingList.innerHTML = '';
+    }
+    
+    // Prices
+    let pricesHTML = '';
+    for (const [size, price] of Object.entries(item.prices || {})) {
+        pricesHTML += `<p><strong>${size}:</strong> ${price} تومان</p>`;
+    }
+    document.getElementById('modalPrices').innerHTML = pricesHTML;
+    
+    // Combo suggestions
+    const comboSection = document.getElementById('comboSection');
+    if (comboSection && item.combo && item.combo.length > 0) {
+        comboSection.style.display = 'block';
+        document.getElementById('comboItems').innerHTML = item.combo.map(c => 
+            `<span class="combo-item" onclick="openModal('${c.replace(/'/g, "\\'")}')">${c}</span>`
+        ).join('');
+    } else if (comboSection) {
+        comboSection.style.display = 'none';
+    }
+    
+    document.getElementById('modal').classList.add('active');
+    showSuggestions(item);
+}
+
+function updateModalImage() {
+    const img = document.getElementById('modalImg');
+    const dots = document.getElementById('modalDots');
+    if (!img) return;
+    img.src = modalImages[modalImageIndex] || 'logo.png.jpg';
+    img.onerror = function() { this.src = 'logo.png.jpg'; };
+    
+    if (dots && modalImages.length > 1) {
+        dots.innerHTML = modalImages.map((_, i) => 
+            `<span class="slider-dot ${i === modalImageIndex ? 'active' : ''}" onclick="modalImageIndex=${i};updateModalImage();"></span>`
+        ).join('');
+    }
+}
+
+function nextImage() {
+    if (modalImages.length > 1) {
+        modalImageIndex = (modalImageIndex + 1) % modalImages.length;
+        updateModalImage();
+    }
+}
+
+function prevImage() {
+    if (modalImages.length > 1) {
+        modalImageIndex = (modalImageIndex - 1 + modalImages.length) % modalImages.length;
+        updateModalImage();
+    }
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+    const sug = document.getElementById('suggestedSection');
+    if (sug) sug.style.display = 'none';
+}
+
+// ========== Share ==========
+function openShare(name) {
+    const item = menuData.find(i => i.name === name);
+    if (!item) return;
+    const url = window.location.href.split('?')[0] + '?item=' + encodeURIComponent(name);
+    const text = `🍹 ${item.name} - ${item.prices[currentSize]} تومان\n${item.desc}\n\nسفارش از آبمیوه سلامت:\n`;
+    
+    document.getElementById('shareText').textContent = `🍹 ${item.name}`;
+    document.getElementById('shareWhatsApp').href = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
+    document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    document.getElementById('shareModal').classList.add('active');
+}
+
+function closeShare() {
+    document.getElementById('shareModal').classList.remove('active');
+}
+
+function copyLink() {
+    const url = window.location.href.split('?')[0];
+    navigator.clipboard.writeText(url).then(() => toast('🔗 لینک کپی شد!'));
+}
+
+// ========== Event Listeners ==========
+document.querySelectorAll('.cat-btn').forEach(b => b.addEventListener('click', function() {
+    document.querySelectorAll('.cat-btn').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    currentCat = this.dataset.cat;
+    displayMenu();
+}));
+
+document.querySelectorAll('.goal-btn').forEach(b => b.addEventListener('click', function() {
+    document.querySelectorAll('.goal-btn').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    currentGoal = this.dataset.goal;
+    displayMenu();
+}));
+
+document.querySelectorAll('.price-btn').forEach(b => b.addEventListener('click', function() {
+    document.querySelectorAll('.price-btn').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    currentPrice = this.dataset.price;
+    displayMenu();
+}));
+
+document.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', function() {
+    document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+    currentSize = this.dataset.size;
+    displayMenu();
+}));
+
+document.getElementById('search').addEventListener('input', e => {
+    const t = e.target.value.toLowerCase();
+    if (t.length === 0) { displayMenu(); return; }
+    const filtered = getFilteredData().filter(i => 
+        i.name.toLowerCase().includes(t) || i.cat.toLowerCase().includes(t) || i.desc.toLowerCase().includes(t)
+    );
+    const temp = [...menuData];
+    menuData = filtered;
+    displayMenu();
+    menuData = temp;
+});
+
+// Voice Search
+function startVoiceSearch() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) { toast('🎤 مرورگر شما پشتیبانی نمی‌کند', 'error'); return; }
+    const rec = new SpeechRecognition();
+    rec.lang = 'fa-IR';
+    const btn = document.getElementById('voiceBtn');
+    btn.classList.add('listening');
+    rec.start();
+    rec.onresult = e => {
+        document.getElementById('search').value = e.results[0][0].transcript;
+        document.getElementById('search').dispatchEvent(new Event('input'));
+        btn.classList.remove('listening');
+    };
+    rec.onerror = () => btn.classList.remove('listening');
+    rec.onend = () => btn.classList.remove('listening');
+}
+
+// Modal close
+document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+document.getElementById('shareModal').addEventListener('click', function(e) {
+    if (e.target === this) closeShare();
+});
+
+// ========== Theme ==========
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.querySelector('.header-actions .icon-btn i');
+    if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        if (icon) icon.className = 'fas fa-moon';
+    } else {
+        html.setAttribute('data-theme', 'dark');
+        if (icon) icon.className = 'fas fa-sun';
+    }
+}
+
+// ========== Review Form ==========
+function submitReview() {
+    const name = document.getElementById('reviewName').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+    const stars = document.getElementById('reviewStars').value;
+    if (!name || !text) { toast('❌ نام و نظر الزامی است', 'error'); return; }
+    
+    const reviewsGrid = document.querySelector('.reviews-grid');
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+        <div class="review-header">
+            <div class="review-avatar">${name[0]}</div>
+            <div>
+                <div class="review-name">${name}</div>
+                <div class="review-stars">${'⭐'.repeat(parseInt(stars))}</div>
+            </div>
+        </div>
+        <p class="review-text">${text}</p>
+    `;
+    reviewsGrid.appendChild(card);
+    document.getElementById('reviewName').value = '';
+    document.getElementById('reviewText').value = '';
+    toast('✅ نظر شما ثبت شد! متشکریم 🙏');
+}
+
+// ========== Toast ==========
+function toast(msg, type = 'success') {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    if (type === 'error') t.style.background = 'var(--danger)';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+}
+
+// ========== Daily Offer Timer ==========
+function updateOfferTimer() {
+    const now = new Date();
+    const end = new Date(); end.setHours(23, 59, 59, 999);
+    const diff = end - now;
+    if (diff <= 0) return;
+    document.getElementById('offerH').textContent = String(Math.floor(diff / 3600000)).padStart(2, '۰');
+    document.getElementById('offerM').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '۰');
+    document.getElementById('offerS').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '۰');
+}
+
+// Check for offer
+function checkDailyOffer() {
+    const hasOffer = menuData.some(i => i.discount > 0);
+    const banner = document.getElementById('dailyBanner');
+    if (banner && hasOffer) {
+        banner.classList.add('show');
+        updateOfferTimer();
+        setInterval(updateOfferTimer, 1000);
+    }
+}
+
+// ========== Check URL for shared item ==========
+function checkSharedItem() {
+    const params = new URLSearchParams(window.location.search);
+    const itemName = params.get('item');
+    if (itemName) {
+        setTimeout(() => openModal(decodeURIComponent(itemName)), 500);
+    }
+}
+
+// ========== Init ==========
+loadData().then(() => {
+    checkDailyOffer();
+    checkSharedItem();
+    
+    // Show skeleton for 800ms then display real data
+    setTimeout(() => {
+        displayMenu();
+        renderRecent();
+    }, 300);
 });
