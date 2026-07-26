@@ -5,20 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>آبمیوه سلامت | منوی دیجیتال حرفه‌ای</title>
     <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="منوی دیجیتال آبمیوه سلامت - طبیعی، تازه، سالم">
     
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #f59e0b;
-            --primary-dark: #d97706;
             --bg-dark: #0f172a;
             --bg-card: #1e293b;
             --text-light: #e2e8f0;
@@ -26,17 +21,18 @@
             --success: #10b981;
             --danger: #ef4444;
             --purple: #8b5cf6;
+            --blue: #3b82f6;
             --border: #334155;
-            --glass: rgba(30, 41, 59, 0.7);
+            --glass: rgba(15, 23, 42, 0.85);
         }
 
         [data-theme="light"] {
-            --bg-dark: #f1f5f9;
+            --bg-dark: #f8fafc;
             --bg-card: #ffffff;
             --text-light: #1e293b;
             --text-muted: #64748b;
-            --border: #cbd5e1;
-            --glass: rgba(255, 255, 255, 0.7);
+            --border: #e2e8f0;
+            --glass: rgba(255, 255, 255, 0.85);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,13 +56,14 @@
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
+        /* ========== LOADING ========== */
         .loading-screen {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: var(--bg-dark);
+            background: var(--bg-dark); z-index: 9999;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            z-index: 9999; transition: 0.5s;
+            transition: 0.5s;
         }
         .loading-screen.hidden { opacity: 0; visibility: hidden; }
         .loader {
@@ -79,20 +76,20 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* ========== HEADER ========== */
         .header {
             position: fixed; top: 0; left: 0; right: 0;
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 10px 20px;
+            padding: 10px 20px; z-index: 1000;
             display: flex; justify-content: space-between;
             align-items: center;
-            z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .header-brand { display: flex; align-items: center; gap: 8px; }
+        .header-brand { display: flex; align-items: center; gap: 10px; }
         .header-logo {
-            width: 38px; height: 38px;
+            width: 42px; height: 42px;
             border-radius: 50%; border: 2px solid var(--primary);
             object-fit: cover; animation: glow 2s infinite;
         }
@@ -100,123 +97,154 @@
             0%,100% { box-shadow: 0 0 8px rgba(245,158,11,0.3); }
             50% { box-shadow: 0 0 18px rgba(245,158,11,0.6); }
         }
-        .header-name { font-size: 1rem; color: var(--primary); font-weight: 900; }
+        .header-name { font-size: 1.1rem; color: var(--primary); font-weight: 900; }
         .header-actions { display: flex; gap: 8px; align-items: center; }
-        .theme-toggle {
+        .icon-btn {
             background: var(--bg-card); border: 1px solid var(--border);
-            color: var(--text-light); width: 35px; height: 35px;
+            color: var(--text-light); width: 38px; height: 38px;
             border-radius: 50%; cursor: pointer; transition: 0.3s;
             display: flex; align-items: center; justify-content: center;
             font-size: 1rem;
         }
-        .theme-toggle:hover { background: var(--primary); color: var(--bg-dark); transform: rotate(180deg); }
+        .icon-btn:hover { background: var(--primary); color: var(--bg-dark); transform: rotate(180deg); }
         .header-phones { display: flex; gap: 6px; }
         .phone-link {
             color: var(--text-light); text-decoration: none;
             background: var(--bg-card); padding: 6px 12px;
-            border-radius: 50px; font-size: 0.75rem; transition: 0.3s;
-            border: 1px solid var(--border);
+            border-radius: 50px; font-size: 0.75rem;
+            transition: 0.3s; border: 1px solid var(--border);
             display: flex; align-items: center; gap: 4px;
             white-space: nowrap;
         }
         .phone-link:hover { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); }
 
+        /* ========== HERO ========== */
         .hero {
-            min-height: 100vh;
+            min-height: 100vh; position: relative;
             display: flex; align-items: center; justify-content: center;
-            text-align: center; position: relative;
-            padding: 100px 20px 50px;
+            text-align: center; padding: 100px 20px 60px;
         }
         .hero-content { position: relative; z-index: 1; }
         .hero-logo {
             width: 140px; height: 140px;
             border-radius: 50%; border: 4px solid var(--primary);
-            margin-bottom: 20px; animation: float 3s ease-in-out infinite;
-            object-fit: cover;
+            margin-bottom: 20px; object-fit: cover;
+            animation: float 3s ease-in-out infinite;
         }
         @keyframes float {
             0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-15px); }
         }
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             background: linear-gradient(135deg, var(--primary), #fbbf24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 900; margin-bottom: 8px;
         }
-        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px; }
-        
+        .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px; }
+
+        /* Visitor Counter */
         .visitor-counter {
             display: inline-flex; align-items: center; gap: 8px;
             background: var(--bg-card); border: 1px solid var(--border);
             padding: 10px 20px; border-radius: 50px;
-            margin-bottom: 20px; font-size: 0.9rem;
+            margin-bottom: 25px; font-size: 0.9rem;
         }
         .visitor-dot {
             width: 10px; height: 10px;
             background: var(--success); border-radius: 50%;
             animation: pulse-dot 1.5s infinite;
         }
-        @keyframes pulse-dot {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
         .visitor-count { color: var(--primary); font-weight: 900; }
-        
-        .hero-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+
+        .hero-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .btn {
-            padding: 12px 28px; border-radius: 50px;
+            padding: 14px 30px; border-radius: 50px;
             text-decoration: none; font-weight: 700;
-            font-size: 0.95rem; transition: 0.3s;
+            font-size: 1rem; transition: 0.3s;
             display: inline-flex; align-items: center; gap: 8px;
+            cursor: pointer; border: none;
+            font-family: 'Vazirmatn';
         }
         .btn-primary { background: var(--primary); color: var(--bg-dark); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245,158,11,0.3); }
-        .btn-outline { border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: var(--bg-dark); }
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(245,158,11,0.3); }
         .btn-whatsapp { background: #25D366; color: white; }
-        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-3px); }
+        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-4px); }
 
+        /* ========== DAILY OFFER TIMER ========== */
         .daily-offer {
             background: linear-gradient(135deg, var(--primary), #fbbf24);
-            padding: 15px 20px; text-align: center;
+            padding: 20px; text-align: center;
             color: var(--bg-dark); position: relative; z-index: 1;
-            margin: 0 20px; border-radius: 20px;
+            margin: 0 20px; border-radius: 24px;
         }
-        .daily-offer h3 { margin-bottom: 8px; }
-        .offer-timer {
-            display: flex; gap: 10px; justify-content: center;
-        }
+        .daily-offer h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .offer-timer { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
         .timer-box {
             background: var(--bg-dark); color: var(--primary);
-            padding: 8px 16px; border-radius: 10px;
-            font-weight: 900; font-size: 1.1rem;
+            padding: 10px 18px; border-radius: 12px;
+            font-weight: 900; font-size: 1.2rem;
         }
+        .timer-label { font-size: 0.7rem; color: var(--bg-dark); }
 
+        /* ========== RANDOM PICKER ========== */
         .random-picker {
             text-align: center; padding: 25px;
             background: var(--bg-card); margin: 20px;
-            border-radius: 20px; border: 1px solid var(--border);
+            border-radius: 24px; border: 1px solid var(--border);
             position: relative; z-index: 1;
         }
         .random-picker h3 { margin-bottom: 12px; }
         .random-btn {
             background: var(--purple); color: white;
-            border: none; padding: 12px 25px;
+            border: none; padding: 14px 28px;
             border-radius: 50px; cursor: pointer;
             font-family: 'Vazirmatn'; font-weight: 700;
             font-size: 1rem; transition: 0.3s;
             display: inline-flex; align-items: center; gap: 8px;
         }
         .random-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(139,92,246,0.3); }
-        .random-result {
-            margin-top: 15px; font-size: 1.2rem;
-            color: var(--primary); font-weight: 700;
-            min-height: 30px;
-        }
+        .random-result { margin-top: 15px; font-size: 1.2rem; color: var(--primary); font-weight: 700; min-height: 30px; }
 
+        /* ========== GOAL FILTER ========== */
+        .goal-filter {
+            display: flex; gap: 10px; justify-content: center;
+            flex-wrap: wrap; padding: 20px;
+            position: relative; z-index: 1; margin: 0 20px;
+        }
+        .goal-btn {
+            background: var(--bg-card); color: var(--text-light);
+            border: 2px solid var(--border); padding: 15px 20px;
+            border-radius: 20px; cursor: pointer;
+            font-family: 'Vazirmatn'; transition: 0.3s;
+            text-align: center; min-width: 110px;
+        }
+        .goal-btn:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .goal-btn.active {
+            background: var(--primary); color: var(--bg-dark);
+            border-color: var(--primary); font-weight: 700;
+        }
+        .goal-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .goal-label { font-size: 0.8rem; }
+
+        /* ========== VIEW TOGGLE ========== */
+        .view-toggle {
+            display: flex; justify-content: center; gap: 8px;
+            padding: 10px 20px; position: relative; z-index: 1;
+        }
+        .view-btn {
+            background: var(--bg-card); color: var(--text-muted);
+            border: 1px solid var(--border); padding: 10px 18px;
+            border-radius: 12px; cursor: pointer;
+            font-family: 'Vazirmatn'; transition: 0.3s; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .view-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
+
+        /* ========== SEARCH WITH VOICE ========== */
         .search-box {
             padding: 15px 20px; display: flex;
             justify-content: center; gap: 8px;
@@ -224,109 +252,132 @@
         }
         #search {
             width: 100%; max-width: 500px;
-            padding: 12px 18px; border-radius: 50px;
+            padding: 14px 20px; border-radius: 50px;
             border: 2px solid var(--border);
             background: var(--bg-card); color: var(--text-light);
-            font-family: 'Vazirmatn'; font-size: 0.9rem;
+            font-family: 'Vazirmatn'; font-size: 0.95rem;
             transition: 0.3s;
         }
-        #search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 20px rgba(245,158,11,0.15); }
+        #search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 25px rgba(245,158,11,0.15); }
         .voice-btn {
             background: var(--primary); color: var(--bg-dark);
-            border: none; width: 45px; height: 45px;
-            border-radius: 50%; cursor: pointer; font-size: 1.1rem;
-            transition: 0.3s;
+            border: none; width: 48px; height: 48px;
+            border-radius: 50%; cursor: pointer;
+            font-size: 1.2rem; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
         }
         .voice-btn:hover { transform: scale(1.1); }
         .voice-btn.listening { animation: pulse-btn 1s infinite; background: var(--danger); color: white; }
-        @keyframes pulse-btn {
-            0%,100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
+        @keyframes pulse-btn { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
+        /* ========== CATEGORIES ========== */
         .categories {
-            display: flex; gap: 6px; padding: 10px 20px;
+            display: flex; gap: 8px; padding: 10px 20px;
             overflow-x: auto; flex-wrap: nowrap;
             position: relative; z-index: 1;
         }
         .cat-btn {
             background: var(--bg-card); color: var(--text-light);
-            border: 2px solid var(--border); padding: 8px 16px;
+            border: 2px solid var(--border); padding: 10px 18px;
             border-radius: 50px; cursor: pointer;
             font-family: 'Vazirmatn'; white-space: nowrap;
-            transition: 0.3s; font-size: 0.8rem;
+            transition: 0.3s; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 6px;
         }
         .cat-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
         .cat-btn:hover { border-color: var(--primary); }
 
+        /* ========== SIZES ========== */
         .sizes {
-            display: flex; justify-content: center; gap: 6px;
+            display: flex; justify-content: center; gap: 8px;
             padding: 10px 20px; flex-wrap: wrap;
             position: relative; z-index: 1;
         }
         .size-btn {
             background: var(--bg-card); color: var(--text-light);
-            border: 2px solid var(--border); padding: 8px 16px;
+            border: 2px solid var(--border); padding: 10px 18px;
             border-radius: 50px; cursor: pointer;
-            font-family: 'Vazirmatn'; transition: 0.3s; font-size: 0.8rem;
+            font-family: 'Vazirmatn'; transition: 0.3s; font-size: 0.85rem;
         }
         .size-btn.active { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); font-weight: 700; }
-        .size-btn:hover { border-color: var(--primary); }
 
+        /* ========== MENU ========== */
         .menu {
             padding: 20px; display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px; max-width: 1200px; margin: 0 auto;
             position: relative; z-index: 1;
         }
-        .menu-item {
-            background: var(--bg-card); border-radius: 20px;
-            padding: 20px; border: 1px solid var(--border);
+        .menu.grid-view { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        .menu.grid-view .menu-item {
+            background: var(--bg-card); border-radius: 24px;
+            overflow: hidden; border: 1px solid var(--border);
             transition: 0.3s; cursor: pointer;
+            display: flex; flex-direction: column;
         }
-        .menu-item:hover {
-            transform: translateY(-5px);
+        .menu.grid-view .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             border-color: var(--primary);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
         }
-        .menu-item img {
-            width: 100%; height: 180px;
-            object-fit: cover; border-radius: 15px;
-            margin-bottom: 12px;
+        .menu.grid-view .menu-item img { width: 100%; height: 220px; object-fit: cover; }
+        .menu.grid-view .item-info { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+        .menu.grid-view .item-info h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 4px; }
+        .menu.grid-view .item-info .stars { color: var(--primary); font-size: 0.8rem; margin-bottom: 4px; }
+        .menu.grid-view .item-info .tag {
+            display: inline-block; background: var(--bg-dark);
+            color: var(--text-muted); padding: 4px 12px;
+            border-radius: 12px; font-size: 0.75rem; margin: 5px 0;
         }
-        .menu-item h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 4px; }
-        .menu-item .stars { color: var(--primary); font-size: 0.8rem; margin-bottom: 4px; }
-        .menu-item .tag {
+        .menu.grid-view .item-info .desc { color: var(--text-muted); font-size: 0.85rem; margin: 8px 0; line-height: 1.7; }
+        .menu.grid-view .item-info .calories { color: var(--text-muted); font-size: 0.75rem; margin: 4px 0; }
+        .menu.grid-view .item-info .price { color: var(--success); font-size: 1.3rem; font-weight: 700; margin-top: auto; }
+
+        .menu.list-view { grid-template-columns: 1fr; max-width: 800px; }
+        .menu.list-view .menu-item {
+            background: var(--bg-card); border-radius: 16px;
+            border: 1px solid var(--border); transition: 0.3s;
+            cursor: pointer; display: flex; align-items: center;
+            padding: 15px; gap: 20px;
+        }
+        .menu.list-view .menu-item:hover { border-color: var(--primary); background: rgba(245,158,11,0.03); }
+        .menu.list-view .menu-item img {
+            width: 130px; height: 130px;
+            border-radius: 16px; object-fit: cover; flex-shrink: 0;
+        }
+        .menu.list-view .item-info { flex: 1; }
+        .menu.list-view .item-info h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 4px; }
+        .menu.list-view .item-info .stars { color: var(--primary); font-size: 0.75rem; }
+        .menu.list-view .item-info .tag {
             display: inline-block; background: var(--bg-dark);
             color: var(--text-muted); padding: 3px 10px;
-            border-radius: 12px; font-size: 0.7rem; margin: 4px 0;
+            border-radius: 10px; font-size: 0.7rem; margin: 4px 0;
         }
-        .menu-item .desc { color: var(--text-muted); font-size: 0.8rem; margin: 6px 0; line-height: 1.6; }
-        .menu-item .calories {
-            display: inline-flex; align-items: center; gap: 4px;
-            color: var(--text-muted); font-size: 0.75rem;
-            margin: 4px 0;
-        }
-        .menu-item .price { color: var(--success); font-size: 1.2rem; font-weight: 700; margin-top: 8px; }
-        .menu-item .size-label { color: #64748b; font-size: 0.7rem; }
+        .menu.list-view .item-info .desc { color: var(--text-muted); font-size: 0.8rem; margin: 4px 0; }
+        .menu.list-view .item-info .calories { color: var(--text-muted); font-size: 0.7rem; }
+        .menu.list-view .item-info .price { color: var(--success); font-size: 1.1rem; font-weight: 700; }
 
+        /* Goal Badge */
+        .goal-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 4px 10px; border-radius: 20px;
+            font-size: 0.7rem; font-weight: 700; margin: 0 3px;
+        }
+        .goal-badge.energy { background: #fbbf24; color: #000; }
+        .goal-badge.diet { background: #10b981; color: #fff; }
+        .goal-badge.immunity { background: #8b5cf6; color: #fff; }
+        .goal-badge.thirst { background: #3b82f6; color: #fff; }
+
+        /* ========== REVIEWS ========== */
         .reviews-section {
             padding: 50px 20px; background: var(--bg-card);
             position: relative; z-index: 1;
         }
-        .reviews-section h2 {
-            text-align: center; color: var(--primary);
-            font-size: 2rem; margin-bottom: 30px;
-        }
+        .reviews-section h2 { text-align: center; color: var(--primary); font-size: 2rem; margin-bottom: 30px; }
         .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px; max-width: 1000px; margin: 0 auto;
         }
-        .review-card {
-            background: var(--bg-dark); padding: 20px;
-            border-radius: 18px; border: 1px solid var(--border);
-        }
+        .review-card { background: var(--bg-dark); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
         .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .review-avatar {
             width: 45px; height: 45px; border-radius: 50%;
@@ -338,16 +389,15 @@
         .review-stars { color: var(--primary); font-size: 0.85rem; }
         .review-text { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; }
 
+        /* ========== QR CODE ========== */
         .qr-section {
             text-align: center; padding: 40px 20px;
             position: relative; z-index: 1;
         }
         .qr-section h3 { color: var(--primary); margin-bottom: 15px; }
-        .qr-box {
-            background: white; padding: 15px;
-            border-radius: 15px; display: inline-block;
-        }
+        .qr-box { background: white; padding: 15px; border-radius: 15px; display: inline-block; }
 
+        /* ========== MODAL ========== */
         .modal {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -357,7 +407,7 @@
         .modal.active { display: flex; align-items: center; justify-content: center; }
         .modal-content {
             background: var(--bg-card); border-radius: 25px;
-            padding: 30px; max-width: 450px; width: 92%;
+            padding: 30px; max-width: 500px; width: 92%;
             text-align: center; position: relative;
             animation: modalIn 0.3s ease;
         }
@@ -366,23 +416,22 @@
             to { transform: translateY(0); opacity: 1; }
         }
         .modal-close {
-            position: absolute; top: 12px; left: 12px;
+            position: absolute; top: 15px; left: 15px;
             font-size: 1.5rem; color: var(--text-muted);
-            cursor: pointer; width: 35px; height: 35px;
+            cursor: pointer; width: 38px; height: 38px;
             border-radius: 50%; background: var(--bg-dark);
             display: flex; align-items: center; justify-content: center;
             transition: 0.3s; border: none;
         }
-        .modal-close:hover { color: var(--danger); }
+        .modal-close:hover { color: var(--danger); background: var(--border); }
         .modal img {
-            width: 150px; height: 150px; border-radius: 50%;
+            width: 180px; height: 180px; border-radius: 50%;
             object-fit: cover; border: 4px solid var(--primary);
             margin-bottom: 15px;
         }
         .modal h2 { color: var(--primary); margin-bottom: 6px; }
-        .modal .stars { color: var(--primary); margin-bottom: 8px; }
+        .modal .stars { color: var(--primary); margin-bottom: 8px; font-size: 1.1rem; }
         .modal .desc { color: var(--text-muted); margin-bottom: 12px; line-height: 1.8; }
-        .modal .calories { color: var(--text-muted); margin-bottom: 12px; }
         .modal-prices {
             background: var(--bg-dark); padding: 15px;
             border-radius: 12px; text-align: right; margin-bottom: 15px;
@@ -393,12 +442,12 @@
             color: var(--text-light);
         }
         .modal-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-        .modal-btns .btn { font-size: 0.85rem; padding: 10px 18px; }
 
+        /* ========== FOOTER ========== */
         .footer {
             background: var(--bg-card); padding: 40px 20px;
             text-align: center; border-top: 1px solid var(--border);
-            position: relative; z-index: 1;
+            position: relative; z-index: 1; margin-top: 20px;
         }
         .footer h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 5px; }
         .footer .slogan { color: var(--text-muted); margin-bottom: 25px; }
@@ -413,19 +462,21 @@
         .footer-phone:hover { background: var(--primary); color: var(--bg-dark); border-color: var(--primary); transform: translateY(-2px); }
         .footer-whatsapp { background: #25D366 !important; color: white !important; border-color: #25D366 !important; }
         .footer-whatsapp:hover { background: #128C7E !important; }
-        .work-time { color: var(--text-muted); line-height: 2; font-size: 0.95rem; }
+        .work-time { color: var(--text-muted); line-height: 2; }
 
+        /* ========== SCROLL TOP ========== */
         #scrollTop {
             position: fixed; bottom: 25px; left: 25px;
             background: var(--primary); color: var(--bg-dark);
-            border: none; width: 48px; height: 48px;
+            border: none; width: 50px; height: 50px;
             border-radius: 50%; cursor: pointer;
-            font-size: 1.2rem; display: none;
+            font-size: 1.3rem; display: none;
             z-index: 999; transition: 0.3s;
             box-shadow: 0 5px 20px rgba(245,158,11,0.3);
         }
-        #scrollTop:hover { transform: translateY(-4px); }
+        #scrollTop:hover { transform: translateY(-5px); }
 
+        /* ========== TOAST ========== */
         .toast {
             position: fixed; bottom: 30px; right: 50%;
             transform: translateX(50%);
@@ -444,35 +495,38 @@
             to { opacity: 0; }
         }
 
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
-            .menu { grid-template-columns: 1fr; padding: 10px; }
+            .menu.grid-view { grid-template-columns: 1fr; }
+            .menu.list-view .menu-item { flex-direction: column; text-align: center; }
+            .menu.list-view .menu-item img { width: 100%; height: 180px; }
             .header-phones .phone-link span { display: none; }
+            .goal-filter { gap: 5px; }
+            .goal-btn { min-width: 75px; padding: 10px 12px; }
             .modal-content { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ذرات طلایی پس‌زمینه -->
+    <!-- ذرات طلایی -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- Loading -->
+    <!-- لودینگ -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader"></div>
         <p style="color:var(--primary);font-weight:700;">🍹 در حال آماده‌سازی...</p>
     </div>
 
-    <!-- Header -->
+    <!-- هدر -->
     <header class="header">
         <div class="header-brand">
             <img src="logo.png.jpg" alt="لوگو" class="header-logo" onerror="this.style.background='var(--primary)'">
             <span class="header-name">آبمیوه سلامت</span>
         </div>
         <div class="header-actions">
-            <button class="theme-toggle" onclick="toggleTheme()" title="تغییر تم">
-                <i class="fas fa-sun"></i>
-            </button>
+            <button class="icon-btn" onclick="toggleTheme()" title="تغییر تم"><i class="fas fa-sun"></i></button>
             <div class="header-phones">
                 <a href="tel:09120230285" class="phone-link"><i class="fas fa-phone"></i> <span>۰۹۱۲۰۲۳۰۲۸۵</span></a>
                 <a href="tel:09196367277" class="phone-link"><i class="fas fa-phone"></i> <span>۰۹۱۹۶۳۶۷۲۷۷</span></a>
@@ -480,20 +534,18 @@
         </div>
     </header>
 
-    <!-- Hero -->
+    <!-- هیرو -->
     <section class="hero">
         <div class="hero-content" data-aos="fade-up">
-            <img src="logo.png.jpg" alt="آبمیوه سلامت" class="hero-logo" onerror="this.style.background='var(--primary)'">
+            <img src="logo.png.jpg" alt="لوگو" class="hero-logo" onerror="this.style.background='var(--primary)'">
             <h1>آبمیوه سلامت</h1>
             <p class="hero-subtitle">🍃 طبیعی • تازه • سالم</p>
-            
             <div class="visitor-counter">
                 <div class="visitor-dot"></div>
                 <span>امروز</span>
                 <span class="visitor-count" id="visitorCount">۱۲,۴۵۸</span>
                 <span>نفر از ما خرید کردن 🎉</span>
             </div>
-            
             <div class="hero-buttons">
                 <a href="#menu-section" class="btn btn-primary"><i class="fas fa-glass-cheers"></i> مشاهده منو</a>
                 <a href="https://wa.me/989120230285" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> سفارش واتساپ</a>
@@ -501,35 +553,46 @@
         </div>
     </section>
 
-    <!-- Daily Offer -->
+    <!-- تخفیف روزانه -->
     <div class="daily-offer" data-aos="fade-up">
         <h3>🎉 تخفیف ویژه امروز - ۲۰٪ روی همه شیک‌ها!</h3>
-        <p style="margin-bottom:8px;">تا پایان تخفیف:</p>
+        <p class="timer-label">تا پایان تخفیف:</p>
         <div class="offer-timer">
-            <div class="timer-box" id="offerHours">۰۰</div>
-            <span style="font-weight:900;">:</span>
-            <div class="timer-box" id="offerMinutes">۰۰</div>
-            <span style="font-weight:900;">:</span>
-            <div class="timer-box" id="offerSeconds">۰۰</div>
+            <div><div class="timer-box" id="offerHours">۰۰</div><div class="timer-label">ساعت</div></div>
+            <div><div class="timer-box" id="offerMinutes">۰۰</div><div class="timer-label">دقیقه</div></div>
+            <div><div class="timer-box" id="offerSeconds">۰۰</div><div class="timer-label">ثانیه</div></div>
         </div>
     </div>
 
-    <!-- Random Picker -->
+    <!-- انتخاب تصادفی -->
     <div class="random-picker" data-aos="fade-up">
         <h3>🤔 امروز چی بخورم؟</h3>
         <button class="random-btn" onclick="pickRandom()"><i class="fas fa-random"></i> انتخاب تصادفی</button>
         <div class="random-result" id="randomResult"></div>
     </div>
 
-    <!-- Search -->
-    <div class="search-box">
-        <input type="text" id="search" placeholder="🔍 جستجو در منو...">
-        <button class="voice-btn" id="voiceBtn" onclick="startVoiceSearch()" title="جستجوی صوتی">
-            <i class="fas fa-microphone"></i>
-        </button>
+    <!-- فیلتر هدف -->
+    <div class="goal-filter" data-aos="fade-up">
+        <button class="goal-btn active" data-goal="all"><span class="goal-icon">📋</span><span class="goal-label">همه</span></button>
+        <button class="goal-btn" data-goal="energy"><span class="goal-icon">⚡</span><span class="goal-label">انرژی</span></button>
+        <button class="goal-btn" data-goal="diet"><span class="goal-icon">🥗</span><span class="goal-label">کاهش وزن</span></button>
+        <button class="goal-btn" data-goal="immunity"><span class="goal-icon">🛡️</span><span class="goal-label">تقویت ایمنی</span></button>
+        <button class="goal-btn" data-goal="thirst"><span class="goal-icon">💧</span><span class="goal-label">رفع تشنگی</span></button>
     </div>
 
-    <!-- Categories -->
+    <!-- تغییر حالت نمایش -->
+    <div class="view-toggle" data-aos="fade-up">
+        <button class="view-btn active" data-view="grid"><i class="fas fa-th-large"></i> کارتی</button>
+        <button class="view-btn" data-view="list"><i class="fas fa-list"></i> لیستی</button>
+    </div>
+
+    <!-- جستجو -->
+    <div class="search-box">
+        <input type="text" id="search" placeholder="🔍 جستجو در منو...">
+        <button class="voice-btn" id="voiceBtn" onclick="startVoiceSearch()" title="جستجوی صوتی"><i class="fas fa-microphone"></i></button>
+    </div>
+
+    <!-- دسته‌بندی -->
     <div class="categories" id="menu-section">
         <button class="cat-btn active" data-cat="all">📋 همه</button>
         <button class="cat-btn" data-cat="پرفروش‌ها">🔥 پرفروش‌ها</button>
@@ -542,7 +605,7 @@
         <button class="cat-btn" data-cat="رژیمی">🥗 رژیمی</button>
     </div>
 
-    <!-- Sizes -->
+    <!-- سایز -->
     <div class="sizes">
         <button class="size-btn active" data-size="لیوانی">🥤 لیوانی</button>
         <button class="size-btn" data-size="نیم‌لیتری">🧃 نیم‌لیتری</button>
@@ -550,42 +613,24 @@
         <button class="size-btn" data-size="یک‌ونیم‌لیتری">🫙 خانوادگی</button>
     </div>
 
-    <!-- Menu -->
-    <section class="menu"><div id="menu-list"></div></section>
+    <!-- منو -->
+    <section class="menu grid-view" id="menu-list"></section>
 
-    <!-- Reviews -->
+    <!-- نظرات -->
     <section class="reviews-section" data-aos="fade-up">
         <h2>⭐ نظرات مشتریان</h2>
         <div class="reviews-grid">
             <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">م</div>
-                    <div>
-                        <div class="review-name">مریم رضایی</div>
-                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    </div>
-                </div>
+                <div class="review-header"><div class="review-avatar">م</div><div><div class="review-name">مریم رضایی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div></div>
                 <p class="review-text">بهترین آبمیوه‌ای که تا حالا خوردم! آووکادو پسته‌شون فوق‌العاده‌ست 👌</p>
             </div>
             <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">ع</div>
-                    <div>
-                        <div class="review-name">علی محمدی</div>
-                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    </div>
-                </div>
+                <div class="review-header"><div class="review-avatar">ع</div><div><div class="review-name">علی محمدی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div></div>
                 <p class="review-text">کیفیت عالی، قیمت مناسب. شیر پسته‌شون یه چیز دیگه‌ست! 😍</p>
             </div>
             <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">س</div>
-                    <div>
-                        <div class="review-name">سارا احمدی</div>
-                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    </div>
-                </div>
-                <p class="review-text">منوی دیجیتالشون خیلی باحاله! راحت میتونم ببینم چی دارن 👍</p>
+                <div class="review-header"><div class="review-avatar">س</div><div><div class="review-name">سارا احمدی</div><div class="review-stars">⭐⭐⭐⭐⭐</div></div></div>
+                <p class="review-text">منوی دیجیتالشون خیلی باحاله! راحت میتونم انتخاب کنم 👍</p>
             </div>
         </div>
     </section>
@@ -597,7 +642,7 @@
         <p style="color:var(--text-muted);margin-top:10px;">با دوربین گوشی اسکن کنید</p>
     </div>
 
-    <!-- Footer -->
+    <!-- فوتر -->
     <footer class="footer">
         <h2>🍹 آبمیوه سلامت</h2>
         <p class="slogan">طبیعی • تازه • سالم</p>
@@ -610,10 +655,10 @@
         <div class="work-time"><i class="fas fa-clock"></i> ساعت کاری: هر روز | ۹ صبح تا ۱۱ شب</div>
     </footer>
 
-    <!-- Scroll Top -->
+    <!-- اسکرول به بالا -->
     <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 
-    <!-- Modal -->
+    <!-- مودال -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -621,7 +666,7 @@
             <h2 id="modalTitle"></h2>
             <div class="stars" id="modalStars"></div>
             <p class="desc" id="modalDesc"></p>
-            <p class="calories" id="modalCalories"></p>
+            <p style="color:var(--text-muted);margin-bottom:12px;" id="modalCalories"></p>
             <div class="modal-prices" id="modalPrices"></div>
             <div class="modal-btns">
                 <a href="tel:09120230285" class="btn btn-primary"><i class="fas fa-phone"></i> تماس بگیرید</a>
@@ -630,282 +675,180 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        // ========== ذرات طلایی پس‌زمینه ==========
-        (function() {
-            var canvas = document.getElementById('particles-canvas');
-            var ctx = canvas.getContext('2d');
-            var particles = [];
-            var particleCount = 35;
-            
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        // ========== ذرات طلایی ==========
+        (function(){
+            var c=document.getElementById('particles-canvas'),ctx=c.getContext('2d'),p=[];
+            function r(){c.width=innerWidth;c.height=innerHeight}
+            addEventListener('resize',r);r();
+            for(var i=0;i<35;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,rad:Math.random()*3+1,sx:(Math.random()-0.5)*0.5,sy:(Math.random()-0.5)*0.5,op:Math.random()*0.4+0.1});
+            function a(){
+                ctx.clearRect(0,0,c.width,c.height);
+                p.forEach(function(o){ctx.beginPath();ctx.arc(o.x,o.y,o.rad,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,'+o.op+')';ctx.fill();o.x+=o.sx;o.y+=o.sy;if(o.x<0||o.x>c.width)o.sx*=-1;if(o.y<0||o.y>c.height)o.sy*=-1});
+                for(var i=0;i<p.length;i++)for(var j=i+1;j<p.length;j++){var dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(p[i].x,p[i].y);ctx.lineTo(p[j].x,p[j].y);ctx.strokeStyle='rgba(245,158,11,'+(0.08*(1-dist/120))+')';ctx.lineWidth=0.5;ctx.stroke()}}
+                requestAnimationFrame(a);
             }
-            window.addEventListener('resize', resize);
-            resize();
-            
-            for (var i = 0; i < particleCount; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 3 + 1,
-                    speedX: (Math.random() - 0.5) * 0.5,
-                    speedY: (Math.random() - 0.5) * 0.5,
-                    opacity: Math.random() * 0.4 + 0.1
-                });
-            }
-            
-            function animateParticles() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                particles.forEach(function(p) {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(245, 158, 11, ' + p.opacity + ')';
-                    ctx.fill();
-                    
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-                    
-                    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-                });
-                
-                for (var i = 0; i < particles.length; i++) {
-                    for (var j = i + 1; j < particles.length; j++) {
-                        var dx = particles[i].x - particles[j].x;
-                        var dy = particles[i].y - particles[j].y;
-                        var distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = 'rgba(245, 158, 11, ' + (0.08 * (1 - distance/120)) + ')';
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-                
-                requestAnimationFrame(animateParticles);
-            }
-            
-            animateParticles();
-            
-            var mouse = { x: -1000, y: -1000 };
-            document.addEventListener('mousemove', function(e) {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-                
-                particles.forEach(function(p) {
-                    var dx = p.x - mouse.x;
-                    var dy = p.y - mouse.y;
-                    var dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 100) {
-                        p.speedX += dx * 0.002;
-                        p.speedY += dy * 0.002;
-                    }
-                });
-            });
-            
-            document.addEventListener('click', function(e) {
-                for (var i = 0; i < 3; i++) {
-                    particles.push({
-                        x: e.clientX,
-                        y: e.clientY,
-                        radius: Math.random() * 3 + 1,
-                        speedX: (Math.random() - 0.5) * 2,
-                        speedY: (Math.random() - 0.5) * 2,
-                        opacity: Math.random() * 0.5 + 0.2
-                    });
-                }
-            });
+            a();
+            var m={x:-1e3,y:-1e3};
+            addEventListener('mousemove',function(e){m.x=e.clientX;m.y=e.clientY;p.forEach(function(o){var dx=o.x-m.x,dy=o.y-m.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){o.sx+=dx*0.002;o.sy+=dy*0.002}})});
+            addEventListener('click',function(e){for(var i=0;i<3;i++)p.push({x:e.clientX,y:e.clientY,rad:Math.random()*3+1,sx:(Math.random()-0.5)*2,sy:(Math.random()-0.5)*2,op:Math.random()*0.5+0.2})});
         })();
 
-        // ========== DATA ==========
-        const menuData = [
-            { name: "آووکادو پسته", image: "assets/images/Avocado.jpeg", description: "ترکیب خامه‌ای آووکادو با پسته تازه و عسل طبیعی", prices: { "لیوانی": "۸۵,۰۰۰", "نیم‌لیتری": "۱۴۰,۰۰۰", "یک‌لیتری": "۲۲۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۰۰,۰۰۰" }, category: "پرفروش‌ها", stars: 5, calories: "۳۲۰ کالری" },
-            { name: "شیر پسته", image: "assets/images/Pistachio.jpeg", description: "شیر پسته خالص با پسته ایرانی و بستنی سنتی", prices: { "لیوانی": "۹۰,۰۰۰", "نیم‌لیتری": "۱۵۰,۰۰۰", "یک‌لیتری": "۲۴۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۲۰,۰۰۰" }, category: "پرفروش‌ها", stars: 5, calories: "۳۸۰ کالری" },
-            { name: "آب پرتقال طبیعی", image: "assets/images/orange.jpg", description: "پرتقال تازه جنوب، سرشار از ویتامین C", prices: { "لیوانی": "۶۰,۰۰۰", "نیم‌لیتری": "۱۰۰,۰۰۰", "یک‌لیتری": "۱۶۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۲۰,۰۰۰" }, category: "آبمیوه طبیعی", stars: 4, calories: "۱۲۰ کالری" },
-            { name: "آب انار", image: "assets/images/pomegranate.jpg", description: "انار تازه دانه شده، آنتی‌اکسیدان طبیعی", prices: { "لیوانی": "۷۰,۰۰۰", "نیم‌لیتری": "۱۲۰,۰۰۰", "یک‌لیتری": "۱۹۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۶۰,۰۰۰" }, category: "آبمیوه طبیعی", stars: 5, calories: "۱۴۰ کالری" },
-            { name: "آب هندوانه", image: "assets/images/watermelon.jpg", description: "هندوانه شیرین و خنک تابستانی", prices: { "لیوانی": "۵۰,۰۰۰", "نیم‌لیتری": "۸۵,۰۰۰", "یک‌لیتری": "۱۳۰,۰۰۰", "یک‌ونیم‌لیتری": "۱۸۰,۰۰۰" }, category: "آبمیوه طبیعی", stars: 4, calories: "۹۰ کالری" },
-            { name: "شربت آلبالو", image: "assets/images/sour-cherry.jpg", description: "آلبالو تازه با شکر و گلاب", prices: { "لیوانی": "۶۵,۰۰۰", "نیم‌لیتری": "۱۱۰,۰۰۰", "یک‌لیتری": "۱۷۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۴۰,۰۰۰" }, category: "آبمیوه فصل", stars: 4, calories: "۱۵۰ کالری" },
-            { name: "طالبی و عسل", image: "assets/images/melon.jpg", description: "طالبی رسیده تابستانی با عسل طبیعی", prices: { "لیوانی": "۵۵,۰۰۰", "نیم‌لیتری": "۹۵,۰۰۰", "یک‌لیتری": "۱۵۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۱۰,۰۰۰" }, category: "آبمیوه فصل", stars: 4, calories: "۱۱۰ کالری" },
-            { name: "لیموناد تازه", image: "assets/images/lemonade.jpg", description: "لیمو ترش تازه با نعنا و شکر", prices: { "لیوانی": "۵۰,۰۰۰", "نیم‌لیتری": "۸۵,۰۰۰", "یک‌لیتری": "۱۳۰,۰۰۰", "یک‌ونیم‌لیتری": "۱۸۰,۰۰۰" }, category: "ترش", stars: 4, calories: "۱۰۰ کالری" },
-            { name: "گریپ فروت", image: "assets/images/grapefruit.jpg", description: "گریپ فروت تازه با کمی عسل", prices: { "لیوانی": "۵۵,۰۰۰", "نیم‌لیتری": "۹۰,۰۰۰", "یک‌لیتری": "۱۴۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۰۰,۰۰۰" }, category: "ترش", stars: 4, calories: "۸۵ کالری" },
-            { name: "کیوی لیمو", image: "assets/images/kiwi.jpg", description: "کیوی تازه با لیمو ترش و نعنا", prices: { "لیوانی": "۶۰,۰۰۰", "نیم‌لیتری": "۱۰۰,۰۰۰", "یک‌لیتری": "۱۵۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۲۰,۰۰۰" }, category: "ترش", stars: 4, calories: "۹۵ کالری" },
-            { name: "انبه", image: "assets/images/Mango.jpeg", description: "انبه تازه و رسیده هندی با یخ", prices: { "لیوانی": "۸۰,۰۰۰", "نیم‌لیتری": "۱۳۵,۰۰۰", "یک‌لیتری": "۲۱۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۹۰,۰۰۰" }, category: "ترکیبی", stars: 5, calories: "۲۰۰ کالری" },
-            { name: "موز توت فرنگی", image: "assets/images/banana-strawberry.jpg", description: "ترکیب موز رسیده با توت فرنگی تازه", prices: { "لیوانی": "۷۰,۰۰۰", "نیم‌لیتری": "۱۲۰,۰۰۰", "یک‌لیتری": "۱۸۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۵۰,۰۰۰" }, category: "ترکیبی", stars: 4, calories: "۱۸۰ کالری" },
-            { name: "سیب هویج", image: "assets/images/apple-carrot.jpg", description: "ترکیب سیب قرمز با هویج تازه و زنجبیل", prices: { "لیوانی": "۵۵,۰۰۰", "نیم‌لیتری": "۹۵,۰۰۰", "یک‌لیتری": "۱۵۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۱۰,۰۰۰" }, category: "ترکیبی", stars: 4, calories: "۱۱۰ کالری" },
-            { name: "شیک نسکافه", image: "assets/images/Coffee.jpeg", description: "نسکافه اصل با شیر و بستنی وانیلی", prices: { "لیوانی": "۷۵,۰۰۰", "نیم‌لیتری": "۱۳۰,۰۰۰", "یک‌لیتری": "۲۰۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۸۰,۰۰۰" }, category: "شیک", stars: 5, calories: "۳۵۰ کالری" },
-            { name: "شیک معجون میکس", image: "assets/images/Majon.jpeg", description: "ترکیب ویژه موز، توت فرنگی، انبه و شیر", prices: { "لیوانی": "۹۵,۰۰۰", "نیم‌لیتری": "۱۶۰,۰۰۰", "یک‌لیتری": "۲۵۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۵۰,۰۰۰" }, category: "شیک", stars: 5, calories: "۴۲۰ کالری" },
-            { name: "شیک شکلات", image: "assets/images/chocolate-shake.jpg", description: "شکلات تلخ با شیر و بستنی وانیلی", prices: { "لیوانی": "۸۰,۰۰۰", "نیم‌لیتری": "۱۳۵,۰۰۰", "یک‌لیتری": "۲۱۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۹۰,۰۰۰" }, category: "شیک", stars: 4, calories: "۳۸۰ کالری" },
-            { name: "اسموتی توت فرنگی", image: "assets/images/strawberry.jpg", description: "توت فرنگی تازه با ماست یونانی و عسل", prices: { "لیوانی": "۷۵,۰۰۰", "نیم‌لیتری": "۱۳۰,۰۰۰", "یک‌لیتری": "۲۰۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۸۰,۰۰۰" }, category: "اسموتی", stars: 5, calories: "۲۵۰ کالری" },
-            { name: "موز شکلات", image: "assets/images/chocolate-banana.jpg", description: "موز رسیده با شکلات تلخ و شیر بادام", prices: { "لیوانی": "۸۵,۰۰۰", "نیم‌لیتری": "۱۴۰,۰۰۰", "یک‌لیتری": "۲۲۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۰۰,۰۰۰" }, category: "اسموتی", stars: 4, calories: "۳۰۰ کالری" },
-            { name: "اسموتی سبز", image: "assets/images/green-smoothie.jpg", description: "اسفناج، کرفس، سیب سبز و لیمو (بدون شکر)", prices: { "لیوانی": "۶۵,۰۰۰", "نیم‌لیتری": "۱۱۰,۰۰۰", "یک‌لیتری": "۱۷۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۴۰,۰۰۰" }, category: "رژیمی", stars: 4, calories: "۸۰ کالری" },
-            { name: "کرفس و سیب", image: "assets/images/celery-apple.jpg", description: "کرفس تازه با سیب سبز (کم کالری، بدون قند)", prices: { "لیوانی": "۵۰,۰۰۰", "نیم‌لیتری": "۸۵,۰۰۰", "یک‌لیتری": "۱۳۰,۰۰۰", "یک‌ونیم‌لیتری": "۱۹۰,۰۰۰" }, category: "رژیمی", stars: 4, calories: "۶۰ کالری" },
-            { name: "چغندر و هویج", image: "assets/images/beetroot-carrot.jpg", description: "چغندر قرمز با هویج و زنجبیل (سم‌زدا)", prices: { "لیوانی": "۶۰,۰۰۰", "نیم‌لیتری": "۱۰۰,۰۰۰", "یک‌لیتری": "۱۵۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۲۰,۰۰۰" }, category: "رژیمی", stars: 4, calories: "۹۰ کالری" }
+        // ========== دیتا ==========
+        const menuData=[
+            {name:"آووکادو پسته",image:"assets/images/Avocado.jpeg",desc:"ترکیب خامه‌ای آووکادو با پسته تازه و عسل طبیعی",prices:{"لیوانی":"۸۵,۰۰۰","نیم‌لیتری":"۱۴۰,۰۰۰","یک‌لیتری":"۲۲۰,۰۰۰","یک‌ونیم‌لیتری":"۳۰۰,۰۰۰"},cat:"پرفروش‌ها",stars:5,cal:"۳۲۰",goals:["energy","immunity"]},
+            {name:"شیر پسته",image:"assets/images/Pistachio.jpeg",desc:"شیر پسته خالص با پسته ایرانی و بستنی سنتی",prices:{"لیوانی":"۹۰,۰۰۰","نیم‌لیتری":"۱۵۰,۰۰۰","یک‌لیتری":"۲۴۰,۰۰۰","یک‌ونیم‌لیتری":"۳۲۰,۰۰۰"},cat:"پرفروش‌ها",stars:5,cal:"۳۸۰",goals:["energy"]},
+            {name:"آب پرتقال طبیعی",image:"assets/images/orange.jpg",desc:"پرتقال تازه جنوب، سرشار از ویتامین C",prices:{"لیوانی":"۶۰,۰۰۰","نیم‌لیتری":"۱۰۰,۰۰۰","یک‌لیتری":"۱۶۰,۰۰۰","یک‌ونیم‌لیتری":"۲۲۰,۰۰۰"},cat:"آبمیوه طبیعی",stars:4,cal:"۱۲۰",goals:["immunity","thirst"]},
+            {name:"آب انار",image:"assets/images/pomegranate.jpg",desc:"انار تازه دانه شده، آنتی‌اکسیدان طبیعی",prices:{"لیوانی":"۷۰,۰۰۰","نیم‌لیتری":"۱۲۰,۰۰۰","یک‌لیتری":"۱۹۰,۰۰۰","یک‌ونیم‌لیتری":"۲۶۰,۰۰۰"},cat:"آبمیوه طبیعی",stars:5,cal:"۱۴۰",goals:["immunity"]},
+            {name:"آب هندوانه",image:"assets/images/watermelon.jpg",desc:"هندوانه شیرین و خنک تابستانی",prices:{"لیوانی":"۵۰,۰۰۰","نیم‌لیتری":"۸۵,۰۰۰","یک‌لیتری":"۱۳۰,۰۰۰","یک‌ونیم‌لیتری":"۱۸۰,۰۰۰"},cat:"آبمیوه طبیعی",stars:4,cal:"۹۰",goals:["thirst","diet"]},
+            {name:"شربت آلبالو",image:"assets/images/sour-cherry.jpg",desc:"آلبالو تازه با شکر و گلاب (فصل بهار و تابستان)",prices:{"لیوانی":"۶۵,۰۰۰","نیم‌لیتری":"۱۱۰,۰۰۰","یک‌لیتری":"۱۷۰,۰۰۰","یک‌ونیم‌لیتری":"۲۴۰,۰۰۰"},cat:"آبمیوه فصل",stars:4,cal:"۱۵۰",goals:["thirst"]},
+            {name:"طالبی و عسل",image:"assets/images/melon.jpg",desc:"طالبی رسیده تابستانی با عسل طبیعی",prices:{"لیوانی":"۵۵,۰۰۰","نیم‌لیتری":"۹۵,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۱۰,۰۰۰"},cat:"آبمیوه فصل",stars:4,cal:"۱۱۰",goals:["thirst","diet"]},
+            {name:"لیموناد تازه",image:"assets/images/lemonade.jpg",desc:"لیمو ترش تازه با نعنا و شکر",prices:{"لیوانی":"۵۰,۰۰۰","نیم‌لیتری":"۸۵,۰۰۰","یک‌لیتری":"۱۳۰,۰۰۰","یک‌ونیم‌لیتری":"۱۸۰,۰۰۰"},cat:"ترش",stars:4,cal:"۱۰۰",goals:["thirst","diet"]},
+            {name:"گریپ فروت",image:"assets/images/grapefruit.jpg",desc:"گریپ فروت تازه با کمی عسل",prices:{"لیوانی":"۵۵,۰۰۰","نیم‌لیتری":"۹۰,۰۰۰","یک‌لیتری":"۱۴۰,۰۰۰","یک‌ونیم‌لیتری":"۲۰۰,۰۰۰"},cat:"ترش",stars:4,cal:"۸۵",goals:["diet","immunity"]},
+            {name:"کیوی لیمو",image:"assets/images/kiwi.jpg",desc:"کیوی تازه با لیمو ترش و نعنا",prices:{"لیوانی":"۶۰,۰۰۰","نیم‌لیتری":"۱۰۰,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۲۰,۰۰۰"},cat:"ترش",stars:4,cal:"۹۵",goals:["immunity","diet"]},
+            {name:"انبه",image:"assets/images/Mango.jpeg",desc:"انبه تازه و رسیده هندی با یخ",prices:{"لیوانی":"۸۰,۰۰۰","نیم‌لیتری":"۱۳۵,۰۰۰","یک‌لیتری":"۲۱۰,۰۰۰","یک‌ونیم‌لیتری":"۲۹۰,۰۰۰"},cat:"ترکیبی",stars:5,cal:"۲۰۰",goals:["energy"]},
+            {name:"موز توت فرنگی",image:"assets/images/banana-strawberry.jpg",desc:"ترکیب موز رسیده با توت فرنگی تازه",prices:{"لیوانی":"۷۰,۰۰۰","نیم‌لیتری":"۱۲۰,۰۰۰","یک‌لیتری":"۱۸۰,۰۰۰","یک‌ونیم‌لیتری":"۲۵۰,۰۰۰"},cat:"ترکیبی",stars:4,cal:"۱۸۰",goals:["energy"]},
+            {name:"سیب هویج",image:"assets/images/apple-carrot.jpg",desc:"ترکیب سیب قرمز با هویج تازه و زنجبیل",prices:{"لیوانی":"۵۵,۰۰۰","نیم‌لیتری":"۹۵,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۱۰,۰۰۰"},cat:"ترکیبی",stars:4,cal:"۱۱۰",goals:["immunity","diet"]},
+            {name:"شیک نسکافه",image:"assets/images/Coffee.jpeg",desc:"نسکافه اصل با شیر و بستنی وانیلی",prices:{"لیوانی":"۷۵,۰۰۰","نیم‌لیتری":"۱۳۰,۰۰۰","یک‌لیتری":"۲۰۰,۰۰۰","یک‌ونیم‌لیتری":"۲۸۰,۰۰۰"},cat:"شیک",stars:5,cal:"۳۵۰",goals:["energy"]},
+            {name:"شیک معجون میکس",image:"assets/images/Majon.jpeg",desc:"ترکیب ویژه موز، توت فرنگی، انبه و شیر",prices:{"لیوانی":"۹۵,۰۰۰","نیم‌لیتری":"۱۶۰,۰۰۰","یک‌لیتری":"۲۵۰,۰۰۰","یک‌ونیم‌لیتری":"۳۵۰,۰۰۰"},cat:"شیک",stars:5,cal:"۴۲۰",goals:["energy"]},
+            {name:"شیک شکلات",image:"assets/images/chocolate-shake.jpg",desc:"شکلات تلخ با شیر و بستنی وانیلی",prices:{"لیوانی":"۸۰,۰۰۰","نیم‌لیتری":"۱۳۵,۰۰۰","یک‌لیتری":"۲۱۰,۰۰۰","یک‌ونیم‌لیتری":"۲۹۰,۰۰۰"},cat:"شیک",stars:4,cal:"۳۸۰",goals:["energy"]},
+            {name:"اسموتی توت فرنگی",image:"assets/images/strawberry.jpg",desc:"توت فرنگی تازه با ماست یونانی و عسل",prices:{"لیوانی":"۷۵,۰۰۰","نیم‌لیتری":"۱۳۰,۰۰۰","یک‌لیتری":"۲۰۰,۰۰۰","یک‌ونیم‌لیتری":"۲۸۰,۰۰۰"},cat:"اسموتی",stars:5,cal:"۲۵۰",goals:["immunity"]},
+            {name:"موز شکلات",image:"assets/images/chocolate-banana.jpg",desc:"موز رسیده با شکلات تلخ و شیر بادام",prices:{"لیوانی":"۸۵,۰۰۰","نیم‌لیتری":"۱۴۰,۰۰۰","یک‌لیتری":"۲۲۰,۰۰۰","یک‌ونیم‌لیتری":"۳۰۰,۰۰۰"},cat:"اسموتی",stars:4,cal:"۳۰۰",goals:["energy"]},
+            {name:"اسموتی سبز",image:"assets/images/green-smoothie.jpg",desc:"اسفناج، کرفس، سیب سبز و لیمو (بدون شکر)",prices:{"لیوانی":"۶۵,۰۰۰","نیم‌لیتری":"۱۱۰,۰۰۰","یک‌لیتری":"۱۷۰,۰۰۰","یک‌ونیم‌لیتری":"۲۴۰,۰۰۰"},cat:"رژیمی",stars:4,cal:"۸۰",goals:["diet","immunity"]},
+            {name:"کرفس و سیب",image:"assets/images/celery-apple.jpg",desc:"کرفس تازه با سیب سبز (کم کالری، بدون قند)",prices:{"لیوانی":"۵۰,۰۰۰","نیم‌لیتری":"۸۵,۰۰۰","یک‌لیتری":"۱۳۰,۰۰۰","یک‌ونیم‌لیتری":"۱۹۰,۰۰۰"},cat:"رژیمی",stars:4,cal:"۶۰",goals:["diet"]},
+            {name:"چغندر و هویج",image:"assets/images/beetroot-carrot.jpg",desc:"چغندر قرمز با هویج و زنجبیل (سم‌زدا)",prices:{"لیوانی":"۶۰,۰۰۰","نیم‌لیتری":"۱۰۰,۰۰۰","یک‌لیتری":"۱۵۰,۰۰۰","یک‌ونیم‌لیتری":"۲۲۰,۰۰۰"},cat:"رژیمی",stars:4,cal:"۹۰",goals:["immunity","diet"]}
         ];
 
-        let currentSize = 'لیوانی';
-        let currentCategory = 'all';
+        let currentSize='لیوانی',currentCat='all',currentGoal='all',currentView='grid';
 
-        function displayMenu(items) {
-            const list = document.getElementById('menu-list');
-            list.innerHTML = '';
-            if (items.length === 0) {
-                list.innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:50px;">😔 محصولی یافت نشد</p>';
-                return;
-            }
-            items.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'menu-item';
-                card.setAttribute('data-aos', 'fade-up');
-                card.setAttribute('data-aos-delay', (index % 6) * 50);
-                card.onclick = () => openModal(item);
-                const starsHTML = '⭐'.repeat(item.stars || 4);
-                card.innerHTML = `
+        const goalLabels={energy:'⚡ انرژی',diet:'🥗 کاهش وزن',immunity:'🛡️ تقویت ایمنی',thirst:'💧 رفع تشنگی'};
+
+        function displayMenu(items){
+            const list=document.getElementById('menu-list');
+            list.innerHTML='';
+            list.className='menu '+(currentView==='grid'?'grid-view':'list-view');
+            if(items.length===0){list.innerHTML='<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:50px;">😔 محصولی یافت نشد</p>';return}
+            items.forEach((item,i)=>{
+                const card=document.createElement('div');
+                card.className='menu-item';
+                card.setAttribute('data-aos','fade-up');
+                card.setAttribute('data-aos-delay',(i%6)*60);
+                card.onclick=()=>openModal(item);
+                const stars='⭐'.repeat(item.stars);
+                let goalsHTML='';
+                if(item.goals)item.goals.forEach(g=>{goalsHTML+=`<span class="goal-badge ${g}">${goalLabels[g]}</span>`});
+                card.innerHTML=`
                     <img src="${item.image}" alt="${item.name}" onerror="this.src='logo.png.jpg'">
-                    <h3>${item.name}</h3>
-                    <div class="stars">${starsHTML}</div>
-                    <span class="tag">${item.category}</span>
-                    <p class="desc">${item.description}</p>
-                    <div class="calories"><i class="fas fa-fire"></i> ${item.calories || '---'}</div>
-                    <div class="price">${item.prices[currentSize]} تومان</div>
-                    <div class="size-label">${currentSize}</div>
-                `;
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <div class="stars">${stars}</div>
+                        <span class="tag">${item.cat}</span>
+                        <div>${goalsHTML}</div>
+                        <p class="desc">${item.desc}</p>
+                        <p class="calories"><i class="fas fa-fire"></i> ${item.cal} کالری</p>
+                        <div class="price">${item.prices[currentSize]} تومان</div>
+                    </div>`;
                 list.appendChild(card);
             });
             AOS.refresh();
         }
 
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = btn.dataset.cat;
-                const filtered = currentCategory === 'all' ? menuData : menuData.filter(i => i.category === currentCategory);
-                displayMenu(filtered);
-            });
-        });
-
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentSize = btn.dataset.size;
-                const filtered = currentCategory === 'all' ? menuData : menuData.filter(i => i.category === currentCategory);
-                displayMenu(filtered);
-            });
-        });
-
-        document.getElementById('search').addEventListener('input', e => {
-            const term = e.target.value.toLowerCase();
-            const filtered = menuData.filter(i => 
-                i.name.toLowerCase().includes(term) || 
-                i.category.toLowerCase().includes(term) ||
-                i.description.toLowerCase().includes(term)
-            );
-            displayMenu(filtered);
-        });
-
-        function startVoiceSearch() {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                showToast('🎤 جستجوی صوتی پشتیبانی نمیشه');
-                return;
-            }
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'fa-IR';
-            const voiceBtn = document.getElementById('voiceBtn');
-            voiceBtn.classList.add('listening');
-            recognition.start();
-            recognition.onresult = (event) => {
-                document.getElementById('search').value = event.results[0][0].transcript;
-                document.getElementById('search').dispatchEvent(new Event('input'));
-                voiceBtn.classList.remove('listening');
-                showToast('🎤 گفتی: ' + event.results[0][0].transcript);
-            };
-            recognition.onerror = () => { voiceBtn.classList.remove('listening'); };
-            recognition.onend = () => { voiceBtn.classList.remove('listening'); };
+        function filterAll(){
+            let filtered=menuData;
+            if(currentCat!=='all')filtered=filtered.filter(i=>i.cat===currentCat);
+            if(currentGoal!=='all')filtered=filtered.filter(i=>i.goals&&i.goals.includes(currentGoal));
+            return filtered;
         }
 
-        function openModal(item) {
-            document.getElementById('modalImg').src = item.image;
-            document.getElementById('modalTitle').textContent = item.name;
-            document.getElementById('modalStars').textContent = '⭐'.repeat(item.stars || 4);
-            document.getElementById('modalDesc').textContent = item.description;
-            document.getElementById('modalCalories').innerHTML = '<i class="fas fa-fire"></i> ' + (item.calories || '---');
-            let html = '';
-            for (const [size, price] of Object.entries(item.prices)) {
-                html += '<p><strong>' + size + ':</strong> ' + price + ' تومان</p>';
-            }
-            document.getElementById('modalPrices').innerHTML = html;
+        document.querySelectorAll('.cat-btn').forEach(b=>b.addEventListener('click',function(){
+            document.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));
+            this.classList.add('active');
+            currentCat=this.dataset.cat;
+            displayMenu(filterAll());
+        }));
+
+        document.querySelectorAll('.goal-btn').forEach(b=>b.addEventListener('click',function(){
+            document.querySelectorAll('.goal-btn').forEach(x=>x.classList.remove('active'));
+            this.classList.add('active');
+            currentGoal=this.dataset.goal;
+            displayMenu(filterAll());
+        }));
+
+        document.querySelectorAll('.size-btn').forEach(b=>b.addEventListener('click',function(){
+            document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active'));
+            this.classList.add('active');
+            currentSize=this.dataset.size;
+            displayMenu(filterAll());
+        }));
+
+        document.querySelectorAll('.view-btn').forEach(b=>b.addEventListener('click',function(){
+            document.querySelectorAll('.view-btn').forEach(x=>x.classList.remove('active'));
+            this.classList.add('active');
+            currentView=this.dataset.view;
+            displayMenu(filterAll());
+        }));
+
+        document.getElementById('search').addEventListener('input',e=>{
+            const t=e.target.value.toLowerCase();
+            displayMenu(filterAll().filter(i=>i.name.toLowerCase().includes(t)||i.cat.toLowerCase().includes(t)||i.desc.toLowerCase().includes(t)));
+        });
+
+        function startVoiceSearch(){
+            if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showToast('🎤 جستجوی صوتی پشتیبانی نمیشه');return}
+            const SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=new SR();
+            rec.lang='fa-IR';const vb=document.getElementById('voiceBtn');vb.classList.add('listening');rec.start();
+            rec.onresult=e=>{document.getElementById('search').value=e.results[0][0].transcript;document.getElementById('search').dispatchEvent(new Event('input'));vb.classList.remove('listening');showToast('🎤 گفتی: '+e.results[0][0].transcript)};
+            rec.onerror=()=>vb.classList.remove('listening');rec.onend=()=>vb.classList.remove('listening');
+        }
+
+        function openModal(item){
+            document.getElementById('modalImg').src=item.image;
+            document.getElementById('modalTitle').textContent=item.name;
+            document.getElementById('modalStars').textContent='⭐'.repeat(item.stars);
+            document.getElementById('modalDesc').textContent=item.desc;
+            document.getElementById('modalCalories').innerHTML=`<i class="fas fa-fire"></i> ${item.cal} کالری`;
+            let h='';for(const[s,p]of Object.entries(item.prices))h+=`<p><strong>${s}:</strong> ${p} تومان</p>`;
+            document.getElementById('modalPrices').innerHTML=h;
             document.getElementById('modal').classList.add('active');
         }
+        function closeModal(){document.getElementById('modal').classList.remove('active')}
+        document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 
-        function closeModal() { document.getElementById('modal').classList.remove('active'); }
-        document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-
-        function pickRandom() {
-            const item = menuData[Math.floor(Math.random() * menuData.length)];
-            document.getElementById('randomResult').innerHTML = '🎯 <strong>' + item.name + '</strong> - ' + item.prices[currentSize] + ' تومان';
+        function pickRandom(){
+            const item=menuData[Math.floor(Math.random()*menuData.length)];
+            document.getElementById('randomResult').innerHTML=`🎯 <strong>${item.name}</strong> - ${item.prices[currentSize]} تومان`;
         }
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const icon = document.querySelector('.theme-toggle i');
-            if (html.getAttribute('data-theme') === 'dark') {
-                html.setAttribute('data-theme', 'light');
-                icon.className = 'fas fa-moon';
-                showToast('☀️ حالت روشن');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                icon.className = 'fas fa-sun';
-                showToast('🌙 حالت تاریک');
-            }
+        function toggleTheme(){
+            const html=document.documentElement,icon=document.querySelector('.icon-btn i');
+            if(html.getAttribute('data-theme')==='dark'){html.setAttribute('data-theme','light');icon.className='fas fa-moon';showToast('☀️ حالت روشن')}
+            else{html.setAttribute('data-theme','dark');icon.className='fas fa-sun';showToast('🌙 حالت تاریک')}
         }
 
-        function updateVisitorCount() {
-            const base = 12458;
-            document.getElementById('visitorCount').textContent = (base + Math.floor(Math.random() * 20)).toLocaleString('fa-IR');
+        function updateVisitor(){document.getElementById('visitorCount').textContent=(12458+Math.floor(Math.random()*20)).toLocaleString('fa-IR')}
+        setInterval(updateVisitor,5000);
+
+        function updateTimer(){
+            const now=new Date(),end=new Date();end.setHours(23,59,59,999);const diff=end-now;
+            if(diff<=0){document.getElementById('offerHours').textContent='۰۰';document.getElementById('offerMinutes').textContent='۰۰';document.getElementById('offerSeconds').textContent='۰۰';return}
+            document.getElementById('offerHours').textContent=String(Math.floor(diff/3600000)).padStart(2,'۰');
+            document.getElementById('offerMinutes').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'۰');
+            document.getElementById('offerSeconds').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'۰');
         }
-        setInterval(updateVisitorCount, 5000);
+        setInterval(updateTimer,1000);updateTimer();
 
-        function updateTimer() {
-            const now = new Date();
-            const end = new Date(); end.setHours(23, 59, 59, 999);
-            const diff = end - now;
-            if (diff <= 0) { document.getElementById('offerHours').textContent = '۰۰'; document.getElementById('offerMinutes').textContent = '۰۰'; document.getElementById('offerSeconds').textContent = '۰۰'; return; }
-            document.getElementById('offerHours').textContent = String(Math.floor(diff / 3600000)).padStart(2, '۰');
-            document.getElementById('offerMinutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '۰');
-            document.getElementById('offerSeconds').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '۰');
-        }
-        setInterval(updateTimer, 1000); updateTimer();
+        function showToast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
 
-        function showToast(msg) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2200);
-        }
+        new QRCode(document.getElementById('qrCode'),{text:window.location.href,width:150,height:150});
 
-        new QRCode(document.getElementById('qrCode'), { text: window.location.href, width: 150, height: 150 });
+        const sb=document.getElementById('scrollTop');
+        addEventListener('scroll',()=>{sb.style.display=scrollY>400?'block':'none'});
 
-        const scrollBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => { scrollBtn.style.display = window.scrollY > 400 ? 'block' : 'none'; });
+        addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hidden')},1500)});
 
-        window.addEventListener('load', () => {
-            setTimeout(() => { document.getElementById('loadingScreen').classList.add('hidden'); }, 1500);
-        });
-
-        AOS.init({ duration: 600, once: true });
+        AOS.init({duration:600,once:true});
         displayMenu(menuData);
     </script>
 </body>
