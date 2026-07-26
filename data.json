@@ -1,0 +1,143 @@
+[
+  {
+    "name": "آووکادو پسته",
+    "images": [
+      "assets/images/Avocado.jpeg",
+      "assets/images/Avocado-2.jpeg",
+      "assets/images/Avocado-3.jpeg"
+    ],
+    "desc": "ترکیب خامه‌ای آووکادو با پسته تازه و عسل طبیعی",
+    "ingredients": ["آووکادو تازه", "پسته ایرانی", "عسل طبیعی", "شیر بادام", "یخ"],
+    "prices": { "لیوانی": "۸۵,۰۰۰", "نیم‌لیتری": "۱۴۰,۰۰۰", "یک‌لیتری": "۲۲۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۰۰,۰۰۰" },
+    "cat": "پرفروش‌ها",
+    "stars": 5,
+    "cal": "۳۲۰",
+    "goals": ["energy", "immunity"],
+    "badge": "special",
+    "discount": 0,
+    "status": "available",
+    "views": 1245,
+    "combo": ["شیر پسته", "اسموتی سبز", "شیک نسکافه"],
+    "order": 1
+  },
+  {
+    "name": "شیر پسته",
+    "images": [
+      "assets/images/Pistachio.jpeg",
+      "assets/images/Pistachio-2.jpeg"
+    ],
+    "desc": "شیر پسته خالص با پسته ایرانی و بستنی سنتی",
+    "ingredients": ["پسته ایرانی", "شیر تازه", "بستنی سنتی", "گلاب", "هل"],
+    "prices": { "لیوانی": "۹۰,۰۰۰", "نیم‌لیتری": "۱۵۰,۰۰۰", "یک‌لیتری": "۲۴۰,۰۰۰", "یک‌ونیم‌لیتری": "۳۲۰,۰۰۰" },
+    "cat": "پرفروش‌ها",
+    "stars": 5,
+    "cal": "۳۸۰",
+    "goals": ["energy"],
+    "badge": "",
+    "discount": 0,
+    "status": "available",
+    "views": 980,
+    "combo": ["آووکادو پسته", "بستنی زعفرانی", "شیک شکلات"],
+    "order": 2
+  },
+  {
+    "name": "آب پرتقال طبیعی",
+    "images": [
+      "assets/images/orange.jpg",
+      "assets/images/orange-2.jpg",
+      "assets/images/orange-3.jpg",
+      "assets/images/orange-4.jpg"
+    ],
+    "desc": "پرتقال تازه جنوب، سرشار از ویتامین C",
+    "ingredients": ["پرتقال تازه جنوب", "یخ", "بدون شکر افزوده"],
+    "prices": { "لیوانی": "۶۰,۰۰۰", "نیم‌لیتری": "۱۰۰,۰۰۰", "یک‌لیتری": "۱۶۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۲۰,۰۰۰" },
+    "cat": "آبمیوه طبیعی",
+    "stars": 4,
+    "cal": "۱۲۰",
+    "goals": ["immunity", "thirst"],
+    "badge": "",
+    "discount": 0,
+    "status": "available",
+    "views": 1560,
+    "combo": ["آب هویج", "لیموناد تازه", "اسموتی سبز"],
+    "order": 3
+  },
+  {
+    "name": "آب انار",
+    "images": [
+      "assets/images/pomegranate.jpg"
+    ],
+    "desc": "انار تازه دانه شده، آنتی‌اکسیدان طبیعی",
+    "ingredients": ["انار تازه", "یخ", "بدون شکر افزوده"],
+    "prices": { "لیوانی": "۷۰,۰۰۰", "نیم‌لیتری": "۱۲۰,۰۰۰", "یک‌لیتری": "۱۹۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۶۰,۰۰۰" },
+    "cat": "آبمیوه طبیعی",
+    "stars": 5,
+    "cal": "۱۴۰",
+    "goals": ["immunity"],
+    "badge": "",
+    "discount": 10,
+    "status": "low",
+    "views": 820,
+    "combo": ["آب پرتقال طبیعی", "گریپ فروت", "چغندر و هویج"],
+    "order": 4
+  },
+  {
+    "name": "انبه",
+    "images": [
+      "assets/images/Mango.jpeg",
+      "assets/images/Mango-2.jpeg"
+    ],
+    "desc": "انبه تازه و رسیده هندی با یخ",
+    "ingredients": ["انبه هندی", "یخ", "کمی شکر"],
+    "prices": { "لیوانی": "۸۰,۰۰۰", "نیم‌لیتری": "۱۳۵,۰۰۰", "یک‌لیتری": "۲۱۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۹۰,۰۰۰" },
+    "cat": "ترکیبی",
+    "stars": 5,
+    "cal": "۲۰۰",
+    "goals": ["energy"],
+    "badge": "",
+    "discount": 0,
+    "status": "available",
+    "views": 1100,
+    "combo": ["موز توت فرنگی", "آووکادو پسته", "شیک معجون میکس"],
+    "order": 5
+  },
+  {
+    "name": "شیک نسکافه",
+    "images": [
+      "assets/images/Coffee.jpeg",
+      "assets/images/Coffee-2.jpeg"
+    ],
+    "desc": "نسکافه اصل با شیر و بستنی وانیلی",
+    "ingredients": ["نسکافه اصل", "شیر تازه", "بستنی وانیلی", "شکر", "یخ"],
+    "prices": { "لیوانی": "۷۵,۰۰۰", "نیم‌لیتری": "۱۳۰,۰۰۰", "یک‌لیتری": "۲۰۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۸۰,۰۰۰" },
+    "cat": "شیک",
+    "stars": 5,
+    "cal": "۳۵۰",
+    "goals": ["energy"],
+    "badge": "new",
+    "discount": 0,
+    "status": "available",
+    "views": 750,
+    "combo": ["شیک شکلات", "شیر پسته", "موز شکلات"],
+    "order": 6
+  },
+  {
+    "name": "اسموتی سبز",
+    "images": [
+      "assets/images/green-smoothie.jpg"
+    ],
+    "desc": "اسفناج، کرفس، سیب سبز و لیمو (بدون شکر)",
+    "ingredients": ["اسفناج تازه", "کرفس", "سیب سبز", "لیمو ترش", "زنجبیل", "بدون شکر"],
+    "prices": { "لیوانی": "۶۵,۰۰۰", "نیم‌لیتری": "۱۱۰,۰۰۰", "یک‌لیتری": "۱۷۰,۰۰۰", "یک‌ونیم‌لیتری": "۲۴۰,۰۰۰" },
+    "cat": "رژیمی",
+    "stars": 4,
+    "cal": "۸۰",
+    "goals": ["diet", "immunity"],
+    "badge": "",
+    "discount": 15,
+    "status": "available",
+    "views": 630,
+    "combo": ["کرفس و سیب", "آب پرتقال طبیعی", "چغندر و هویج"],
+    "order": 7
+  }
+]
