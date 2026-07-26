@@ -99,4 +99,25 @@ function copyLink(){navigator.clipboard.writeText(window.location.href.split('?'
 
 document.querySelectorAll('.cat-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');currentCat=this.dataset.cat;displayMenu();}));
 document.querySelectorAll('.goal-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.goal-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');currentGoal=this.dataset.goal;displayMenu();}));
-document.querySelectorAll('.price-btn').forEach(b=>b.addEventListener('click',function(){document
+document.querySelectorAll('.price-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.price-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');currentPrice=this.dataset.price;displayMenu();}));
+document.querySelectorAll('.size-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');currentSize=this.dataset.size;displayMenu();}));
+document.getElementById('search').addEventListener('input',e=>{const t=e.target.value.toLowerCase();if(!t){displayMenu();return;}const filtered=getFiltered().filter(i=>i.name.toLowerCase().includes(t)||i.cat.toLowerCase().includes(t)||i.desc.toLowerCase().includes(t));const temp=[...menuData];menuData=filtered;displayMenu();menuData=temp;});
+
+function startVoiceSearch(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('🎤 پشتیبانی نمیشه','error');return;}const rec=new SR();rec.lang='fa-IR';const btn=document.getElementById('voiceBtn');btn.classList.add('listening');rec.start();rec.onresult=e=>{document.getElementById('search').value=e.results[0][0].transcript;document.getElementById('search').dispatchEvent(new Event('input'));btn.classList.remove('listening');};rec.onerror=()=>btn.classList.remove('listening');rec.onend=()=>btn.classList.remove('listening');}
+
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('shareModal').addEventListener('click',function(e){if(e.target===this)closeShare();});
+
+function toggleTheme(){const h=document.documentElement,icon=document.querySelector('.header-actions .icon-btn i');if(h.getAttribute('data-theme')==='dark'){h.setAttribute('data-theme','light');icon.className='fas fa-moon';}else{h.setAttribute('data-theme','dark');icon.className='fas fa-sun';}}
+
+function submitReview(){const name=document.getElementById('reviewName').value.trim(),text=document.getElementById('reviewText').value.trim(),stars=parseInt(document.getElementById('reviewStars').value);if(!name||!text){toast('❌ نام و نظر الزامی','error');return;}const review={name,text,stars,date:new Date().toLocaleDateString('fa-IR')};const saved=JSON.parse(localStorage.getItem('juice_reviews')||'[]');saved.unshift(review);localStorage.setItem('juice_reviews',JSON.stringify(saved.slice(0,20)));document.getElementById('reviewName').value='';document.getElementById('reviewText').value='';loadReviews();toast('✅ ثبت شد!');}
+function loadReviews(){const saved=JSON.parse(localStorage.getItem('juice_reviews')||'[]');const grid=document.getElementById('reviewsGrid');if(!saved.length){grid.innerHTML='<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;padding:20px;">💬 هنوز نظری ثبت نشده. اولین نفر باش!</p>';return;}grid.innerHTML=saved.map(r=>`<div class="review-card"><div class="review-header"><div class="review-avatar">${r.name[0]}</div><div><div class="review-name">${r.name}</div><div class="review-stars">${'⭐'.repeat(r.stars)}</div></div></div><p class="review-text">${r.text}</p><div style="color:var(--text-muted);font-size:0.7rem;margin-top:8px;">${r.date}</div></div>`).join('');}
+
+function checkOffer(){const has=menuData.some(i=>i.discount>0);const b=document.getElementById('dailyBanner');if(b&&has){b.classList.add('show');updateOfferTimer();setInterval(updateOfferTimer,1000);}}
+function updateOfferTimer(){const n=new Date(),e=new Date();e.setHours(23,59,59,999);const d=e-n;if(d<=0)return;document.getElementById('offerH').textContent=String(Math.floor(d/3600000)).padStart(2,'۰');document.getElementById('offerM').textContent=String(Math.floor((d%3600000)/60000)).padStart(2,'۰');document.getElementById('offerS').textContent=String(Math.floor((d%60000)/1000)).padStart(2,'۰');}
+
+function toast(msg,type='success'){const t=document.createElement('div');t.className='toast';t.textContent=msg;if(type==='error')t.style.background='var(--danger)';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+
+const sb=document.getElementById('scrollTop');window.addEventListener('scroll',()=>{sb.style.display=window.scrollY>400?'block':'none';});
+
+window.addEventListener('load',()=>{loadData();loadReviews();if(typeof QRCode!=='undefined')new QRCode(document.getElementById('qrCode'),{text:window.location.href,width:140,height:140});const params=new URLSearchParams(window.location.search);const item=params.get('item');if(item)setTimeout(()=>openModal(decodeURIComponent(item)),600);});
