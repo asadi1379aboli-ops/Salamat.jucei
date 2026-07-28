@@ -95,7 +95,7 @@
             background: var(--card); border-radius: 16px;
             border: 1px solid var(--border); overflow-x: auto;
         }
-        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
         th {
             background: var(--bg); padding: 12px 14px; text-align: right;
             color: var(--primary); font-weight: 700; font-size: 0.8rem;
@@ -244,7 +244,7 @@
             <div class="stat"><div class="num" id="statTotal">۰</div><div class="label">🍹 محصولات</div></div>
             <div class="stat"><div class="num" id="statCats">۰</div><div class="label">📂 دسته‌بندی</div></div>
             <div class="stat"><div class="num" id="statDiscounts">۰</div><div class="label">🎫 تخفیف‌دار</div></div>
-            <div class="stat"><div class="num" id="statViews">۰</div><div class="label">👁️ بازدید</div></div>
+            <div class="stat"><div class="num" id="statViews">۰</div><div class="label">👁️ بازدید (تخمینی)</div></div>
         </div>
 
         <div class="table-wrap">
@@ -352,8 +352,23 @@
         let tempFiles = [];
 
         // ========== DATA ==========
-        function getData() { return JSON.parse(localStorage.getItem('admin_menu_data') || '[]'); }
-        function setData(d) { localStorage.setItem('admin_menu_data', JSON.stringify(d)); menuData = d; refreshUI(); }
+        function getData() {
+            const stored = localStorage.getItem('admin_menu_data');
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch (e) {
+                    return [];
+                }
+            }
+            return [];
+        }
+        
+        function setData(d) {
+            localStorage.setItem('admin_menu_data', JSON.stringify(d));
+            menuData = d;
+            refreshUI();
+        }
 
         // ========== LOGIN ==========
         function login() {
@@ -361,8 +376,16 @@
             const p = document.getElementById('password').value;
             const errEl = document.getElementById('loginError');
 
-            if (!t.startsWith('ghp_')) { errEl.textContent = '❌ توکن باید با ghp_ شروع بشه'; errEl.style.display = 'block'; return; }
-            if (p !== PASS) { errEl.textContent = '❌ رمز اشتباهه'; errEl.style.display = 'block'; return; }
+            if (!t.startsWith('ghp_')) { 
+                errEl.textContent = '❌ توکن باید با ghp_ شروع بشه'; 
+                errEl.style.display = 'block'; 
+                return; 
+            }
+            if (p !== PASS) { 
+                errEl.textContent = '❌ رمز اشتباهه'; 
+                errEl.style.display = 'block'; 
+                return; 
+            }
 
             token = t;
             document.getElementById('loginScreen').classList.add('hidden');
@@ -372,34 +395,54 @@
         }
 
         function logout() {
-            if (confirm('خارج میشی؟ تغییرات ذخیره نشده پاک میشه!')) {
-                document.getElementById('loginScreen').classList.remove('hidden');
-                document.getElementById('dashboard').classList.remove('active');
-                document.getElementById('password').value = '';
-                token = '';
-            }
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('password').value = '';
+            token = '';
         }
 
         // ========== GITHUB API ==========
         async function loadFromGitHub() {
             if (!token) return;
+            
+            // اول از localStorage بخون
+            const localData = getData();
+            if (localData.length > 0) {
+                setData(localData);
+                updateSyncStatus(true, '📦 داده‌های محلی بارگذاری شد');
+            }
+            
+            // بعد از GitHub هم دریافت کن
             try {
                 const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
                     headers: { Authorization: `token ${token}` }
                 });
+                
                 if (res.ok) {
                     const data = await res.json();
-                    const content = JSON.parse(atob(data.content));
-                    setData(content);
-                    updateSyncStatus(true, '✅ داده‌ها از GitHub دریافت شد');
-                    toast('✅ از سایت دریافت شد', 'success');
+                    // decode base64 properly for UTF-8
+                    const jsonStr = decodeURIComponent(escape(atob(data.content)));
+                    const content = JSON.parse(jsonStr);
+                    
+                    if (Array.isArray(content) && content.length > 0) {
+                        setData(content);
+                        updateSyncStatus(true, '✅ داده‌ها از GitHub دریافت شد');
+                        toast('✅ از سایت دریافت شد', 'success');
+                    }
                 } else if (res.status === 404) {
-                    updateSyncStatus(true, '⚠️ فایل data.json هنوز وجود نداره - با اولین انتشار ساخته میشه');
-                    toast('📝 فایل جدید با انتشار ساخته میشه', 'info');
+                    updateSyncStatus(true, '⚠️ فایل data.json هنوز وجود نداره');
+                    if (localData.length === 0) {
+                        toast('📝 فایلی پیدا نشد. یه محصول بساز و انتشار بده', 'info');
+                    }
+                } else {
+                    throw new Error('API error');
                 }
             } catch (e) {
-                updateSyncStatus(false, '❌ خطا در اتصال به GitHub');
-                toast('⚠️ خطا در دریافت', 'error');
+                if (getData().length > 0) {
+                    updateSyncStatus(true, '⚠️ آفلاین - داده‌های محلی نمایش داده میشه');
+                } else {
+                    updateSyncStatus(false, '❌ خطا در اتصال به GitHub');
+                }
             }
         }
 
@@ -420,9 +463,14 @@
                     sha = checkData.sha;
                 }
 
+                const jsonStr = JSON.stringify(data, null, 2);
+                // Encode properly for UTF-8
+                const utf8Bytes = new TextEncoder().encode(jsonStr);
+                const base64 = btoa(String.fromCharCode(...utf8Bytes));
+
                 const body = {
-                    message: `🔄 بروزرسانی منو - ${new Date().toLocaleString('fa-IR')}`,
-                    content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
+                    message: '🔄 بروزرسانی منو - ' + new Date().toLocaleString('fa-IR'),
+                    content: base64,
                     branch: 'main'
                 };
                 if (sha) body.sha = sha;
@@ -461,21 +509,26 @@
             document.getElementById('statTotal').textContent = data.length.toLocaleString('fa-IR');
             document.getElementById('statCats').textContent = [...new Set(data.map(i => i.cat))].length.toLocaleString('fa-IR');
             document.getElementById('statDiscounts').textContent = data.filter(i => i.discount > 0).length.toLocaleString('fa-IR');
-            document.getElementById('statViews').textContent = data.reduce((sum, i) => sum + (i.views || 0), 0).toLocaleString('fa-IR');
+            // بازدید تخمینی (چون واقعی توی localStorage مرورگر مشتریاست)
+            document.getElementById('statViews').textContent = '📊';
 
             const statusIcons = { available: '✅', low: '⏳', unavailable: '❌' };
 
             document.getElementById('tableBody').innerHTML = data.map((item, i) => {
                 const img = (item.images && item.images[0]) || item.image || 'logo.png.jpg';
+                const priceText = (item.prices && item.prices['لیوانی']) ? 
+                    item.prices['لیوانی'].replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ت' : 
+                    '---';
+                
                 return `
                     <tr>
                         <td>${i + 1}</td>
-                        <td><img src="${img}" class="product-img" onerror="this.src='logo.png.jpg'"></td>
-                        <td><strong>${item.name}</strong>${item.discount > 0 ? ` <span style="color:var(--danger);">-${item.discount}%</span>` : ''}</td>
+                        <td><img src="${img}" class="product-img" onerror="this.src='logo.png.jpg'" alt="${item.name}"></td>
+                        <td><strong>${item.name}</strong>${item.discount > 0 ? ` <span style="color:var(--danger);font-size:0.75rem;">-${item.discount}%</span>` : ''}</td>
                         <td>${item.cat}</td>
                         <td>${statusIcons[item.status] || '✅'}</td>
                         <td>${item.discount > 0 ? item.discount + '٪' : '-'}</td>
-                        <td style="color:var(--success);">${(item.prices?.['لیوانی'] || '۰').replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ت</td>
+                        <td style="color:var(--success);font-weight:700;">${priceText}</td>
                         <td>${(item.views || 0).toLocaleString('fa-IR')}</td>
                         <td>
                             <button class="icon-btn" onclick="openEditModal(${i})" title="ویرایش">✏️</button>
@@ -548,9 +601,9 @@
             const item = getData()[index];
             document.getElementById('modalTitle').textContent = '✏️ ویرایش: ' + item.name;
             document.getElementById('editIdx').value = index;
-            document.getElementById('pName').value = item.name;
+            document.getElementById('pName').value = item.name || '';
             document.getElementById('pDesc').value = item.desc || '';
-            document.getElementById('pCat').value = item.cat;
+            document.getElementById('pCat').value = item.cat || 'آبمیوه طبیعی';
             document.getElementById('pStatus').value = item.status || 'available';
             document.getElementById('pBadge').value = item.badge || '';
             document.getElementById('pStars').value = item.stars || 4;
@@ -568,7 +621,10 @@
             document.getElementById('productModal').classList.add('active');
         }
 
-        function closeProductModal() { document.getElementById('productModal').classList.remove('active'); clearForm(); }
+        function closeProductModal() { 
+            document.getElementById('productModal').classList.remove('active'); 
+            clearForm(); 
+        }
 
         function clearForm() {
             ['pName','pDesc','pCal','p1','p2','p3','p4'].forEach(id => document.getElementById(id).value = '');
@@ -620,6 +676,11 @@
             if (idx >= 0) {
                 product.views = data[idx].views || 0;
                 product.goals = data[idx].goals || [];
+                // Keep old images if no new files uploaded
+                if (tempFiles.length === 0) {
+                    product.images = data[idx].images;
+                    product.image = data[idx].image;
+                }
                 data[idx] = product;
             } else {
                 data.push(product);
@@ -633,7 +694,7 @@
 
         function deleteProduct(index) {
             const item = getData()[index];
-            if (confirm(`حذف "${item.name}"؟\nاین عملیات قابل بازگشت نیست!`)) {
+            if (confirm('حذف "' + item.name + '"؟\nاین عملیات قابل بازگشت نیست!')) {
                 const data = getData();
                 data.splice(index, 1);
                 setData(data);
@@ -657,7 +718,7 @@
                 const json = document.getElementById('importJson').value.trim();
                 const imported = JSON.parse(json);
                 if (!Array.isArray(imported)) throw new Error('Invalid format');
-                if (confirm(`${imported.length} محصول وارد شود؟`)) {
+                if (confirm(imported.length + ' محصول وارد شود؟')) {
                     setData(imported);
                     document.getElementById('importModal').classList.remove('active');
                     document.getElementById('importJson').value = '';
@@ -680,8 +741,15 @@
         }
 
         // ========== EVENT LISTENERS ==========
-        document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeProductModal(); });
-        document.getElementById('importModal').addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('active'); document.getElementById('importJson').value = ''; } });
+        document.getElementById('productModal').addEventListener('click', function(e) { 
+            if (e.target === this) closeProductModal(); 
+        });
+        document.getElementById('importModal').addEventListener('click', function(e) { 
+            if (e.target === this) { 
+                this.classList.remove('active'); 
+                document.getElementById('importJson').value = ''; 
+            } 
+        });
 
         // ========== INIT ==========
         refreshUI();
