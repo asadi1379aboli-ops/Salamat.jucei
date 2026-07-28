@@ -135,7 +135,25 @@ async function loadData() {
         menuData = await response.json();
         menuData.sort((a, b) => (a.order || 99) - (b.order || 99));
         
-        // بارگذاری بازدیدهای واقعی از CountAPI
+        // تبدیل همه قیمت‌ها به فرمت قابل نمایش
+        menuData.forEach(item => {
+            if (item.prices) {
+                const newPrices = {};
+                for (let size in item.prices) {
+                    let priceStr = String(item.prices[size]);
+                    // حذف همه کاراکترهای غیر عددی
+                    let num = priceStr.replace(/[^0-9]/g, '');
+                    if (num) {
+                        // تبدیل به فرمت فارسی با کاما
+                        newPrices[size] = parseInt(num).toLocaleString('fa-IR');
+                    } else {
+                        newPrices[size] = priceStr;
+                    }
+                }
+                item.prices = newPrices;
+            }
+        });
+        
         loadRealViews();
     } catch (error) {
         console.warn('⚠️ Could not load data.json, using empty menu');
