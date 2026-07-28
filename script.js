@@ -47,7 +47,6 @@ document.getElementById('installClose').addEventListener('click', () => {
     window.addEventListener('resize', resize);
     resize();
     
-    // Create particles
     for (let i = 0; i < 30; i++) {
         particles.push({
             x: Math.random() * canvas.width,
@@ -64,7 +63,6 @@ document.getElementById('installClose').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         particles.forEach(p => {
-            // Convert hex to rgba
             const hex = p.color;
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
@@ -82,7 +80,6 @@ document.getElementById('installClose').addEventListener('click', () => {
             if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
         });
         
-        // Draw connections
         for (let i = 0; i < particles.length; i++) {
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
@@ -137,6 +134,9 @@ async function loadData() {
         if (!response.ok) throw new Error('Failed to load data');
         menuData = await response.json();
         menuData.sort((a, b) => (a.order || 99) - (b.order || 99));
+        
+        // بارگذاری بازدیدهای واقعی از CountAPI
+        loadRealViews();
     } catch (error) {
         console.warn('⚠️ Could not load data.json, using empty menu');
         menuData = [];
@@ -145,6 +145,40 @@ async function loadData() {
     displayMenu();
     renderRecentlyViewed();
     checkDailyOffer();
+}
+
+// ========== بارگذاری بازدید واقعی از CountAPI ==========
+async function loadRealViews() {
+    for (let item of menuData) {
+        const countKey = 'salamat_juice_' + item.name.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+        try {
+            const res = await fetch('https://api.countapi.xyz/get/salamat-juice/' + encodeURIComponent(countKey));
+            if (res.ok) {
+                const data = await res.json();
+                if (data.value) {
+                    item.views = data.value;
+                }
+            }
+        } catch (e) {
+            // بی‌خیال - از مقدار قبلی استفاده کن
+        }
+    }
+    displayMenu();
+}
+
+// ========== افزایش بازدید واقعی ==========
+async function incrementRealView(item) {
+    const countKey = 'salamat_juice_' + item.name.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+    try {
+        const res = await fetch('https://api.countapi.xyz/hit/salamat-juice/' + encodeURIComponent(countKey));
+        if (res.ok) {
+            const data = await res.json();
+            item.views = data.value || (item.views || 0) + 1;
+        }
+    } catch (e) {
+        // اگه اینترنت نبود، بازم بازدید رو افزایش بده
+        item.views = (item.views || 0) + 1;
+    }
 }
 
 // ========== FILTERS ==========
@@ -190,7 +224,6 @@ function displayMenu() {
         const mainImage = (item.images && item.images[0]) || item.image || 'logo.png.jpg';
         const imageCount = (item.images && item.images.length > 1) ? item.images.length : 0;
         
-        // Badges
         let badgeHTML = '';
         if (item.badge === 'special') {
             badgeHTML = '<div class="ribbon special">⭐ پرفروش</div>';
@@ -251,7 +284,6 @@ function displayMenu() {
         `;
     }).join('');
     
-    // Animate items
     requestAnimationFrame(() => {
         document.querySelectorAll('.menu-item').forEach((item, i) => {
             setTimeout(() => item.classList.add('visible'), i * 40);
@@ -374,13 +406,13 @@ function showSuggestions(item) {
     section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ========== MODAL ==========
+// ========== MODAL با بازدید واقعی ==========
 function openModal(name) {
     const item = menuData.find(i => i.name === name);
     if (!item) return;
     
-    // Increment view count
-    item.views = (item.views || 0) + 1;
+    // افزایش بازدید واقعی از طریق CountAPI
+    incrementRealView(item);
     
     addToRecentlyViewed(item);
     modalImages = item.images || [item.image || 'logo.png.jpg'];
@@ -396,14 +428,12 @@ function openModal(name) {
         <i class="fas fa-eye"></i> ${(item.views || 0).toLocaleString('fa-IR')} بازدید
     `;
     
-    // Status
     const statusEl = document.getElementById('modalStatus');
     if (statusEl) {
         statusEl.textContent = statusLabels[item.status] || statusLabels.available;
         statusEl.className = 'status-text ' + (item.status || 'available');
     }
     
-    // Ingredients
     const ingredientsList = document.getElementById('ingredientsList');
     if (ingredientsList && item.ingredients) {
         ingredientsList.innerHTML = item.ingredients.map(i => 
@@ -411,14 +441,12 @@ function openModal(name) {
         ).join('');
     }
     
-    // Prices
     let pricesHTML = '';
     for (const [size, price] of Object.entries(item.prices || {})) {
         pricesHTML += `<p><strong>${size}:</strong> ${price} تومان</p>`;
     }
     document.getElementById('modalPrices').innerHTML = pricesHTML;
     
-    // Combo suggestions
     const comboSection = document.getElementById('comboSection');
     if (comboSection && item.combo && item.combo.length > 0) {
         comboSection.style.display = 'block';
@@ -445,7 +473,6 @@ function updateModalImage() {
         this.src = 'logo.png.jpg';
     };
     
-    // Update dots
     if (dots && modalImages.length > 1) {
         dots.innerHTML = modalImages.map((_, i) => 
             `<span class="slider-dot ${i === modalImageIndex ? 'active' : ''}" 
@@ -697,7 +724,6 @@ document.getElementById('search').addEventListener('input', function(e) {
     menuData = tempMenuData;
 });
 
-// Modal close on overlay click
 document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
@@ -706,7 +732,6 @@ document.getElementById('shareModal').addEventListener('click', function(e) {
     if (e.target === this) closeShare();
 });
 
-// Scroll to top button
 const scrollTopBtn = document.getElementById('scrollTop');
 window.addEventListener('scroll', () => {
     scrollTopBtn.style.display = window.scrollY > 400 ? 'block' : 'none';
@@ -734,7 +759,6 @@ window.addEventListener('load', () => {
     loadData();
     loadReviews();
     
-    // Generate QR Code
     const qrElement = document.getElementById('qrCode');
     if (qrElement && typeof QRCode !== 'undefined') {
         new QRCode(qrElement, {
@@ -744,7 +768,6 @@ window.addEventListener('load', () => {
         });
     }
     
-    // Check for shared item in URL
     const params = new URLSearchParams(window.location.search);
     const sharedItem = params.get('item');
     if (sharedItem) {
