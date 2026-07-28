@@ -70,7 +70,7 @@ body::after {
     border-image: linear-gradient(90deg, var(--orange), var(--pineapple), var(--strawberry), var(--berry)) 1;
 }
 .header-brand { display: flex; align-items: center; gap: 10px; }
-.header-logo { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--orange); object-fit: cover; box-shadow: 0 0 15px rgba(255,107,53,0.3); }
+.header-logo { width: 50px; height: 50px; border-radius: 50%; border: none; object-fit: cover; box-shadow: 0 0 20px rgba(255,107,53,0.4); }
 .header-name { font-size: 1.1rem; background: linear-gradient(135deg, var(--orange), var(--strawberry)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 .icon-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-light); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
@@ -83,7 +83,16 @@ body::after {
 .hero { min-height: 90vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; padding: 100px 20px 60px; overflow: hidden; }
 .hero-bg { position: absolute; top: -50px; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 30% 20%, rgba(255,107,53,0.12) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, rgba(255,210,63,0.08) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(255,45,85,0.06) 0%, transparent 50%); z-index: 0; }
 .hero-content { position: relative; z-index: 1; }
-.hero-logo { width: 130px; height: 130px; border-radius: 50%; border: 4px solid transparent; border-image: linear-gradient(135deg, var(--orange), var(--pineapple), var(--strawberry), var(--berry)) 1; margin-bottom: 20px; object-fit: cover; box-shadow: 0 10px 40px rgba(255,107,53,0.2); animation: float 4s ease-in-out infinite; }
+.hero-logo { 
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    border: none; 
+    margin-bottom: 25px; 
+    object-fit: cover; 
+    box-shadow: 0 15px 50px rgba(255,107,53,0.3), 0 0 80px rgba(255,210,63,0.15); 
+    animation: float 4s ease-in-out infinite; 
+}
 .hero h1 { font-size: 2.8rem; background: linear-gradient(135deg, var(--orange), var(--pineapple), var(--strawberry)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900; margin-bottom: 8px; }
 .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px; }
 .hero-welcome { color: var(--orange); font-size: 1rem; margin-bottom: 25px; font-weight: 500; animation: float 3s ease-in-out infinite; }
