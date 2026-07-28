@@ -8,82 +8,195 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a; --card: #1e293b; --text: #e2e8f0;
-            --muted: #94a3b8; --primary: #f59e0b; --success: #10b981;
-            --danger: #ef4444; --border: #334155;
+            --bg: #1a0f07; --card: #241a10; --text: #f5e6d3;
+            --muted: #c4a882; --primary: #ff6b35; --success: #7bc67e;
+            --danger: #ff2d55; --warning: #ffd23f; --border: #3d2b1a;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Vazirmatn', sans-serif; background: var(--bg); color: var(--text); direction: rtl; min-height: 100vh; }
-        .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        .login-screen.hidden { display: none; }
-        .login-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); text-align: center; max-width: 420px; width: 90%; }
-        .login-box h1 { color: var(--primary); margin-bottom: 5px; }
-        .login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 15px; }
-        .login-box label { display: block; text-align: right; color: var(--muted); font-size: 0.8rem; margin: 8px 0 4px; }
-        .login-box input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: 'Vazirmatn'; font-size: 0.9rem; }
-        .login-box button { width: 100%; padding: 12px; background: var(--primary); color: var(--bg); border: none; border-radius: 10px; font-family: 'Vazirmatn'; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 15px; }
-        .login-error { color: var(--danger); margin-top: 10px; display: none; font-size: 0.85rem; }
 
-        .dashboard { display: none; padding: 15px; max-width: 1200px; margin: 0 auto; }
+        .login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); display: flex; align-items: center;
+            justify-content: center; z-index: 9999;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,107,53,0.08) 0%, transparent 50%);
+        }
+        .login-screen.hidden { display: none; }
+        .login-box {
+            background: var(--card); padding: 35px; border-radius: 24px;
+            border: 1px solid var(--border); text-align: center;
+            max-width: 420px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .login-box h1 { color: var(--primary); margin-bottom: 5px; font-size: 1.8rem; }
+        .login-box .emoji { font-size: 3rem; margin-bottom: 10px; }
+        .login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
+        .login-box label { display: block; text-align: right; color: var(--muted); font-size: 0.8rem; margin: 10px 0 5px; }
+        .login-box input {
+            width: 100%; padding: 12px 14px; border-radius: 12px;
+            border: 1px solid var(--border); background: var(--bg);
+            color: var(--text); font-family: 'Vazirmatn'; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .login-box input:focus { outline: none; border-color: var(--primary); }
+        .login-box button {
+            width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary), #ff8c5a);
+            color: white; border: none; border-radius: 12px;
+            font-family: 'Vazirmatn'; font-weight: 700; font-size: 1.1rem;
+            cursor: pointer; margin-top: 20px; transition: 0.3s;
+        }
+        .login-box button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,107,53,0.3); }
+        .login-error { color: var(--danger); margin-top: 10px; display: none; font-size: 0.85rem; }
+        .login-info { color: var(--muted); font-size: 0.7rem; margin-top: 15px; line-height: 1.8; }
+
+        .dashboard { display: none; padding: 20px; max-width: 1300px; margin: 0 auto; }
         .dashboard.active { display: block; }
-        .dash-header { background: var(--card); padding: 15px 20px; border-radius: 14px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-        .dash-header h2 { color: var(--primary); font-size: 1.2rem; }
-        .btn { padding: 8px 16px; border-radius: 10px; border: none; font-family: 'Vazirmatn'; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 5px; }
-        .btn-success { background: var(--success); color: white; }
+
+        .dash-header {
+            background: var(--card); padding: 18px 25px; border-radius: 16px;
+            border: 1px solid var(--border); display: flex;
+            justify-content: space-between; align-items: center;
+            margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+        }
+        .dash-header h2 { color: var(--primary); font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        .btn {
+            padding: 10px 18px; border-radius: 12px; border: none;
+            font-family: 'Vazirmatn'; font-weight: 700; cursor: pointer;
+            transition: 0.3s; font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-success { background: var(--success); color: #000; }
+        .btn-success:hover { background: #5a9e5f; }
         .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; }
+        .btn-purple:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139,92,246,0.3); }
         .btn-danger { background: var(--danger); color: white; }
         .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat { background: var(--card); padding: 12px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
-        .stat .num { font-size: 1.5rem; font-weight: 900; color: var(--primary); }
-        .stat .label { color: var(--muted); font-size: 0.75rem; }
-        .sync-status { background: var(--card); border: 1px solid var(--border); padding: 10px 15px; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
-        .sync-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .sync-dot.online { background: var(--success); }
-        .sync-dot.offline { background: var(--danger); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; }
 
-        .table-wrap { background: var(--card); border-radius: 14px; border: 1px solid var(--border); overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { background: var(--bg); padding: 10px; text-align: right; color: var(--primary); font-weight: 700; font-size: 0.8rem; border-bottom: 2px solid var(--border); }
-        td { padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 0.78rem; }
-        tr:hover td { background: rgba(245,158,11,0.03); }
-        .product-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
-        .icon-btn { background: var(--bg); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; display: inline-flex; align-items: center; justify-content: center; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+        .stat {
+            background: var(--card); padding: 15px; border-radius: 14px;
+            border: 1px solid var(--border); text-align: center;
+        }
+        .stat .num { font-size: 1.8rem; font-weight: 900; color: var(--primary); }
+        .stat .label { color: var(--muted); font-size: 0.75rem; margin-top: 4px; }
+
+        .sync-bar {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 12px 18px; border-radius: 12px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px; font-size: 0.85rem;
+        }
+        .sync-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .sync-dot.online { background: var(--success); animation: pulse-dot 1.5s infinite; }
+        .sync-dot.offline { background: var(--danger); }
+        @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .table-wrap {
+            background: var(--card); border-radius: 16px;
+            border: 1px solid var(--border); overflow-x: auto;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        th {
+            background: var(--bg); padding: 12px 14px; text-align: right;
+            color: var(--primary); font-weight: 700; font-size: 0.8rem;
+            border-bottom: 2px solid var(--border); white-space: nowrap;
+        }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+        tr:hover td { background: rgba(255,107,53,0.03); }
+        .product-img { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; }
+        .icon-btn {
+            background: var(--bg); border: 1px solid var(--border);
+            color: var(--text); width: 30px; height: 30px;
+            border-radius: 8px; cursor: pointer; font-size: 0.8rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+        }
         .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
         .icon-btn.del:hover { border-color: var(--danger); color: var(--danger); }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.75);
+            z-index: 1000; align-items: center; justify-content: center;
+        }
         .modal-overlay.active { display: flex; }
-        .modal { background: var(--card); border-radius: 16px; padding: 25px; max-width: 650px; width: 95%; max-height: 85vh; overflow-y: auto; border: 1px solid var(--border); }
-        .modal h3 { color: var(--primary); margin-bottom: 15px; text-align: center; }
-        .form-group { margin-bottom: 10px; }
-        .form-group label { display: block; margin-bottom: 3px; color: var(--muted); font-size: 0.78rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: 'Vazirmatn'; font-size: 0.85rem; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+        .modal {
+            background: var(--card); border-radius: 20px; padding: 25px;
+            max-width: 700px; width: 95%; max-height: 85vh; overflow-y: auto;
+            border: 1px solid var(--border); animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal h3 { color: var(--primary); margin-bottom: 20px; text-align: center; font-size: 1.2rem; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--muted); font-size: 0.8rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 14px; border-radius: 10px;
+            border: 1px solid var(--border); background: var(--bg);
+            color: var(--text); font-family: 'Vazirmatn'; font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--primary);
+        }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
         .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .modal-btns { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
-        .tag-input { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); min-height: 40px; }
-        .tag-item { background: var(--primary); color: var(--bg); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px; }
-        .tag-item button { background: none; border: none; color: var(--bg); cursor: pointer; font-size: 0.8rem; }
+        .modal-btns { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 
-        .file-upload-area { border: 2px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 10px; }
-        .file-upload-area:hover { border-color: var(--primary); background: rgba(245,158,11,0.05); }
-        .file-upload-area i { font-size: 2rem; color: var(--primary); margin-bottom: 8px; }
+        .tag-container {
+            display: flex; flex-wrap: wrap; gap: 5px; padding: 10px;
+            border: 1px solid var(--border); border-radius: 10px;
+            background: var(--bg); min-height: 42px; align-items: center;
+        }
+        .tag {
+            background: var(--primary); color: white; padding: 4px 12px;
+            border-radius: 15px; font-size: 0.75rem; display: flex;
+            align-items: center; gap: 6px;
+        }
+        .tag button { background: none; border: none; color: white; cursor: pointer; font-size: 0.8rem; }
+        .tag-input {
+            border: none; background: transparent; color: var(--text);
+            font-family: 'Vazirmatn'; font-size: 0.8rem; flex: 1;
+            min-width: 100px; padding: 4px;
+        }
+        .tag-input:focus { outline: none; }
+
+        .file-upload-zone {
+            border: 2px dashed var(--border); border-radius: 14px;
+            padding: 25px; text-align: center; cursor: pointer;
+            transition: 0.3s; margin-bottom: 10px;
+        }
+        .file-upload-zone:hover { border-color: var(--primary); background: rgba(255,107,53,0.05); }
+        .file-upload-zone i { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
         .file-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-        .file-item { position: relative; width: 80px; height: 80px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+        .file-item {
+            position: relative; width: 80px; height: 80px;
+            border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
+        }
         .file-item img, .file-item video { width: 100%; height: 100%; object-fit: cover; }
-        .file-item button { position: absolute; top: 2px; right: 2px; background: var(--danger); color: white; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 0.6rem; }
+        .file-item .remove-file {
+            position: absolute; top: 3px; right: 3px;
+            background: var(--danger); color: white; border: none;
+            width: 20px; height: 20px; border-radius: 50%;
+            cursor: pointer; font-size: 0.6rem;
+        }
 
-        .toast { position: fixed; bottom: 20px; right: 50%; transform: translateX(50%); padding: 10px 20px; border-radius: 50px; font-weight: 700; z-index: 9999; font-size: 0.85rem; animation: fadeIn 0.3s; }
-        .toast.success { background: var(--success); color: white; }
+        .toast {
+            position: fixed; bottom: 25px; right: 50%; transform: translateX(50%);
+            padding: 12px 25px; border-radius: 50px; font-weight: 700;
+            z-index: 9999; font-size: 0.85rem; animation: fadeIn 0.3s ease;
+            white-space: nowrap;
+        }
+        .toast.success { background: var(--success); color: #000; }
         .toast.error { background: var(--danger); color: white; }
         .toast.info { background: #3b82f6; color: white; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(50%) translateY(10px); } to { opacity: 1; transform: translateX(50%) translateY(0); } }
 
-        @media (max-width: 768px) { .form-row, .form-row-3, .price-grid { grid-template-columns: 1fr; } .stats { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            .form-row, .form-row-3, .price-grid { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr 1fr; }
+            .dash-header { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -91,15 +204,19 @@
     <!-- Login -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <h1>🔐 پنل مدیریت</h1>
+            <div class="emoji">🍹</div>
+            <h1>پنل مدیریت</h1>
             <p>آبمیوه سلامت</p>
-            <label>توکن GitHub</label>
-            <input type="password" id="githubToken" placeholder="ghp_...">
-            <label>رمز عبور</label>
-            <input type="password" id="password" placeholder="admin123">
-            <button onclick="login()">🚀 ورود</button>
+            <label>🔑 توکن GitHub</label>
+            <input type="password" id="githubToken" placeholder="ghp_..." dir="ltr">
+            <label>🔒 رمز عبور</label>
+            <input type="password" id="password" placeholder="admin123" dir="ltr">
+            <button onclick="login()">🚀 ورود به پنل</button>
             <p class="login-error" id="loginError"></p>
-            <p style="color:var(--muted);font-size:0.7rem;margin-top:10px;">توکن رو از github.com/settings/tokens بساز</p>
+            <p class="login-info">
+                📌 توکن رو از <b>github.com/settings/tokens</b> بساز<br>
+                تیک <b>repo</b> رو بزن
+            </p>
         </div>
     </div>
 
@@ -108,33 +225,34 @@
         <div class="dash-header">
             <h2>🍹 مدیریت منو</h2>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-success" onclick="openAdd()"><i class="fas fa-plus"></i> محصول جدید</button>
-                <button class="btn btn-purple" onclick="publishNow()"><i class="fas fa-cloud-upload-alt"></i> 🚀 انتشار در سایت</button>
-                <button class="btn btn-outline" onclick="loadFromGitHub()"><i class="fas fa-download"></i> دریافت</button>
-                <button class="btn btn-outline" onclick="exportJSON()"><i class="fas fa-file-export"></i> خروجی</button>
-                <button class="btn btn-outline" onclick="document.getElementById('importModal').classList.add('active')"><i class="fas fa-file-import"></i> ورودی</button>
-                <button class="btn btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+                <button class="btn btn-success" onclick="openAddModal()">➕ محصول جدید</button>
+                <button class="btn btn-purple" onclick="publishNow()">🚀 انتشار در سایت</button>
+                <button class="btn btn-outline" onclick="loadFromGitHub()">📥 دریافت از سایت</button>
+                <button class="btn btn-outline" onclick="exportData()">📤 خروجی JSON</button>
+                <button class="btn btn-outline" onclick="document.getElementById('importModal').classList.add('active')">📥 ورودی JSON</button>
+                <button class="btn btn-danger" onclick="logout()">🚪 خروج</button>
             </div>
         </div>
 
-        <div class="sync-status">
+        <div class="sync-bar">
             <div class="sync-dot" id="syncDot"></div>
             <span id="syncText">آماده به کار</span>
-            <span style="margin-right:auto;color:var(--muted);font-size:0.75rem;" id="syncTime"></span>
+            <span style="margin-right:auto;color:var(--muted);font-size:0.8rem;" id="syncTime"></span>
         </div>
 
         <div class="stats">
-            <div class="stat"><div class="num" id="statTotal">۰</div><div class="label">محصولات</div></div>
-            <div class="stat"><div class="num" id="statCats">۰</div><div class="label">دسته‌بندی</div></div>
-            <div class="stat"><div class="num" id="statDiscounts">۰</div><div class="label">تخفیف‌دار</div></div>
-            <div class="stat"><div class="num" id="statViews">۰</div><div class="label">کل بازدید</div></div>
+            <div class="stat"><div class="num" id="statTotal">۰</div><div class="label">🍹 محصولات</div></div>
+            <div class="stat"><div class="num" id="statCats">۰</div><div class="label">📂 دسته‌بندی</div></div>
+            <div class="stat"><div class="num" id="statDiscounts">۰</div><div class="label">🎫 تخفیف‌دار</div></div>
+            <div class="stat"><div class="num" id="statViews">۰</div><div class="label">👁️ بازدید</div></div>
         </div>
 
         <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
-                        <th>#</th><th>عکس</th><th>نام</th><th>دسته</th><th>وضعیت</th><th>تخفیف</th><th>قیمت</th><th>بازدید</th><th>عملیات</th>
+                        <th>#</th><th>عکس</th><th>نام</th><th>دسته</th><th>وضعیت</th>
+                        <th>تخفیف</th><th>قیمت</th><th>بازدید</th><th>عملیات</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -146,12 +264,12 @@
     <div class="modal-overlay" id="productModal">
         <div class="modal">
             <h3 id="modalTitle">➕ محصول جدید</h3>
-            
-            <div class="form-group"><label>نام محصول *</label><input type="text" id="pName" placeholder="آب پرتقال"></div>
-            
+
+            <div class="form-group"><label>📝 نام محصول *</label><input type="text" id="pName" placeholder="مثال: آب پرتقال طبیعی"></div>
+
             <div class="form-group">
-                <label>تصاویر و فیلم</label>
-                <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                <label>🖼️ تصاویر و فیلم</label>
+                <div class="file-upload-zone" onclick="document.getElementById('fileInput').click()">
                     <i class="fas fa-cloud-upload-alt"></i>
                     <p style="color:var(--muted);">کلیک کن یا فایل رو بکش اینجا</p>
                     <p style="color:var(--muted);font-size:0.7rem;">عکس (jpg, png, webp) یا فیلم (mp4)</p>
@@ -159,71 +277,51 @@
                 <input type="file" id="fileInput" multiple accept="image/*,video/mp4" style="display:none;" onchange="handleFiles(this.files)">
                 <div class="file-list" id="fileList"></div>
             </div>
-            
-            <div class="form-group"><label>توضیحات</label><textarea id="pDesc" rows="2"></textarea></div>
-            
+
+            <div class="form-group"><label>📄 توضیحات</label><textarea id="pDesc" rows="2" placeholder="توضیح کوتاه درباره محصول..."></textarea></div>
+
             <div class="form-group">
-                <label>مواد تشکیل‌دهنده</label>
-                <div class="tag-input" id="ingredientsTags" onclick="document.getElementById('ingredientInput').focus()">
-                    <input type="text" id="ingredientInput" placeholder="بنویس و Enter بزن..." style="border:none;background:transparent;color:var(--text);flex:1;min-width:100px;padding:4px;font-family:'Vazirmatn';font-size:0.8rem;" onkeypress="if(event.key==='Enter'){event.preventDefault();addIngredient();}">
+                <label>🧂 مواد تشکیل‌دهنده</label>
+                <div class="tag-container" id="ingredientsContainer">
+                    <input type="text" class="tag-input" id="ingredientInput" placeholder="بنویس و Enter بزن..." onkeypress="if(event.key==='Enter'){event.preventDefault();addIngredient();}">
                 </div>
             </div>
-            
+
             <div class="form-group">
-                <label>پیشنهادهای ترکیبی</label>
-                <div class="tag-input" id="comboTags" onclick="document.getElementById('comboInput').focus()">
-                    <input type="text" id="comboInput" placeholder="نام محصول رو بنویس و Enter بزن..." style="border:none;background:transparent;color:var(--text);flex:1;min-width:100px;padding:4px;font-family:'Vazirmatn';font-size:0.8rem;" onkeypress="if(event.key==='Enter'){event.preventDefault();addCombo();}">
+                <label>🍹 پیشنهادهای ترکیبی</label>
+                <div class="tag-container" id="comboContainer">
+                    <input type="text" class="tag-input" id="comboInput" placeholder="اسم محصول رو بنویس و Enter بزن..." onkeypress="if(event.key==='Enter'){event.preventDefault();addCombo();}">
                 </div>
             </div>
-            
+
             <div class="form-row-3">
-                <div class="form-group">
-                    <label>دسته‌بندی</label>
-                    <select id="pCat">
-                        <option>پرفروش‌ها</option><option>آبمیوه طبیعی</option><option>آبمیوه فصل</option>
-                        <option>ترش</option><option>ترکیبی</option><option>شیک</option>
-                        <option>اسموتی</option><option>رژیمی</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>وضعیت</label>
-                    <select id="pStatus">
-                        <option value="available">✅ موجود</option>
-                        <option value="low">⏳ رو به اتمام</option>
-                        <option value="unavailable">❌ ناموجود</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>نشان</label>
-                    <select id="pBadge">
-                        <option value="">بدون نشان</option>
-                        <option value="special">⭐ پرفروش</option>
-                        <option value="new">🆕 جدید</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>📂 دسته‌بندی</label><select id="pCat"><option>پرفروش‌ها</option><option>آبمیوه طبیعی</option><option>آبمیوه فصل</option><option>ترش</option><option>ترکیبی</option><option>شیک</option><option>اسموتی</option><option>رژیمی</option></select></div>
+                <div class="form-group"><label>📦 وضعیت</label><select id="pStatus"><option value="available">✅ موجود</option><option value="low">⏳ رو به اتمام</option><option value="unavailable">❌ ناموجود</option></select></div>
+                <div class="form-group"><label>🏷️ نشان</label><select id="pBadge"><option value="">بدون نشان</option><option value="special">⭐ پرفروش</option><option value="new">🆕 جدید</option></select></div>
             </div>
-            
+
             <div class="form-row">
-                <div class="form-group"><label>امتیاز (۱-۵)</label><input type="number" id="pStars" min="1" max="5" value="4"></div>
-                <div class="form-group"><label>کالری</label><input type="text" id="pCal" placeholder="۱۲۰"></div>
+                <div class="form-group"><label>⭐ امتیاز</label><input type="number" id="pStars" min="1" max="5" value="4"></div>
+                <div class="form-group"><label>🔥 کالری</label><input type="text" id="pCal" placeholder="۱۲۰"></div>
             </div>
-            
+
             <div class="form-row">
-                <div class="form-group"><label>تخفیف (٪)</label><input type="number" id="pDiscount" min="0" max="99" value="0" placeholder="۰ = بدون تخفیف"></div>
-                <div class="form-group"><label>ترتیب نمایش</label><input type="number" id="pOrder" value="1"></div>
+                <div class="form-group"><label>🎫 تخفیف (٪)</label><input type="number" id="pDiscount" min="0" max="99" value="0" placeholder="۰ = بدون تخفیف"></div>
+                <div class="form-group"><label>🔢 ترتیب</label><input type="number" id="pOrder" value="10"></div>
             </div>
-            
-            <label style="color:var(--muted);font-size:0.8rem;display:block;margin-bottom:6px;">💰 قیمت‌ها (تومان - فقط عدد)</label>
+
+            <label style="color:var(--muted);font-size:0.8rem;display:block;margin-bottom:8px;">💰 قیمت‌ها (تومان - فقط عدد وارد کن)</label>
             <div class="price-grid">
-                <div class="form-group"><label>لیوانی</label><input type="text" id="p1" placeholder="85000"></div>
-                <div class="form-group"><label>نیم‌لیتری</label><input type="text" id="p2" placeholder="140000"></div>
-                <div class="form-group"><label>یک‌لیتری</label><input type="text" id="p3" placeholder="220000"></div>
-                <div class="form-group"><label>خانوادگی</label><input type="text" id="p4" placeholder="300000"></div>
+                <div class="form-group"><label>🥤 لیوانی</label><input type="text" id="p1" placeholder="85000"></div>
+                <div class="form-group"><label>🧃 نیم‌لیتری</label><input type="text" id="p2" placeholder="140000"></div>
+                <div class="form-group"><label>🍶 یک‌لیتری</label><input type="text" id="p3" placeholder="220000"></div>
+                <div class="form-group"><label>🫙 خانوادگی</label><input type="text" id="p4" placeholder="300000"></div>
             </div>
-            
+
             <input type="hidden" id="editIdx" value="-1">
+
             <div class="modal-btns">
-                <button class="btn btn-success" onclick="saveProduct()"><i class="fas fa-save"></i> 💾 ذخیره</button>
+                <button class="btn btn-success" onclick="saveProduct()">💾 ذخیره</button>
                 <button class="btn btn-outline" onclick="closeProductModal()">انصراف</button>
             </div>
         </div>
@@ -233,15 +331,16 @@
     <div class="modal-overlay" id="importModal">
         <div class="modal">
             <h3>📥 ورود JSON</h3>
-            <div class="form-group"><textarea id="importJson" style="min-height:200px;direction:ltr;text-align:left;font-family:monospace;font-size:0.75rem;"></textarea></div>
+            <div class="form-group"><textarea id="importJson" style="min-height:200px;direction:ltr;text-align:left;font-family:monospace;font-size:0.75rem;" placeholder="JSON رو اینجا بچسبون..."></textarea></div>
             <div class="modal-btns">
-                <button class="btn btn-success" onclick="importData()">وارد کردن</button>
+                <button class="btn btn-success" onclick="importData()">✅ وارد کردن</button>
                 <button class="btn btn-outline" onclick="document.getElementById('importModal').classList.remove('active')">انصراف</button>
             </div>
         </div>
     </div>
 
     <script>
+        // ========== CONFIG ==========
         const USER = 'asadi1379aboli-ops';
         const REPO = 'Salamat.jucei';
         const FILE = 'data.json';
@@ -250,70 +349,76 @@
         let menuData = [];
         let tempIngredients = [];
         let tempCombos = [];
-        let tempFiles = []; // ذخیره موقت فایل‌های آپلود شده
+        let tempFiles = [];
 
-        function getData() { return JSON.parse(localStorage.getItem('admin_menu') || '[]'); }
-        function setData(d) { localStorage.setItem('admin_menu', JSON.stringify(d)); menuData = d; refresh(); }
+        // ========== DATA ==========
+        function getData() { return JSON.parse(localStorage.getItem('admin_menu_data') || '[]'); }
+        function setData(d) { localStorage.setItem('admin_menu_data', JSON.stringify(d)); menuData = d; refreshUI(); }
 
+        // ========== LOGIN ==========
         function login() {
             const t = document.getElementById('githubToken').value.trim();
             const p = document.getElementById('password').value;
-            if (!t.startsWith('ghp_')) { showError('توکن باید با ghp_ شروع بشه'); return; }
-            if (p !== PASS) { showError('رمز اشتباهه'); return; }
+            const errEl = document.getElementById('loginError');
+
+            if (!t.startsWith('ghp_')) { errEl.textContent = '❌ توکن باید با ghp_ شروع بشه'; errEl.style.display = 'block'; return; }
+            if (p !== PASS) { errEl.textContent = '❌ رمز اشتباهه'; errEl.style.display = 'block'; return; }
+
             token = t;
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('dashboard').classList.add('active');
+            errEl.style.display = 'none';
             loadFromGitHub();
         }
 
-        function showError(msg) {
-            const el = document.getElementById('loginError');
-            el.textContent = '❌ ' + msg;
-            el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 2500);
-        }
-
         function logout() {
-            if (confirm('خارج میشی؟')) {
+            if (confirm('خارج میشی؟ تغییرات ذخیره نشده پاک میشه!')) {
                 document.getElementById('loginScreen').classList.remove('hidden');
                 document.getElementById('dashboard').classList.remove('active');
+                document.getElementById('password').value = '';
                 token = '';
             }
         }
 
+        // ========== GITHUB API ==========
         async function loadFromGitHub() {
             if (!token) return;
             try {
-                const r = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, { headers: { Authorization: `token ${token}` } });
-                if (r.ok) {
-                    const d = await r.json();
-                    const data = JSON.parse(atob(d.content));
-                    setData(data);
-                    updateSyncStatus(true, 'داده‌ها از GitHub دریافت شد');
+                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
+                    headers: { Authorization: `token ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const content = JSON.parse(atob(data.content));
+                    setData(content);
+                    updateSyncStatus(true, '✅ داده‌ها از GitHub دریافت شد');
                     toast('✅ از سایت دریافت شد', 'success');
-                } else if (r.status === 404) {
-                    updateSyncStatus(true, 'فایل data.json هنوز وجود نداره');
-                    toast('📝 با اولین انتشار، فایل ساخته میشه', 'info');
+                } else if (res.status === 404) {
+                    updateSyncStatus(true, '⚠️ فایل data.json هنوز وجود نداره - با اولین انتشار ساخته میشه');
+                    toast('📝 فایل جدید با انتشار ساخته میشه', 'info');
                 }
             } catch (e) {
-                updateSyncStatus(false, 'خطا در اتصال');
+                updateSyncStatus(false, '❌ خطا در اتصال به GitHub');
                 toast('⚠️ خطا در دریافت', 'error');
             }
         }
 
         async function publishNow() {
-            if (!token) { toast('❌ اول وارد شو', 'error'); return; }
+            if (!token) { toast('❌ اول وارد شو!', 'error'); return; }
             const data = getData();
-            if (!data.length) { toast('❌ محصولی نیست', 'error'); return; }
+            if (!data.length) { toast('❌ هیچ محصولی وجود نداره!', 'error'); return; }
 
-            const dot = document.getElementById('syncDot');
-            const text = document.getElementById('syncText');
             toast('🔄 در حال انتشار...', 'info');
 
             try {
                 let sha = null;
-                const cr = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, { headers: { Authorization: `token ${token}` } });
-                if (cr.ok) { const cd = await cr.json(); sha = cd.sha; }
+                const checkRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
+                    headers: { Authorization: `token ${token}` }
+                });
+                if (checkRes.ok) {
+                    const checkData = await checkRes.json();
+                    sha = checkData.sha;
+                }
 
                 const body = {
                     message: `🔄 بروزرسانی منو - ${new Date().toLocaleString('fa-IR')}`,
@@ -322,23 +427,26 @@
                 };
                 if (sha) body.sha = sha;
 
-                const r = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
+                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${FILE}`, {
                     method: 'PUT',
-                    headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+                    headers: {
+                        Authorization: `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(body)
                 });
 
-                if (r.ok) {
-                    document.getElementById('syncTime').textContent = 'انتشار: ' + new Date().toLocaleTimeString('fa-IR');
-                    updateSyncStatus(true, '✅ سایت با موفقیت آپدیت شد! 🎉');
-                    toast('🎉 سایت آپدیت شد! چند ثانیه بعد ببین', 'success');
+                if (res.ok) {
+                    document.getElementById('syncTime').textContent = '✅ انتشار: ' + new Date().toLocaleTimeString('fa-IR');
+                    updateSyncStatus(true, '🎉 سایت با موفقیت آپدیت شد!');
+                    toast('🎉 سایت آپدیت شد!', 'success');
                 } else {
-                    const err = await r.json();
-                    throw new Error(err.message);
+                    const err = await res.json();
+                    throw new Error(err.message || 'Unknown error');
                 }
             } catch (e) {
-                updateSyncStatus(false, 'خطا: ' + e.message);
-                toast('❌ خطا: ' + e.message, 'error');
+                updateSyncStatus(false, '❌ خطا: ' + e.message);
+                toast('❌ خطا در انتشار: ' + e.message, 'error');
             }
         }
 
@@ -347,29 +455,31 @@
             document.getElementById('syncText').textContent = msg;
         }
 
-        function refresh() {
-            const d = getData();
-            document.getElementById('statTotal').textContent = d.length.toLocaleString('fa-IR');
-            document.getElementById('statCats').textContent = [...new Set(d.map(i => i.cat))].length.toLocaleString('fa-IR');
-            document.getElementById('statDiscounts').textContent = d.filter(i => i.discount > 0).length.toLocaleString('fa-IR');
-            document.getElementById('statViews').textContent = d.reduce((sum, i) => sum + (i.views || 0), 0).toLocaleString('fa-IR');
+        // ========== UI ==========
+        function refreshUI() {
+            const data = getData();
+            document.getElementById('statTotal').textContent = data.length.toLocaleString('fa-IR');
+            document.getElementById('statCats').textContent = [...new Set(data.map(i => i.cat))].length.toLocaleString('fa-IR');
+            document.getElementById('statDiscounts').textContent = data.filter(i => i.discount > 0).length.toLocaleString('fa-IR');
+            document.getElementById('statViews').textContent = data.reduce((sum, i) => sum + (i.views || 0), 0).toLocaleString('fa-IR');
 
-            document.getElementById('tableBody').innerHTML = d.map((item, i) => {
+            const statusIcons = { available: '✅', low: '⏳', unavailable: '❌' };
+
+            document.getElementById('tableBody').innerHTML = data.map((item, i) => {
                 const img = (item.images && item.images[0]) || item.image || 'logo.png.jpg';
-                const statusLabels = { available: '✅', low: '⏳', unavailable: '❌' };
                 return `
                     <tr>
                         <td>${i + 1}</td>
                         <td><img src="${img}" class="product-img" onerror="this.src='logo.png.jpg'"></td>
-                        <td><strong>${item.name}</strong>${item.discount > 0 ? ` <span style="color:var(--danger);font-size:0.7rem;">-${item.discount}%</span>` : ''}</td>
+                        <td><strong>${item.name}</strong>${item.discount > 0 ? ` <span style="color:var(--danger);">-${item.discount}%</span>` : ''}</td>
                         <td>${item.cat}</td>
-                        <td>${statusLabels[item.status] || '✅'}</td>
+                        <td>${statusIcons[item.status] || '✅'}</td>
                         <td>${item.discount > 0 ? item.discount + '٪' : '-'}</td>
                         <td style="color:var(--success);">${(item.prices?.['لیوانی'] || '۰').replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ت</td>
                         <td>${(item.views || 0).toLocaleString('fa-IR')}</td>
                         <td>
-                            <button class="icon-btn" onclick="openEdit(${i})" title="ویرایش"><i class="fas fa-edit"></i></button>
-                            <button class="icon-btn del" onclick="deleteProduct(${i})" title="حذف"><i class="fas fa-trash"></i></button>
+                            <button class="icon-btn" onclick="openEditModal(${i})" title="ویرایش">✏️</button>
+                            <button class="icon-btn del" onclick="deleteProduct(${i})" title="حذف">🗑️</button>
                         </td>
                     </tr>
                 `;
@@ -381,11 +491,7 @@
             for (let file of files) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    tempFiles.push({
-                        name: file.name,
-                        data: e.target.result,
-                        type: file.type
-                    });
+                    tempFiles.push({ name: file.name, data: e.target.result, type: file.type });
                     renderFileList();
                 };
                 reader.readAsDataURL(file);
@@ -393,13 +499,10 @@
         }
 
         function renderFileList() {
-            const list = document.getElementById('fileList');
-            list.innerHTML = tempFiles.map((f, i) => `
+            document.getElementById('fileList').innerHTML = tempFiles.map((f, i) => `
                 <div class="file-item">
-                    ${f.type.startsWith('video') ? 
-                        `<video src="${f.data}" muted></video>` : 
-                        `<img src="${f.data}" alt="">`}
-                    <button onclick="tempFiles.splice(${i},1);renderFileList();">✕</button>
+                    ${f.type.startsWith('video') ? `<video src="${f.data}" muted></video>` : `<img src="${f.data}" alt="">`}
+                    <button class="remove-file" onclick="tempFiles.splice(${i},1);renderFileList();">✕</button>
                 </div>
             `).join('');
         }
@@ -411,11 +514,10 @@
             if (val) { tempIngredients.push(val); input.value = ''; renderIngredients(); }
         }
         function renderIngredients() {
-            const container = document.getElementById('ingredientsTags');
-            const input = document.getElementById('ingredientInput');
-            container.innerHTML = tempIngredients.map((t, i) => 
-                `<span class="tag-item">${t} <button onclick="tempIngredients.splice(${i},1);renderIngredients();">✕</button></span>`
-            ).join('') + '<input type="text" id="ingredientInput" placeholder="بنویس و Enter بزن..." style="border:none;background:transparent;color:var(--text);flex:1;min-width:100px;padding:4px;font-family:Vazirmatn;font-size:0.8rem;" onkeypress="if(event.key===\'Enter\'){event.preventDefault();addIngredient();}">';
+            const container = document.getElementById('ingredientsContainer');
+            container.innerHTML = tempIngredients.map((t, i) =>
+                `<span class="tag">${t} <button onclick="tempIngredients.splice(${i},1);renderIngredients();">✕</button></span>`
+            ).join('') + '<input type="text" class="tag-input" id="ingredientInput" placeholder="بنویس و Enter بزن..." onkeypress="if(event.key===\'Enter\'){event.preventDefault();addIngredient();}">';
             setTimeout(() => document.getElementById('ingredientInput')?.focus(), 50);
         }
 
@@ -425,29 +527,24 @@
             if (val) { tempCombos.push(val); input.value = ''; renderCombos(); }
         }
         function renderCombos() {
-            const container = document.getElementById('comboTags');
-            const input = document.getElementById('comboInput');
-            container.innerHTML = tempCombos.map((t, i) => 
-                `<span class="tag-item">${t} <button onclick="tempCombos.splice(${i},1);renderCombos();">✕</button></span>`
-            ).join('') + '<input type="text" id="comboInput" placeholder="نام محصول رو بنویس و Enter بزن..." style="border:none;background:transparent;color:var(--text);flex:1;min-width:100px;padding:4px;font-family:Vazirmatn;font-size:0.8rem;" onkeypress="if(event.key===\'Enter\'){event.preventDefault();addCombo();}">';
+            const container = document.getElementById('comboContainer');
+            container.innerHTML = tempCombos.map((t, i) =>
+                `<span class="tag">${t} <button onclick="tempCombos.splice(${i},1);renderCombos();">✕</button></span>`
+            ).join('') + '<input type="text" class="tag-input" id="comboInput" placeholder="اسم محصول رو بنویس و Enter بزن..." onkeypress="if(event.key===\'Enter\'){event.preventDefault();addCombo();}">';
             setTimeout(() => document.getElementById('comboInput')?.focus(), 50);
         }
 
         // ========== MODAL ==========
-        function openAdd() {
+        function openAddModal() {
             document.getElementById('modalTitle').textContent = '➕ محصول جدید';
             document.getElementById('editIdx').value = '-1';
             clearForm();
-            tempIngredients = [];
-            tempCombos = [];
-            tempFiles = [];
-            renderIngredients();
-            renderCombos();
-            renderFileList();
+            tempIngredients = []; tempCombos = []; tempFiles = [];
+            renderIngredients(); renderCombos(); renderFileList();
             document.getElementById('productModal').classList.add('active');
         }
 
-        function openEdit(index) {
+        function openEditModal(index) {
             const item = getData()[index];
             document.getElementById('modalTitle').textContent = '✏️ ویرایش: ' + item.name;
             document.getElementById('editIdx').value = index;
@@ -459,36 +556,19 @@
             document.getElementById('pStars').value = item.stars || 4;
             document.getElementById('pCal').value = item.cal || '';
             document.getElementById('pDiscount').value = item.discount || 0;
-            document.getElementById('pOrder').value = item.order || 1;
+            document.getElementById('pOrder').value = item.order || 10;
             document.getElementById('p1').value = (item.prices?.['لیوانی'] || '').replace(/[^0-9]/g, '');
             document.getElementById('p2').value = (item.prices?.['نیم‌لیتری'] || '').replace(/[^0-9]/g, '');
             document.getElementById('p3').value = (item.prices?.['یک‌لیتری'] || '').replace(/[^0-9]/g, '');
             document.getElementById('p4').value = (item.prices?.['یک‌ونیم‌لیتری'] || '').replace(/[^0-9]/g, '');
-
             tempIngredients = [...(item.ingredients || [])];
             tempCombos = [...(item.combo || [])];
             tempFiles = [];
-            renderIngredients();
-            renderCombos();
-            renderFileList();
-            
-            // Show existing images
-            if (item.images) {
-                tempFiles = item.images.map(img => ({
-                    name: img.split('/').pop(),
-                    data: img,
-                    type: 'image'
-                }));
-                renderFileList();
-            }
-
+            renderIngredients(); renderCombos(); renderFileList();
             document.getElementById('productModal').classList.add('active');
         }
 
-        function closeProductModal() {
-            document.getElementById('productModal').classList.remove('active');
-            clearForm();
-        }
+        function closeProductModal() { document.getElementById('productModal').classList.remove('active'); clearForm(); }
 
         function clearForm() {
             ['pName','pDesc','pCal','p1','p2','p3','p4'].forEach(id => document.getElementById(id).value = '');
@@ -497,24 +577,13 @@
             document.getElementById('pBadge').value = '';
             document.getElementById('pStars').value = '4';
             document.getElementById('pDiscount').value = '0';
-            document.getElementById('pOrder').value = '1';
-            tempIngredients = [];
-            tempCombos = [];
-            tempFiles = [];
-            renderIngredients();
-            renderCombos();
-            renderFileList();
+            document.getElementById('pOrder').value = '10';
         }
 
+        // ========== SAVE ==========
         function saveProduct() {
             const name = document.getElementById('pName').value.trim();
-            if (!name) { toast('❌ اسم رو بنویس', 'error'); return; }
-
-            // Use uploaded files or existing ones
-            let images = [];
-            if (tempFiles.length > 0) {
-                images = tempFiles.map(f => f.data); // Base64 data URLs
-            }
+            if (!name) { toast('❌ اسم محصول رو بنویس!', 'error'); return; }
 
             const formatPrice = (val) => {
                 const num = parseInt(val) || 0;
@@ -523,8 +592,8 @@
 
             const product = {
                 name,
-                images: images.length > 0 ? images : undefined,
-                image: images.length > 0 ? images[0] : undefined,
+                images: tempFiles.length > 0 ? tempFiles.map(f => f.data) : undefined,
+                image: tempFiles.length > 0 ? tempFiles[0].data : undefined,
                 desc: document.getElementById('pDesc').value.trim(),
                 ingredients: [...tempIngredients],
                 prices: {
@@ -539,7 +608,7 @@
                 stars: parseInt(document.getElementById('pStars').value) || 4,
                 cal: document.getElementById('pCal').value.trim() || '---',
                 discount: parseInt(document.getElementById('pDiscount').value) || 0,
-                order: parseInt(document.getElementById('pOrder').value) || 1,
+                order: parseInt(document.getElementById('pOrder').value) || 10,
                 combo: [...tempCombos],
                 goals: [],
                 views: 0
@@ -547,7 +616,7 @@
 
             const data = getData();
             const idx = parseInt(document.getElementById('editIdx').value);
-            
+
             if (idx >= 0) {
                 product.views = data[idx].views || 0;
                 product.goals = data[idx].goals || [];
@@ -556,50 +625,53 @@
                 data.push(product);
             }
 
-            // Sort by order
             data.sort((a, b) => (a.order || 99) - (b.order || 99));
-            
             setData(data);
             closeProductModal();
-            toast('💾 ذخیره شد. حالا دکمه 🚀 انتشار رو بزن', 'info');
+            toast('💾 ذخیره شد! حالا 🚀 انتشار رو بزن', 'info');
         }
 
         function deleteProduct(index) {
             const item = getData()[index];
-            if (confirm(`حذف "${item.name}"؟`)) {
+            if (confirm(`حذف "${item.name}"؟\nاین عملیات قابل بازگشت نیست!`)) {
                 const data = getData();
                 data.splice(index, 1);
                 setData(data);
-                toast('🗑️ حذف شد. انتشار رو فراموش نکن', 'info');
+                toast('🗑️ حذف شد. انتشار رو فراموش نکن!', 'info');
             }
         }
 
-        function exportJSON() {
+        // ========== IMPORT/EXPORT ==========
+        function exportData() {
             const data = getData();
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'menu-backup-' + new Date().toISOString().slice(0,10) + '.json';
+            a.download = 'menu-backup-' + new Date().toISOString().slice(0, 10) + '.json';
             a.click();
-            toast('📥 دانلود شد', 'success');
+            toast('📥 فایل پشتیبان دانلود شد', 'success');
         }
 
         function importData() {
             try {
-                const data = JSON.parse(document.getElementById('importJson').value.trim());
-                if (!Array.isArray(data)) throw new Error('نامعتبر');
-                if (confirm(`${data.length} محصول وارد شود؟`)) {
-                    setData(data);
+                const json = document.getElementById('importJson').value.trim();
+                const imported = JSON.parse(json);
+                if (!Array.isArray(imported)) throw new Error('Invalid format');
+                if (confirm(`${imported.length} محصول وارد شود؟`)) {
+                    setData(imported);
                     document.getElementById('importModal').classList.remove('active');
                     document.getElementById('importJson').value = '';
-                    toast('✅ وارد شد', 'success');
+                    toast('✅ داده‌ها وارد شد', 'success');
                 }
             } catch (e) {
-                toast('❌ JSON نامعتبر', 'error');
+                toast('❌ فرمت JSON نامعتبره!', 'error');
             }
         }
 
+        // ========== TOAST ==========
         function toast(msg, type = 'success') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
             const t = document.createElement('div');
             t.className = 'toast ' + type;
             t.textContent = msg;
@@ -607,12 +679,12 @@
             setTimeout(() => t.remove(), 3000);
         }
 
-        // Close modals
+        // ========== EVENT LISTENERS ==========
         document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeProductModal(); });
-        document.getElementById('importModal').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
+        document.getElementById('importModal').addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('active'); document.getElementById('importJson').value = ''; } });
 
-        // Init
-        refresh();
+        // ========== INIT ==========
+        refreshUI();
     </script>
 </body>
 </html>
