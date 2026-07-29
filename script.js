@@ -93,7 +93,6 @@ const statusLabels = { available: '✅ موجود', low: '⏳ رو به اتما
 // ========== HELPER: تبدیل هر فرمت قیمت به عدد ==========
 function parsePrice(priceStr) {
     if (!priceStr) return 0;
-    // حذف همه چیز غیر از اعداد
     const num = String(priceStr).replace(/[^0-9]/g, '');
     return parseInt(num) || 0;
 }
@@ -149,9 +148,9 @@ function getFilteredData() {
     if (currentPrice !== 'all') {
         filtered = filtered.filter(item => {
             const price = parsePrice(item.prices[currentSize]);
-            if (currentPrice === 'low') return price < 150000;
-            if (currentPrice === 'mid') return price >= 150000 && price <= 250000;
-            if (currentPrice === 'high') return price > 250000;
+            if (currentPrice === 'low') return price < 250000;
+            if (currentPrice === 'mid') return price >= 250000 && price <= 350000;
+            if (currentPrice === 'high') return price > 350000;
             return true;
         });
     }
