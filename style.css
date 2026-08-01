@@ -24,9 +24,20 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    font-family: 'Vazirmatn', sans-serif;
-    background: var(--bg-dark);
+Hero{
+    font-family:'Vazirmatn',sans-serif;
+    direction:rtl;
+    color:var(--text-light);
+
+    background:
+    linear-gradient(rgba(8,15,30,.70),rgba(8,15,30,.70)),
+    url("assets/images/background.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
     background-image: 
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ccircle cx='30' cy='40' r='25' fill='%23ff6b35' opacity='0.04'/%3E%3Ccircle cx='170' cy='160' r='30' fill='%23ffd23f' opacity='0.03'/%3E%3Ccircle cx='160' cy='30' r='20' fill='%23ff2d55' opacity='0.03'/%3E%3Ccircle cx='40' cy='170' r='28' fill='%237b2d8e' opacity='0.04'/%3E%3Ccircle cx='100' cy='100' r='18' fill='%237bc67e' opacity='0.03'/%3E%3C/svg%3E"),
         radial-gradient(circle at 20% 30%, rgba(255,107,53,0.06) 0%, transparent 50%),
